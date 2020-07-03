@@ -13,10 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>migration-service</name>
 
-    <properties>
-        <java.version>14</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
