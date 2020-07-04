@@ -72,7 +72,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run watch</arguments>
+                            <arguments>run dev</arguments>
                         </configuration>
                     </execution>
                 </executions>
