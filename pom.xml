@@ -12,6 +12,7 @@
     <modules>
         <module>api-service</module>
         <module>migration-service</module>
+        <module>webapp</module>
     </modules>
 
 </project>
