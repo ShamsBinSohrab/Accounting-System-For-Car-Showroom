@@ -1,4 +1,4 @@
-package com.apiservice.configuration;
+package com.apiservice.utils.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

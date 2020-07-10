@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: shams
+      changes:
+        - createTable:
+            tableName: purchase_record
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_purchase_record
+              - column:
+                  name: car_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: car
+                    referencedColumnNames: id
+                    foreignKeyName: FK_car_id__car_id
+              - column:
+                  name: purchase_type
+                  type: varchar(16)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: base_price
+                  type: numeric
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: lc_charge
+                  type: numeric
+              - column:
+                  name: shipping_charge
+                  type: numeric
+              - column:
+                  name: tax
+                  type: numeric
+              - column:
+                  name: ait
+                  type: numeric
+              - column:
+                  name: cnf_charge
+                  type: numeric
+              - column:
+                  name: transportation_charge
+                  type: numeric
+              - column:
+                  name: garage_charge
+                  type: numeric
+              - column:
+                  name: miscellaneous_charge
+                  type: numeric
