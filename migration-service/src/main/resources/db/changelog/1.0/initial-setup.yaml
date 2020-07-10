@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: pk_car
               - column:
-                  name: brand
+                  name: make
                   type: varchar(50)
                   constraints:
                     nullable: false
@@ -44,3 +44,9 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+              - column:
+                  name: deleted
+                  type: boolean
+                  defaultValue: false
+                  constraints:
+                    nullable: false
