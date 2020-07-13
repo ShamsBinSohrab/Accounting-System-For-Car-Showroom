@@ -10,4 +10,4 @@ databaseChangeLog:
                 schemaName: development
       changes:
         - sql:
-            sql: CREATE SCHEMA developmentk
+            sql: CREATE SCHEMA development
