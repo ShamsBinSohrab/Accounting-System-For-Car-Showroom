@@ -2,6 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
+      comment: Adding new table purchase_record
       changes:
         - createTable:
             tableName: purchase_record

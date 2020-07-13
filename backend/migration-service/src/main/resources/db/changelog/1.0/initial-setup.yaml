@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: shams
+      comment: Adding development schema
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - schemaExists:
+                schemaName: development
+      changes:
+        - sql:
+            sql: CREATE SCHEMA developmentk

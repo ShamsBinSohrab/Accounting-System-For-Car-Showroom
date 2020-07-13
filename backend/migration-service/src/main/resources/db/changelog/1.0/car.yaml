@@ -2,6 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
+      comment: Adding new table car
       changes:
         - createTable:
             tableName: car
