@@ -1,5 +1,6 @@
-package com.apiservice.purchase;
+package com.apiservice.entity;
 
+import com.apiservice.enums.PurchaseType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

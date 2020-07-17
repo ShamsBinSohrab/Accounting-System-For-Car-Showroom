@@ -1,5 +1,7 @@
-package com.apiservice.purchase;
+package com.apiservice.controller;
 
+import com.apiservice.entity.PurchaseRecord;
+import com.apiservice.service.PurchaseRecordService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

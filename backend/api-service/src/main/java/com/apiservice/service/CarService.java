@@ -1,5 +1,8 @@
-package com.apiservice.car;
+package com.apiservice.service;
 
+import com.apiservice.entity.Car;
+import com.apiservice.repository.CarRepository;
+import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +31,7 @@ public class CarService {
   @Transactional(readOnly = true)
   public Car getCarById(long id) {
     return carRepository.findByIdAndDeletedIsFalse(id)
-        .orElseThrow(IllegalArgumentException::new);
+        .orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
   }
 
   @Transactional
@@ -42,7 +45,7 @@ public class CarService {
   @Transactional
   public Car update(long id, Car car) {
     Car carToUpdate = carRepository.findByIdAndDeletedIsFalse(id)
-        .orElseThrow(IllegalArgumentException::new);
+        .orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
     modelMapper.map(car, carToUpdate);
     return carRepository.save(carToUpdate);
   }
@@ -53,7 +56,7 @@ public class CarService {
   @Transactional
   public void delete(long id) {
     if (carRepository.deleteById(id) == 0) {
-      throw new IllegalArgumentException();
+      throw EntityNotFoundException.of(Car.class, id);
     }
   }
 }

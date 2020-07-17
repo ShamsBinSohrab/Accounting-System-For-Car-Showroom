@@ -1,5 +1,6 @@
-package com.apiservice.purchase;
+package com.apiservice.repository;
 
+import com.apiservice.entity.PurchaseRecord;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
