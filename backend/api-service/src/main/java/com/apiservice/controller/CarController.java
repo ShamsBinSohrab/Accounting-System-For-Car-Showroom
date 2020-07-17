@@ -1,5 +1,7 @@
-package com.apiservice.car;
+package com.apiservice.controller;
 
+import com.apiservice.entity.Car;
+import com.apiservice.service.CarService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +43,7 @@ public class CarController {
 
   @PutMapping("/cars/{id}")
   public Car update(@RequestBody @Valid Car car, @PathVariable long id) {
-    return carService.update(car, id);
+    return carService.update(id, car);
   }
 
   @DeleteMapping("/cars/{id}")

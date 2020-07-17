@@ -1,4 +1,4 @@
-package com.apiservice.car;
+package com.apiservice.enums;
 
 public enum CarType {
     SEDAN,

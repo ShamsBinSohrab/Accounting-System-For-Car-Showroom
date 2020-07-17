@@ -1,5 +1,6 @@
-package com.apiservice.car;
+package com.apiservice.entity;
 
+import com.apiservice.enums.CarType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;

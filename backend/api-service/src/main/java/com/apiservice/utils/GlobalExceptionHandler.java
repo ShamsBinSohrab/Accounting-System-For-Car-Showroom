@@ -1,4 +1,4 @@
-package com.apiservice.utils.common;
+package com.apiservice.utils;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

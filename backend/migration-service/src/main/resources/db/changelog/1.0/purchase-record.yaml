@@ -55,3 +55,8 @@ databaseChangeLog:
               - column:
                   name: miscellaneous_charge
                   type: numeric
+              - column:
+                  name: deleted
+                  type: boolean
+                  constraints:
+                    nullable: false
