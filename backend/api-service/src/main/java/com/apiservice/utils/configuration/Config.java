@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 class Config {
 
-    @Bean()
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+  @Bean()
+  @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
 }

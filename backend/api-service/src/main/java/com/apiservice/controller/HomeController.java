@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class HomeController {
 
-    @GetMapping("/index")
-    public String index() {
-        return "Hello world!";
-    }
+  @GetMapping("/index")
+  public String index() {
+    return "Hello world!";
+  }
 }

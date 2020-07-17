@@ -11,17 +11,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    protected ResponseEntity<Object> handleIllegalArgumentException(
-            RuntimeException ex, WebRequest request) {
-        return handleExceptionInternal(ex, "Invalid request",
-                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
+  @ExceptionHandler(IllegalArgumentException.class)
+  protected ResponseEntity<Object> handleIllegalArgumentException(
+      RuntimeException ex, WebRequest request) {
+    return handleExceptionInternal(ex, "Invalid request",
+        new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+  }
 
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<Object> handleException(
-            RuntimeException ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getMessage(),
-                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
+  @ExceptionHandler(Exception.class)
+  protected ResponseEntity<Object> handleException(
+      RuntimeException ex, WebRequest request) {
+    return handleExceptionInternal(ex, ex.getMessage(),
+        new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+  }
 }
