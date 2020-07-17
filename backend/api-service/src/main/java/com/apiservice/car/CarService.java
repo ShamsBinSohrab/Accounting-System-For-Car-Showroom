@@ -36,19 +36,24 @@ public class CarService {
     return carRepository.save(car);
   }
 
+  /**
+   * Update a car.
+   */
   @Transactional
-  public Car update(Car car, long id) {
+  public Car update(long id, Car car) {
     Car carToUpdate = carRepository.findByIdAndDeletedIsFalse(id)
         .orElseThrow(IllegalArgumentException::new);
     modelMapper.map(car, carToUpdate);
     return carRepository.save(carToUpdate);
   }
 
+  /**
+   * Set deleted flag to a car.
+   */
   @Transactional
   public void delete(long id) {
-    if (carRepository.deleteById(id) == 1) {
-      return;
+    if (carRepository.deleteById(id) == 0) {
+      throw new IllegalArgumentException();
     }
-    throw new IllegalArgumentException();
   }
 }
