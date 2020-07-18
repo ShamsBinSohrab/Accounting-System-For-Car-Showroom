@@ -1,5 +1,6 @@
 package com.apiservice.entity;
 
+import com.apiservice.enums.CarMake;
 import com.apiservice.enums.CarType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
@@ -23,14 +24,15 @@ public class Car {
   @Column(name = "id", nullable = false)
   private Long id;
 
+  @Enumerated(value = EnumType.STRING)
   @Column(name = "make", nullable = false)
-  private String make;
+  private CarMake make;
 
   @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "type", nullable = false)
   @Enumerated(value = EnumType.STRING)
+  @Column(name = "type", nullable = false)
   private CarType type;
 
   @Digits(integer = 4, fraction = 0)
