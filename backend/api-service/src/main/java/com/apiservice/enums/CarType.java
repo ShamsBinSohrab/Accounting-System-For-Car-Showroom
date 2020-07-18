@@ -1,8 +1,15 @@
 package com.apiservice.enums;
 
 public enum CarType {
-    SEDAN,
-    SUV,
+
+    CONVERTIBLE,
+    COUPE,
     HATCHBACK,
-    MINIVAN
+    JEEP,
+    MINIVAN,
+    PICKUP_TRUCK,
+    SEDAN,
+    SPORTS_CAR,
+    STATION_WAGON,
+    SUV
 }

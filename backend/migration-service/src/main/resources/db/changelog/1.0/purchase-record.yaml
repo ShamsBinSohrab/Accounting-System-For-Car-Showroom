@@ -28,33 +28,33 @@ databaseChangeLog:
                     nulllable: false
               - column:
                   name: base_price
-                  type: numeric
+                  type: numeric(10, 2)
                   constraints:
                     nulllable: false
               - column:
                   name: lc_charge
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: shipping_charge
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: tax
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: ait
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: cnf_charge
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: transportation_charge
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: garage_charge
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: miscellaneous_charge
-                  type: numeric
+                  type: numeric(10, 2)
               - column:
                   name: deleted
                   type: boolean

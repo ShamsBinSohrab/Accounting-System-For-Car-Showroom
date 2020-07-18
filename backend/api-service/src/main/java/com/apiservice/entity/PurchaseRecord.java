@@ -1,6 +1,7 @@
 package com.apiservice.entity;
 
 import com.apiservice.enums.PurchaseType;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Digits;
 import lombok.Data;
 
 @Data
@@ -26,32 +28,41 @@ public class PurchaseRecord {
   @Column(name = "purchase_type", nullable = false)
   private PurchaseType purchaseType;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "base_price", nullable = false)
-  private double basePrice;
+  private BigDecimal basePrice;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "lc_charge")
-  private double lcCharge;
+  private BigDecimal lcCharge;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "shipping_charge")
-  private double shippingCharge;
+  private BigDecimal shippingCharge;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "tax")
-  private double tax;
+  private BigDecimal tax;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "ait")
-  private double advancedIncomeTax;
+  private BigDecimal advancedIncomeTax;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "cnf_charge")
-  private double cnfCharge;
+  private BigDecimal cnfCharge;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "transportation_charge")
-  private double transportationCharge;
+  private BigDecimal transportationCharge;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "garage_charge")
-  private double garageCharge;
+  private BigDecimal garageCharge;
 
+  @Digits(integer = 10, fraction = 2)
   @Column(name = "miscellaneous_charge")
-  private double miscellaneousCharge;
+  private BigDecimal miscellaneousCharge;
 
   @Column(name = "deleted", nullable = false)
   private boolean deleted;

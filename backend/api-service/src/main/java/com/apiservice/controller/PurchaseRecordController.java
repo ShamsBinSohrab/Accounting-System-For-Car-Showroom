@@ -1,6 +1,7 @@
 package com.apiservice.controller;
 
 import com.apiservice.entity.PurchaseRecord;
+import com.apiservice.model.PurchaseRecordCharge;
 import com.apiservice.service.PurchaseRecordService;
 import java.util.List;
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,6 +53,13 @@ public class PurchaseRecordController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("id") long id) {
     purchaseRecordService.delete(id);
+  }
+
+  @PatchMapping("/purchaseRecords/{id}")
+  public PurchaseRecord addCharge(
+      @PathVariable("id") long id,
+      @RequestBody @Valid PurchaseRecordCharge charge) {
+    return purchaseRecordService.addCharge(id, charge);
   }
 
 }
