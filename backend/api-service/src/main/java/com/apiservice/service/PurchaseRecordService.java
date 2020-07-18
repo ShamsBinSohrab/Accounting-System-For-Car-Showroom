@@ -1,6 +1,7 @@
 package com.apiservice.service;
 
 import com.apiservice.entity.PurchaseRecord;
+import com.apiservice.model.PurchaseRecordCharge;
 import com.apiservice.repository.PurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
@@ -59,5 +60,28 @@ public class PurchaseRecordService {
     if (purchaseRecordRepository.deleteById(id) == 0) {
       throw EntityNotFoundException.of(PurchaseRecord.class, id);
     }
+  }
+
+  /**
+   * Add charges to a purchase record.
+   */
+  @Transactional
+  public PurchaseRecord addCharge(long id, PurchaseRecordCharge charge) {
+    PurchaseRecord purchaseRecord =
+        purchaseRecordRepository.findByIdAndDeletedIsFalse(id)
+            .orElseThrow(() -> EntityNotFoundException.of(PurchaseRecord.class, id));
+    switch (charge.getChargeType()) {
+      case LC_CHARGE -> purchaseRecord.setLcCharge(charge.getAmount());
+      case SHIPPING_CHARGE -> purchaseRecord.setShippingCharge(charge.getAmount());
+      case TAX -> purchaseRecord.setTax(charge.getAmount());
+      case AIT -> purchaseRecord.setAdvancedIncomeTax(charge.getAmount());
+      case CNF_CHARGE -> purchaseRecord.setCnfCharge(charge.getAmount());
+      case TRANSPORTATION_CHARGE -> purchaseRecord.setTransportationCharge(charge.getAmount());
+      case GARAGE_CHARGE -> purchaseRecord.setGarageCharge(charge.getAmount());
+      case MISC_CHARGE -> purchaseRecord.setMiscellaneousCharge(charge.getAmount());
+      default -> throw new IllegalArgumentException(
+          "Invalid charge type " + charge.getChargeType().name());
+    }
+    return purchaseRecordRepository.save(purchaseRecord);
   }
 }
