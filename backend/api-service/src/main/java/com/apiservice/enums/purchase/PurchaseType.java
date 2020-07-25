@@ -1,4 +1,4 @@
-package com.apiservice.enums;
+package com.apiservice.enums.purchase;
 
 public enum PurchaseType {
   IMPORTED,

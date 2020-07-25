@@ -1,4 +1,4 @@
-package com.apiservice.repository;
+package com.apiservice.repository.car;
 
 import com.apiservice.entity.car.Car;
 import java.util.List;
@@ -14,6 +14,8 @@ public interface CarRepository extends JpaRepository<Car, Long> {
   List<Car> findAllByDeletedIsFalse();
 
   Optional<Car> findByIdAndDeletedIsFalse(long id);
+
+  Optional<Car> findByChassisNo(String chassisNo);
 
   @Modifying
   @Query("UPDATE Car SET deleted = true where id = :id and deleted = false")

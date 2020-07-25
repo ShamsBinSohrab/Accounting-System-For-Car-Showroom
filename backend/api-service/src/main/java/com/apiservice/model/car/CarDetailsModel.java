@@ -1,7 +1,7 @@
 package com.apiservice.model.car;
 
-import com.apiservice.enums.CarMake;
-import com.apiservice.enums.CarType;
+import com.apiservice.enums.car.CarMake;
+import com.apiservice.enums.car.CarType;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Digits;

@@ -1,8 +1,8 @@
-package com.apiservice.controller;
+package com.apiservice.controller.car;
 
 import com.apiservice.entity.car.Car;
 import com.apiservice.model.car.CarModel;
-import com.apiservice.service.CarService;
+import com.apiservice.service.car.CarService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;

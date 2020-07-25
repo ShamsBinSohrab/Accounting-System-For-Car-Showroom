@@ -1,11 +1,8 @@
-package com.apiservice.entity;
+package com.apiservice.entity.purchase;
 
-import com.apiservice.enums.PurchaseType;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,19 +11,12 @@ import lombok.Data;
 
 @Data
 @Entity
-public class PurchaseRecord {
+public class PurchaseRecordDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
-
-  @Column(name = "car_id", nullable = false)
-  private int carId;
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "purchase_type", nullable = false)
-  private PurchaseType purchaseType;
 
   @Digits(integer = 10, fraction = 2)
   @Column(name = "base_price", nullable = false)
@@ -64,6 +54,4 @@ public class PurchaseRecord {
   @Column(name = "miscellaneous_charge")
   private BigDecimal miscellaneousCharge;
 
-  @Column(name = "deleted", nullable = false)
-  private boolean deleted;
 }

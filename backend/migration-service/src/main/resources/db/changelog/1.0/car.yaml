@@ -2,6 +2,46 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
+      comment: Adding new table car_details
+      changes:
+        - createTable:
+            tableName: car_details
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_car_details
+              - column:
+                  name: make
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model_year
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: shams
       comment: Adding new table car
       changes:
         - createTable:
@@ -26,56 +66,15 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: car_details_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: car_details
+                    referencedColumnNames: id
+                    foreignKeyName: FK_car_details_id__car_details_id
+              - column:
                   name: deleted
                   type: boolean
                   defaultValue: false
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: 2
-      author: shams
-      comment: Adding new table car_details
-      changes:
-        - createTable:
-            tableName: car_details
-            columns:
-              - column:
-                  name: id
-                  type: bigserial
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: pk_car_details
-              - column:
-                  name: car_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-                    referencedTableName: car
-                    referencedColumnNames: id
-                    foreignKeyName: FK_car_id__car_id
-              - column:
-                  name: make
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(100)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: type
-                  type: varchar(20)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: model_year
-                  type: varchar(4)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: color
-                  type: varchar(10)
                   constraints:
                     nullable: false

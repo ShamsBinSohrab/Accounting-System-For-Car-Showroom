@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class Car {
   @Column(name = "deleted", nullable = false)
   private boolean deleted;
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "car")
+  @JoinColumn(name = "car_details_id")
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private CarDetails details;
 }

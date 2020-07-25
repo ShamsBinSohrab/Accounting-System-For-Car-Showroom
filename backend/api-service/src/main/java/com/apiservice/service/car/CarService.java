@@ -1,14 +1,11 @@
-package com.apiservice.service;
+package com.apiservice.service.car;
 
 import com.apiservice.entity.car.Car;
-import com.apiservice.entity.car.CarDetails;
-import com.apiservice.repository.CarRepository;
+import com.apiservice.repository.car.CarRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +28,6 @@ public class CarService {
 
   @Transactional
   public Car save(Car car) {
-    Optional.ofNullable(car.getDetails())
-        .ifPresent(cd -> cd.setCar(car));
     return carRepository.save(car);
   }
 
@@ -44,5 +39,10 @@ public class CarService {
     if (carRepository.deleteById(id) == 0) {
       throw EntityNotFoundException.of(Car.class, id);
     }
+  }
+
+  @Transactional
+  public Car getByChassisNo(String chassisNo) {
+    return carRepository.findByChassisNo(chassisNo).orElseThrow();
   }
 }
