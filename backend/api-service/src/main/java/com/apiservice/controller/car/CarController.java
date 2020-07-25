@@ -1,8 +1,10 @@
-package com.apiservice.controller;
+package com.apiservice.controller.car;
 
-import com.apiservice.entity.Car;
-import com.apiservice.service.CarService;
+import com.apiservice.entity.car.Car;
+import com.apiservice.model.car.CarModel;
+import com.apiservice.service.car.CarService;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,24 +28,30 @@ public class CarController {
   private final CarService carService;
 
   @GetMapping("/cars")
-  public List<Car> cars() {
-    return carService.getAllCars();
+  public List<CarModel> cars() {
+    return carService.getAllCars().stream()
+        .map(CarModel::toModel)
+        .collect(Collectors.toUnmodifiableList());
   }
 
   @GetMapping("/cars/{id}")
-  public Car car(@PathVariable long id) {
-    return carService.getCarById(id);
+  public CarModel car(@PathVariable long id) {
+    return CarModel.toModel(carService.getCarById(id));
   }
 
   @PostMapping("/cars")
   @ResponseStatus(HttpStatus.CREATED)
-  public Car create(@RequestBody @Valid Car car) {
-    return carService.save(car);
+  public CarModel create(@RequestBody @Valid CarModel model) {
+    Car car = model.toEntity();
+    return CarModel.toModel(carService.save(car));
   }
 
   @PutMapping("/cars/{id}")
-  public Car update(@RequestBody @Valid Car car, @PathVariable long id) {
-    return carService.update(id, car);
+  public CarModel update(
+      @RequestBody @Valid CarModel model, @PathVariable long id) {
+    Car car = carService.getCarById(id);
+    model.updateEntity(car);
+    return CarModel.toModel(carService.save(car));
   }
 
   @DeleteMapping("/cars/{id}")

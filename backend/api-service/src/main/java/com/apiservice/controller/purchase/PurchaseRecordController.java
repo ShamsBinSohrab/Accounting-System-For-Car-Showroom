@@ -1,9 +1,13 @@
-package com.apiservice.controller;
+package com.apiservice.controller.purchase;
 
-import com.apiservice.entity.PurchaseRecord;
-import com.apiservice.model.PurchaseRecordCharge;
-import com.apiservice.service.PurchaseRecordService;
+import com.apiservice.entity.car.Car;
+import com.apiservice.entity.purchase.PurchaseRecord;
+import com.apiservice.model.purchase.PurchaseRecordCharge;
+import com.apiservice.model.purchase.PurchaseRecordModel;
+import com.apiservice.service.car.CarService;
+import com.apiservice.service.purchase.PurchaseRecordService;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,27 +30,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class PurchaseRecordController {
 
   private final PurchaseRecordService purchaseRecordService;
+  private final CarService carService;
 
   @GetMapping("/purchaseRecords")
-  public List<PurchaseRecord> purchaseRecords() {
-    return purchaseRecordService.getAllPurchaseRecord();
+  public List<PurchaseRecordModel> purchaseRecords() {
+    return purchaseRecordService.getAllPurchaseRecord().stream()
+        .map(PurchaseRecordModel::toModel)
+        .collect(Collectors.toUnmodifiableList());
   }
 
   @GetMapping("/purchaseRecords/{id}")
-  public PurchaseRecord purchaseRecord(@PathVariable("id") long id) {
-    return purchaseRecordService.getById(id);
+  public PurchaseRecordModel purchaseRecord(@PathVariable("id") long id) {
+    return PurchaseRecordModel.toModel(purchaseRecordService.getById(id));
   }
 
   @PostMapping("/purchaseRecords")
   @ResponseStatus(HttpStatus.CREATED)
-  public PurchaseRecord create(@RequestBody @Valid PurchaseRecord purchaseRecord) {
-    return purchaseRecordService.save(purchaseRecord);
+  public PurchaseRecordModel create(@RequestBody @Valid PurchaseRecordModel model) {
+    Car car = carService.getByChassisNoOrNew(model.getChassisNo());
+    PurchaseRecord purchaseRecord = model.toEntity();
+    purchaseRecord.setCar(car);
+    return PurchaseRecordModel.toModel(purchaseRecordService.save(purchaseRecord));
   }
 
   @PutMapping("/purchaseRecords/{id}")
-  public PurchaseRecord update(@PathVariable("id") long id,
-      @RequestBody @Valid PurchaseRecord purchaseRecord) {
-    return purchaseRecordService.update(id, purchaseRecord);
+  public PurchaseRecordModel update(@PathVariable("id") long id,
+      @RequestBody @Valid PurchaseRecordModel model) {
+    PurchaseRecord purchaseRecord = purchaseRecordService.getById(id);
+    model.updateEntity(purchaseRecord);
+    purchaseRecordService.save(purchaseRecord);
+    return PurchaseRecordModel.toModel(purchaseRecord);
   }
 
   @DeleteMapping("/purchaseRecords/{id}")

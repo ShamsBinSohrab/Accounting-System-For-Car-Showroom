@@ -1,6 +1,6 @@
-package com.apiservice.model;
+package com.apiservice.model.purchase;
 
-import com.apiservice.enums.ChargeType;
+import com.apiservice.enums.purchase.ChargeType;
 import java.math.BigDecimal;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;

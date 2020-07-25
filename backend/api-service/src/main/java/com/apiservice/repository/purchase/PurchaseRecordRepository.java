@@ -1,6 +1,6 @@
-package com.apiservice.repository;
+package com.apiservice.repository.purchase;
 
-import com.apiservice.entity.PurchaseRecord;
+import com.apiservice.entity.purchase.PurchaseRecord;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,11 +11,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, Long> {
 
-  List<PurchaseRecord> findAllByDeletedIsFalse();
-
-  Optional<PurchaseRecord> findByIdAndDeletedIsFalse(long id);
-
-  @Modifying
-  @Query("UPDATE PurchaseRecord SET deleted = true where id = :id and deleted = false")
-  int deleteById(long id);
 }

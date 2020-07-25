@@ -2,10 +2,10 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
-      comment: Adding new table car
+      comment: Adding new table car_details
       changes:
         - createTable:
-            tableName: car
+            tableName: car_details
             columns:
               - column:
                   name: id
@@ -13,7 +13,7 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: pk_car
+                    primaryKeyName: pk_car_details
               - column:
                   name: make
                   type: varchar(50)
@@ -39,6 +39,21 @@ databaseChangeLog:
                   type: varchar(10)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 2
+      author: shams
+      comment: Adding new table car
+      changes:
+        - createTable:
+            tableName: car
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_car
               - column:
                   name: chassis_no
                   type: varchar(50)
@@ -46,8 +61,14 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
-                  name: deleted
+                  name: draft
                   type: boolean
-                  defaultValue: false
                   constraints:
                     nullable: false
+              - column:
+                  name: car_details_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: car_details
+                    referencedColumnNames: id
+                    foreignKeyName: FK_car_details_id__car_details_id
