@@ -88,3 +88,11 @@ databaseChangeLog:
                   type: boolean
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 3
+      author: shams
+      comment: Car id unique for purchase_record
+      changes:
+        - addUniqueConstraint:
+            tableName: purchase_record
+            columnNames: car_id

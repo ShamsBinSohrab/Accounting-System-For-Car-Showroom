@@ -47,8 +47,7 @@ public class PurchaseRecordController {
   @ResponseStatus(HttpStatus.CREATED)
   public PurchaseRecordModel create(@RequestBody @Valid PurchaseRecordModel model) {
     PurchaseRecord purchaseRecord = model.toEntity();
-    purchaseRecordService.save(purchaseRecord);
-    return PurchaseRecordModel.toModel(purchaseRecord);
+    return PurchaseRecordModel.toModel(purchaseRecordService.save(purchaseRecord));
   }
 
   @PutMapping("/purchaseRecords/{id}")

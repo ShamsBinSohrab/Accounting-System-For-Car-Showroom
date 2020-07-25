@@ -32,12 +32,12 @@ public class PurchaseRecordService {
   }
 
   @Transactional
-  public void save(PurchaseRecord purchaseRecord) {
+  public PurchaseRecord save(PurchaseRecord purchaseRecord) {
     Car car = purchaseRecord.getCar().isDraft()
         ? purchaseRecord.getCar()
         : carService.getByChassisNo(purchaseRecord.getCar().getChassisNo());
     purchaseRecord.setCar(car);
-    purchaseRecordRepository.save(purchaseRecord);
+    return purchaseRecordRepository.save(purchaseRecord);
   }
 
   /**
