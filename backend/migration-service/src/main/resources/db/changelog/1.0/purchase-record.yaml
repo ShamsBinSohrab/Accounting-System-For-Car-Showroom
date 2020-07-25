@@ -83,11 +83,6 @@ databaseChangeLog:
                   type: timestamp
                   constraints:
                     nullable: false
-              - column:
-                  name: deleted
-                  type: boolean
-                  constraints:
-                    nullable: false
   - changeSet:
       id: 3
       author: shams

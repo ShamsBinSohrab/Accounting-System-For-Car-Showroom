@@ -1,15 +1,11 @@
 package com.apiservice.service.purchase;
 
-import com.apiservice.entity.car.Car;
 import com.apiservice.entity.purchase.PurchaseRecord;
 import com.apiservice.model.purchase.PurchaseRecordCharge;
 import com.apiservice.repository.purchase.PurchaseRecordRepository;
-import com.apiservice.service.car.CarService;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,25 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class PurchaseRecordService {
 
   private final PurchaseRecordRepository purchaseRecordRepository;
-  private final CarService carService;
 
   @Transactional(readOnly = true)
   public List<PurchaseRecord> getAllPurchaseRecord() {
-    return purchaseRecordRepository.findAllByDeletedIsFalse();
+    return purchaseRecordRepository.findAll();
   }
 
   @Transactional(readOnly = true)
   public PurchaseRecord getById(long id) {
-    return purchaseRecordRepository.findByIdAndDeletedIsFalse(id)
+    return purchaseRecordRepository.findById(id)
         .orElseThrow(() -> EntityNotFoundException.of(PurchaseRecord.class, id));
   }
 
   @Transactional
   public PurchaseRecord save(PurchaseRecord purchaseRecord) {
-    Car car = purchaseRecord.getCar().isDraft()
-        ? purchaseRecord.getCar()
-        : carService.getByChassisNo(purchaseRecord.getCar().getChassisNo());
-    purchaseRecord.setCar(car);
     return purchaseRecordRepository.save(purchaseRecord);
   }
 
@@ -45,9 +36,9 @@ public class PurchaseRecordService {
    */
   @Transactional
   public void delete(long id) {
-    if (purchaseRecordRepository.deleteById(id) == 0) {
-      throw EntityNotFoundException.of(PurchaseRecord.class, id);
-    }
+    PurchaseRecord purchaseRecord = purchaseRecordRepository.findById(id)
+        .orElseThrow(() ->  EntityNotFoundException.of(PurchaseRecord.class, id));
+    purchaseRecordRepository.delete(purchaseRecord);
   }
 
   /**
@@ -56,7 +47,7 @@ public class PurchaseRecordService {
   @Transactional
   public PurchaseRecord addCharge(long id, PurchaseRecordCharge charge) {
     PurchaseRecord purchaseRecord =
-        purchaseRecordRepository.findByIdAndDeletedIsFalse(id)
+        purchaseRecordRepository.findById(id)
             .orElseThrow(() -> EntityNotFoundException.of(PurchaseRecord.class, id));
 //    switch (charge.getChargeType()) {
 //      case LC_CHARGE -> purchaseRecord.setLcCharge(charge.getAmount());

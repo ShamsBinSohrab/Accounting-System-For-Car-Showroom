@@ -16,12 +16,12 @@ public class CarService {
 
   @Transactional(readOnly = true)
   public List<Car> getAllCars() {
-    return carRepository.findAllByDeletedIsFalse();
+    return carRepository.findAll();
   }
 
   @Transactional(readOnly = true)
   public Car getCarById(long id) {
-    return carRepository.findByIdAndDeletedIsFalse(id)
+    return carRepository.findById(id)
         .orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
   }
 
@@ -35,13 +35,14 @@ public class CarService {
    */
   @Transactional
   public void delete(long id) {
-    if (carRepository.deleteById(id) == 0) {
-      throw EntityNotFoundException.of(Car.class, id);
-    }
+    Car car = carRepository.findById(id)
+        .orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
+    carRepository.delete(car);
   }
 
   @Transactional
-  public Car getByChassisNo(String chassisNo) {
-    return carRepository.findByChassisNo(chassisNo).orElseThrow();
+  public Car getByChassisNoOrNew(String chassisNo) {
+    return carRepository.findByChassisNo(chassisNo)
+        .orElseGet(Car::newDraftCar);
   }
 }

@@ -72,9 +72,3 @@ databaseChangeLog:
                     referencedTableName: car_details
                     referencedColumnNames: id
                     foreignKeyName: FK_car_details_id__car_details_id
-              - column:
-                  name: deleted
-                  type: boolean
-                  defaultValue: false
-                  constraints:
-                    nullable: false

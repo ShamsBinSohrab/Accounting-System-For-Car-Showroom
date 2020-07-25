@@ -21,14 +21,12 @@ public class PurchaseRecordModel {
   }
 
   private long id;
-
-  @JsonIgnoreProperties("details")
-  private CarModel car;
+  private ZonedDateTime purchaseDate = ZonedDateTime.now();
 
   @Enumerated(EnumType.STRING)
   private PurchaseType purchaseType;
+  private String chassisNo;
   private PurchaseRecordDetailsModel details;
-  private ZonedDateTime purchaseDate = ZonedDateTime.now();
 
   public static PurchaseRecordModel toModel(PurchaseRecord purchaseRecord) {
     return mapper.map(purchaseRecord, PurchaseRecordModel.class);

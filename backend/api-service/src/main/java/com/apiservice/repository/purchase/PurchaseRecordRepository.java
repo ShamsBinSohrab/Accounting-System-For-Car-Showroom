@@ -11,11 +11,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, Long> {
 
-  List<PurchaseRecord> findAllByDeletedIsFalse();
-
-  Optional<PurchaseRecord> findByIdAndDeletedIsFalse(long id);
-
-  @Modifying
-  @Query("UPDATE PurchaseRecord SET deleted = true where id = :id and deleted = false")
-  int deleteById(long id);
 }

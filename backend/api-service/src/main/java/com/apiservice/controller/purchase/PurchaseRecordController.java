@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PurchaseRecordController {
 
   private final PurchaseRecordService purchaseRecordService;
+  private final CarService carService;
 
   @GetMapping("/purchaseRecords")
   public List<PurchaseRecordModel> purchaseRecords() {
@@ -46,7 +47,9 @@ public class PurchaseRecordController {
   @PostMapping("/purchaseRecords")
   @ResponseStatus(HttpStatus.CREATED)
   public PurchaseRecordModel create(@RequestBody @Valid PurchaseRecordModel model) {
+    Car car = carService.getByChassisNoOrNew(model.getChassisNo());
     PurchaseRecord purchaseRecord = model.toEntity();
+    purchaseRecord.setCar(car);
     return PurchaseRecordModel.toModel(purchaseRecordService.save(purchaseRecord));
   }
 

@@ -29,11 +29,13 @@ public class Car {
   @Column(name = "draft", nullable = false)
   private boolean draft;
 
-  @JsonIgnore
-  @Column(name = "deleted", nullable = false)
-  private boolean deleted;
-
   @JoinColumn(name = "car_details_id")
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private CarDetails details;
+
+  public static Car newDraftCar() {
+    Car car = new Car();
+    car.setDraft(true);
+    return car;
+  }
 }

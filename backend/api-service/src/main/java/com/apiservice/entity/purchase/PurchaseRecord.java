@@ -26,7 +26,7 @@ public class PurchaseRecord {
   private Long id;
 
   @JoinColumn(name = "car_id")
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
   private Car car;
 
   @Enumerated(EnumType.STRING)
@@ -39,7 +39,4 @@ public class PurchaseRecord {
 
   @Column(name = "purchase_date", nullable = false)
   private ZonedDateTime purchaseDate;
-
-  @Column(name = "deleted", nullable = false)
-  private boolean deleted;
 }
