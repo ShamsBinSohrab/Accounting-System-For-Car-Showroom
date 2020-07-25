@@ -1,28 +1,35 @@
-package com.apiservice.entity;
+package com.apiservice.entity.car;
 
 import com.apiservice.enums.CarMake;
 import com.apiservice.enums.CarType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "car")
-public class Car {
+@Table(name = "car_details")
+public class CarDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  private Car car;
 
   @Enumerated(value = EnumType.STRING)
   @Column(name = "make", nullable = false)
@@ -41,11 +48,4 @@ public class Car {
 
   @Column(name = "color", nullable = false)
   private String color;
-
-  @Column(name = "chassis_no", nullable = false, unique = true)
-  private String chassisNo;
-
-  @JsonIgnore
-  @Column(name = "deleted", nullable = false)
-  private boolean deleted;
 }

@@ -1,6 +1,6 @@
 package com.apiservice.repository;
 
-import com.apiservice.entity.Car;
+import com.apiservice.entity.car.Car;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
