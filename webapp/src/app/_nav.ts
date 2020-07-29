@@ -4,26 +4,26 @@ export const navItems: INavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'icon-speedometer',
+    icon: 'icon-graph',
     // badge: {
     //   variant: 'info',
     //   text: 'NEW'
     // }
   },
   {
-    name: 'Customer Position',
-    url: '/customer-position',
-    icon: 'icon-people',
+    name: 'Car',
+    url: '/car',
+    icon: 'icon-speedometer',
     children: [
       {
-        name: 'Summery',
-        url: '/customer-position/summery',
-        icon: 'icon-drop'
+        name: 'Car List',
+        url: '/car/list',
+        icon: 'icon-list'
       },
       {
-        name: 'Accounts',
-        url: '/customer-position/accounts',
-        icon: 'icon-drop'
+        name: 'Add Car',
+        url: '/car/create',
+        icon: 'icon-plus'
       },
       {
         name: 'Liquidation/Interest A/Cs',
@@ -35,7 +35,6 @@ export const navItems: INavData[] = [
         url: '/customer-position/termsanddemandloans',
         icon: 'icon-drop'
       }
-  
     ]
   },
   {

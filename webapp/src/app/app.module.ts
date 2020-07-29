@@ -23,23 +23,23 @@ import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
 
 // Custom Import
-import { DefaultLayoutComponent } from './IBanking/containers';
-import { AuthGuard } from './IBanking/Helpers/auth.guard';
-import { AuthInterceptor } from './IBanking/Helpers/auth.interceptor';
-import { MaterialModule } from './IBanking/Common/material.module';
+import { DefaultLayoutComponent } from './car_showroom_accounting_system/containers';
+import { AuthGuard } from './car_showroom_accounting_system/Helpers/auth.guard';
+import { AuthInterceptor } from './car_showroom_accounting_system/Helpers/auth.interceptor';
+import { MaterialModule } from './car_showroom_accounting_system/Common/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './IBanking/views/Home/home.component';
-import { P404Component } from './IBanking/views/error/404.component';
-import { P500Component } from './IBanking/views/error/500.component';
-import { LoginComponent } from './IBanking/views/Login/login.component';
-import { SignupComponent } from './IBanking/views/signup/signup.component';
-import { LoginService } from './IBanking/Services/login.service';
-import { EncryptionDescryptionService } from './IBanking/Services/encryption-descryption.service';
-import { ChangePasswordComponent } from './IBanking/views/change-password/change-password.component';
-import { DashboardComponent } from './IBanking/views/dashboard/dashboard.component';
-import { AccountStatementComponent } from './IBanking/views/account-statement/account-statement.component';
-import { ContactComponent } from './IBanking/views/contact/contact.component';
+import { HomeComponent } from './car_showroom_accounting_system/views/Home/home.component';
+import { P404Component } from './car_showroom_accounting_system/views/error/404.component';
+import { P500Component } from './car_showroom_accounting_system/views/error/500.component';
+import { LoginComponent } from './car_showroom_accounting_system/views/Login/login.component';
+import { SignupComponent } from './car_showroom_accounting_system/views/signup/signup.component';
+import { LoginService } from './car_showroom_accounting_system/Services/login.service';
+import { EncryptionDescryptionService } from './car_showroom_accounting_system/Services/encryption-descryption.service';
+import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
+import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
+import { AccountStatementComponent } from './car_showroom_accounting_system/views/account-statement/account-statement.component';
+import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -62,8 +62,8 @@ const APP_CONTAINERS = [
     DashboardComponent,
     AccountStatementComponent,
     ContactComponent,
-    
-    
+
+
   ],
   imports: [
     AppAsideModule,
@@ -80,24 +80,24 @@ const APP_CONTAINERS = [
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      timeOut:5000,
-      positionClass:'toast-top-right',
-      preventDuplicates:false
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false
     }),
   ],
   providers: [
     LoginService,
     EncryptionDescryptionService,
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
+    // AuthGuard,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true
+    // },
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
