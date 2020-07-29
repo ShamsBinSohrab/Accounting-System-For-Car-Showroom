@@ -50,10 +50,15 @@ export class AddCarComponent implements OnInit {
 
   toUpperCase_make(data: any)
   {
-    console.log(data);
-    // this.CarForm.patchValue({
-    //   make: data.
-    // });
+    this.CarForm.patchValue({
+      make: data.toUpperCase()
+    });
+  }
+  toUpperCase_type(data: any)
+  {
+    this.CarForm.patchValue({
+      type: data.toUpperCase()
+    });
   }
 
 }

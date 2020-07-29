@@ -20,7 +20,7 @@
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="make">Make</label>
                       <div class="col-md-8">
-                        <input type="text" id="make" name="make" class="form-control " placeholder="Ex: Toyota" formControlName="make" (keyup)="toUpperCase_make($event)">
+                        <input type="text" id="make" name="make" class="form-control " placeholder="Ex: Toyota" formControlName="make" (keyup)="toUpperCase_make($event.target.value)">
                         <!-- <span class="help-block">Please enter no of transaction</span> -->
                       </div>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="type">Type</label>
                       <div class="col-md-8">
-                        <input type="text" id="type" name="type" class="form-control" placeholder="Ex: SEDAN" formControlName="type">
+                        <input type="text" id="type" name="type" class="form-control" placeholder="Ex: SEDAN" formControlName="type" (keyup)="toUpperCase_type($event.target.value)">
                       </div>
                     </div>
 
