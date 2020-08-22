@@ -1,6 +1,5 @@
 package com.apiservice.entity.car;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

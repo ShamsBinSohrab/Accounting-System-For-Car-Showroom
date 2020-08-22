@@ -2,8 +2,6 @@ package com.apiservice.model.purchase;
 
 import com.apiservice.entity.purchase.PurchaseRecord;
 import com.apiservice.enums.purchase.PurchaseType;
-import com.apiservice.model.car.CarModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.ZonedDateTime;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
