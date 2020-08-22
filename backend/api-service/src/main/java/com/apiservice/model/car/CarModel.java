@@ -30,4 +30,11 @@ public class CarModel {
   public void updateEntity(Car car) {
     mapper.map(this, car, "UpdateEntity");
   }
+
+  public static Car newDraftCar(String chassisNo) {
+    Car car = new Car();
+    car.setChassisNo(chassisNo);
+    car.setDraft(true);
+    return car;
+  }
 }

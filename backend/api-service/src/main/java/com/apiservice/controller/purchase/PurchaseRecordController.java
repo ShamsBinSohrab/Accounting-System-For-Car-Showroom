@@ -2,6 +2,7 @@ package com.apiservice.controller.purchase;
 
 import com.apiservice.entity.car.Car;
 import com.apiservice.entity.purchase.PurchaseRecord;
+import com.apiservice.model.car.CarModel;
 import com.apiservice.model.purchase.PurchaseRecordCharge;
 import com.apiservice.model.purchase.PurchaseRecordModel;
 import com.apiservice.service.car.CarService;
@@ -47,7 +48,8 @@ public class PurchaseRecordController {
   @PostMapping("/purchaseRecords")
   @ResponseStatus(HttpStatus.CREATED)
   public PurchaseRecordModel create(@RequestBody @Valid PurchaseRecordModel model) {
-    Car car = carService.getByChassisNoOrNew(model.getChassisNo());
+    Car car = carService.getByChassisNo(model.getChassisNo())
+        .orElseGet(() -> CarModel.newDraftCar(model.getChassisNo()));
     PurchaseRecord purchaseRecord = model.toEntity();
     purchaseRecord.setCar(car);
     return PurchaseRecordModel.toModel(purchaseRecordService.save(purchaseRecord));

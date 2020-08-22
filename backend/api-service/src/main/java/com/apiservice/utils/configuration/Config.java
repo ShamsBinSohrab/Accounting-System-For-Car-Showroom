@@ -5,6 +5,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 class Config {
@@ -13,5 +15,10 @@ class Config {
   @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
   public ModelMapper modelMapper() {
     return new ModelMapper();
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 }
