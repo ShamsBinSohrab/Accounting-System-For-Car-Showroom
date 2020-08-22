@@ -30,3 +30,12 @@ databaseChangeLog:
                   type: varchar(20)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 2
+      author: shams
+      comment: Adding constraint unique username
+      changes:
+        - addUniqueConstraint:
+            schemaName:  public
+            tableName:  operator
+            columnNames:  username
