@@ -58,9 +58,10 @@ secrets.yml
 /api-service/mvnw.cmd
 /webapp/.vscode/
 /webapp/e2e/
-/backend/migration-service/HELP.md
+/backend/migration-service/HELP.mdk
 /backend/migration-service/mvnw
 /backend/migration-service/mvnw.cmd
 /backend/api-service/HELP.md
 /backend/api-service/mvnw
 /backend/api-service/mvnw.cmd
+/webapp/node_modules/
