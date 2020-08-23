@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: shams
+      comment: Adding table operator
+      changes:
+        - createTable:
+            schemaName: public
+            tableName: operator
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_operator
+              - column:
+                  name: username
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: shams
+      comment: Adding constraint unique username
+      changes:
+        - addUniqueConstraint:
+            schemaName:  public
+            tableName:  operator
+            columnNames:  username

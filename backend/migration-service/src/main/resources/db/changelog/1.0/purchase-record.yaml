@@ -2,6 +2,50 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
+      comment: Adding new table purchase_record_details
+      changes:
+        - createTable:
+            tableName: purchase_record_details
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_purchase_record_details
+              - column:
+                  name: base_price
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: lc_charge
+                  type: numeric(10, 2)
+              - column:
+                  name: shipping_charge
+                  type: numeric(10, 2)
+              - column:
+                  name: tax
+                  type: numeric(10, 2)
+              - column:
+                  name: ait
+                  type: numeric(10, 2)
+              - column:
+                  name: cnf_charge
+                  type: numeric(10, 2)
+              - column:
+                  name: transportation_charge
+                  type: numeric(10, 2)
+              - column:
+                  name: garage_charge
+                  type: numeric(10, 2)
+              - column:
+                  name: miscellaneous_charge
+                  type: numeric(10, 2)
+  - changeSet:
+      id: 2
+      author: shams
       comment: Adding new table purchase_record
       changes:
         - createTable:
@@ -18,40 +62,32 @@ databaseChangeLog:
                   name: car_id
                   type: bigint
                   constraints:
+                    nullable: false
                     referencedTableName: car
                     referencedColumnNames: id
                     foreignKeyName: FK_car_id__car_id
+              - column:
+                  name: purchase_record_details_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: purchase_record_details
+                    referencedColumnNames: id
+                    foreignKeyName: FK_purchase_record_details_id__purchase_record_details_id
               - column:
                   name: purchase_type
                   type: varchar(16)
                   constraints:
                     nulllable: false
               - column:
-                  name: base_price
-                  type: numeric
+                  name: purchase_date
+                  type: timestamp
                   constraints:
-                    nulllable: false
-              - column:
-                  name: lc_charge
-                  type: numeric
-              - column:
-                  name: shipping_charge
-                  type: numeric
-              - column:
-                  name: tax
-                  type: numeric
-              - column:
-                  name: ait
-                  type: numeric
-              - column:
-                  name: cnf_charge
-                  type: numeric
-              - column:
-                  name: transportation_charge
-                  type: numeric
-              - column:
-                  name: garage_charge
-                  type: numeric
-              - column:
-                  name: miscellaneous_charge
-                  type: numeric
+                    nullable: false
+  - changeSet:
+      id: 3
+      author: shams
+      comment: Car id unique for purchase_record
+      changes:
+        - addUniqueConstraint:
+            tableName: purchase_record
+            columnNames: car_id

@@ -1,6 +1,7 @@
-package com.apiservice.car;
+package com.apiservice.entity.car;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.apiservice.enums.car.CarMake;
+import com.apiservice.enums.car.CarType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,22 +15,23 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "car")
-public class Car {
+@Table(name = "car_details")
+public class CarDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
 
+  @Enumerated(value = EnumType.STRING)
   @Column(name = "make", nullable = false)
-  private String make;
+  private CarMake make;
 
   @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "type", nullable = false)
   @Enumerated(value = EnumType.STRING)
+  @Column(name = "type", nullable = false)
   private CarType type;
 
   @Digits(integer = 4, fraction = 0)
@@ -38,11 +40,4 @@ public class Car {
 
   @Column(name = "color", nullable = false)
   private String color;
-
-  @Column(name = "chassis_no", nullable = false, unique = true)
-  private String chassisNo;
-
-  @JsonIgnore
-  @Column(name = "deleted", nullable = false)
-  private boolean deleted;
 }

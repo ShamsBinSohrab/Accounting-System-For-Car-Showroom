@@ -1,5 +1,6 @@
-package com.apiservice.utils.common;
+package com.apiservice.utils;
 
+import com.apiservice.utils.exceptions.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+  @ExceptionHandler(EntityNotFoundException.class)
+  protected ResponseEntity<Object> handleEntityNotFoundException(
+      RuntimeException ex, WebRequest request) {
+    return handleExceptionInternal(ex, ex.getMessage(),
+        new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+  }
 
   @ExceptionHandler(IllegalArgumentException.class)
   protected ResponseEntity<Object> handleIllegalArgumentException(
