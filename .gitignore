@@ -54,7 +54,7 @@ secrets.yml
 /migration-service/mvnw
 /migration-service/mvnw.cmd
 /api-service/HELP.md
-/api-service/mvnw
+/api-service/mvnwK
 /api-service/mvnw.cmd
 /webapp/.vscode/
 /webapp/e2e/
