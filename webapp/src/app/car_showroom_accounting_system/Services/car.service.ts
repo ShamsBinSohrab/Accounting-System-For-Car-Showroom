@@ -11,7 +11,15 @@ export class CarService {
 
   public addCar(data: any)
   {
-    console.log(data);
     return this.http.post<any>(Common.baseUrl + '/cars', data);
+  }
+  public getCar()
+  {
+    return this.http.get<any>(Common.baseUrl + '/cars');
+  }
+  public deleteCar(data: any)
+  {
+    console.log(data);
+    return this.http.delete<any>(Common.baseUrl + '/deletecCars', data);
   }
 }
