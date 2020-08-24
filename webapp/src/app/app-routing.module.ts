@@ -1,34 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './IBanking/views/Home/home.component';
-import { LoginComponent } from './IBanking/views/Login/login.component';
-import { SignupComponent } from './IBanking/views/signup/signup.component';
-import { AuthGuard } from './IBanking/Helpers/auth.guard';
-import { DefaultLayoutComponent } from './IBanking/containers';
-import { P404Component } from './IBanking/views/error/404.component';
-import { P500Component } from './IBanking/views/error/500.component';
-import { ChangePasswordComponent } from './IBanking/views/change-password/change-password.component';
-import { DashboardComponent } from './IBanking/views/dashboard/dashboard.component';
-import { AccountStatementComponent } from './IBanking/views/account-statement/account-statement.component';
-import { ContactComponent } from './IBanking/views/contact/contact.component';
-
-
-// const routes: Routes = [
-//   {
-//     path:"",
-//     component: HomeComponent,
-//     canActivate:[AuthGuard]
-//   },
-//   {
-//     path:"login",
-//     component: LoginComponent
-//   },
-//   {
-//     path:"signup",
-//     component: SignupComponent
-//   }
-// ];
-
+import { HomeComponent } from './car_showroom_accounting_system/views/Home/home.component';
+import { LoginComponent } from './car_showroom_accounting_system/views/Login/login.component';
+import { SignupComponent } from './car_showroom_accounting_system/views/signup/signup.component';
+import { AuthGuard } from './car_showroom_accounting_system/Helpers/auth.guard';
+import { DefaultLayoutComponent } from './car_showroom_accounting_system/containers';
+import { P404Component } from './car_showroom_accounting_system/views/error/404.component';
+import { P500Component } from './car_showroom_accounting_system/views/error/500.component';
+import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
+import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
+import { AccountStatementComponent } from './car_showroom_accounting_system/views/account-statement/account-statement.component';
+import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
+import { CarListComponent } from './car_showroom_accounting_system/views/car/car-list/car-list.component';
 
 const routes: Routes = [
   {
@@ -67,7 +50,7 @@ const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    canActivate:[AuthGuard],
+    // canActivate:[AuthGuard],
     data: {
       title: 'Home'
     },
@@ -77,9 +60,20 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
+        path: 'car',
+        loadChildren: () => import('./car_showroom_accounting_system/views/car/car.module').then(m => m.CarModule)
+      },
+
+
+
+
+
+
+      {
         path: 'change-password',
         component: ChangePasswordComponent
-        //loadChildren: () => import('./IBanking/views/change-password/change-password.module').then(m => m.ChangePasswordModule)
+        // tslint:disable-next-line:max-line-length
+        // loadChildren: () => import('./car_showroom_accounting_system/views/change-password/change-password.module').then(m => m.ChangePasswordModule)
       },
       {
         path: 'dashboard',
@@ -95,27 +89,30 @@ const routes: Routes = [
       },
       {
         path: 'transfer',
-        loadChildren: () => import('./IBanking/views/transfer/transfer.module').then(e => e.TransferModule),
+        loadChildren: () => import('./car_showroom_accounting_system/views/transfer/transfer.module').then(e => e.TransferModule),
       },
       {
         path: 'customer-position',
-        loadChildren: () => import('./IBanking/views/customer-position/customerposition.module').then(e => e.CustomerpositionModule),
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./car_showroom_accounting_system/views/customer-position/customerposition.module').then(e => e.CustomerpositionModule),
       },
       {
         path: 'bill-payment',
-        loadChildren: () => import('./IBanking/views/bill-payment/bill-payment.module').then(e => e.BillPaymentModule),
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./car_showroom_accounting_system/views/bill-payment/bill-payment.module').then(e => e.BillPaymentModule),
       },
       {
         path: 'contact',
         component: ContactComponent,
         data:
         {
-          title:'Contact' 
+          title: 'Contact'
         }
       },
       {
         path: 'terms',
-        loadChildren: () => import('./IBanking/views/Terms&Condition/terms-condition.module').then(e => e.TermsConditionModule),
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./car_showroom_accounting_system/views/Terms&Condition/terms-condition.module').then(e => e.TermsConditionModule),
       },
 
 
@@ -152,7 +149,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
       }
     ]
-  },  
+  },
   { path: '**', component: P404Component }
 ];
 
