@@ -29,7 +29,6 @@ public class CarController {
 
   @GetMapping("/cars")
   public List<CarModel> cars() {
-
     return carService.getAllCars().stream()
         .map(CarModel::toModel)
         .collect(Collectors.toUnmodifiableList());
