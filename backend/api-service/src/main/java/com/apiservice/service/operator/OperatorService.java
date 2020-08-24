@@ -1,8 +1,12 @@
 package com.apiservice.service.operator;
 
+import com.apiservice.entity.car.Car;
+import com.apiservice.utils.exceptions.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import com.apiservice.entity.operator.Operator;
 import com.apiservice.repository.operator.OperatorRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +25,27 @@ public class OperatorService {
             () -> new UsernameNotFoundException("User not found with username: " + username));
   }
 
+  @Transactional(readOnly = true)
+  public List<Operator> getAllOperators() {
+    return operatorRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public Operator getOperatorById(long id) {
+    return operatorRepository.findById(id)
+            .orElseThrow(() -> EntityNotFoundException.of(Operator.class, id));
+  }
+
+  @Transactional
+  public void delete(long id) {
+    Operator operator = operatorRepository.findById(id)
+            .orElseThrow(() -> EntityNotFoundException.of(Operator.class, id));
+    operatorRepository.delete(operator);
+  }
+
   @Transactional
   public Operator save(Operator user) {
     return operatorRepository.save(user);
   }
+
 }
