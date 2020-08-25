@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: shams
+      comment: Adding new table sell_record
+      changes:
+        - createTable:
+            tableName: sell_record
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_sell_record
+              - column:
+                  name: sell_type
+                  type: varchar(16)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: sell_date
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paid_as_advance
+                  type: numeric(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paid_on_delivery
+                  type: numeric(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paid_after_delivery
+                  type: numeric(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: purchase_letter_no
+                  type: varchar(200)
+  - changeSet:
+      id: 2
+      author: shams
+      comment: Adding new table car_sell_record
+      changes:
+        - createTable:
+            tableName: car_sell_record
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_car_sell_record
+              - column:
+                  name: car_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    referencedTableName: car
+                    referencedColumnNames: id
+                    foreignKeyName: FK_car_id__car_id
+              - column:
+                  name: sell_record_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    referencedTableName: sell_record
+                    referencedColumnNames: id
+                    foreignKeyName: FK_sell_record_id__sell_record_id
