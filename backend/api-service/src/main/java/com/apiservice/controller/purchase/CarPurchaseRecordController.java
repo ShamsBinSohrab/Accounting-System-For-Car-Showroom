@@ -6,13 +6,14 @@ import com.apiservice.model.car.CarModel;
 import com.apiservice.model.purchase.PurchaseRecordCar;
 import com.apiservice.model.purchase.PurchaseRecordModel;
 import com.apiservice.service.car.CarService;
-import com.apiservice.service.purchase.PurchaseRecordService;
+import com.apiservice.service.purchase.CarPurchaseRecordService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,21 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-public class PurchaseRecordController {
+public class CarPurchaseRecordController {
 
-  private final PurchaseRecordService purchaseRecordService;
+  private final CarPurchaseRecordService carPurchaseRecordService;
   private final CarService carService;
 
   @GetMapping("/purchaseRecords")
   public List<PurchaseRecordModel> purchaseRecords() {
-    return purchaseRecordService.getAll().stream()
+    return carPurchaseRecordService.getAll().stream()
         .map(PurchaseRecordModel::toModel)
         .collect(Collectors.toUnmodifiableList());
   }
 
   @GetMapping("/purchaseRecords/{id}")
   public PurchaseRecordModel purchaseRecord(@PathVariable("id") long id) {
-    final CarPurchaseRecord purchaseRecord = purchaseRecordService.getById(id);
+    final CarPurchaseRecord purchaseRecord = carPurchaseRecordService.getById(id);
     return PurchaseRecordModel.toModel(purchaseRecord);
   }
 
@@ -53,7 +54,7 @@ public class PurchaseRecordController {
         ? CarModel.newDraftCar(model.getCarChassisNo())
         : carService.getByChassisNo(model.getCarChassisNo());
     purchaseRecord.setCar(car);
-    purchaseRecordService.save(purchaseRecord);
+    carPurchaseRecordService.save(purchaseRecord);
     return PurchaseRecordModel.toModel(purchaseRecord);
   }
 //
@@ -66,16 +67,9 @@ public class PurchaseRecordController {
 //    return PurchaseRecordModel.toModel(purchaseRecord);
 //  }
 //
-//  @DeleteMapping("/purchaseRecords/{id}")
-//  @ResponseStatus(HttpStatus.NO_CONTENT)
-//  public void delete(@PathVariable("id") long id) {
-//    purchaseRecordService.delete(id);
-//  }
-//
-//  @PatchMapping("/purchaseRecords/{id}")
-//  public PurchaseRecord addCharge(
-//      @PathVariable("id") long id,
-//      @RequestBody @Valid PurchaseRecordCharge charge) {
-//    return purchaseRecordService.addCharge(id, charge);
-//  }
+  @DeleteMapping("/purchaseRecords/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable("id") long id) {
+    carPurchaseRecordService.delete(id);
+  }
 }

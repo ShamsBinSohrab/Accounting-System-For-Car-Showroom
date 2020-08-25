@@ -3,7 +3,6 @@ package com.apiservice.service.purchase;
 import com.apiservice.entity.purchase.CarPurchaseRecord;
 import com.apiservice.entity.purchase.PurchaseRecord;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
-import com.apiservice.repository.purchase.PurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PurchaseRecordService {
+public class CarPurchaseRecordService {
 
-  private final PurchaseRecordRepository purchaseRecordRepository;
   private final CarPurchaseRecordRepository carPurchaseRecordRepository;
 
   @Transactional(readOnly = true)
@@ -31,5 +29,10 @@ public class PurchaseRecordService {
   @Transactional
   public void save(CarPurchaseRecord carPurchaseRecord) {
     carPurchaseRecordRepository.save(carPurchaseRecord);
+  }
+
+  @Transactional
+  public void delete(long id) {
+    carPurchaseRecordRepository.deleteById(id);
   }
 }
