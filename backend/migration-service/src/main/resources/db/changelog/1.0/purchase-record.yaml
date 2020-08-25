@@ -2,10 +2,10 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
-      comment: Adding new table purchase_record_details
+      comment: Adding new table purchase_record
       changes:
         - createTable:
-            tableName: purchase_record_details
+            tableName: purchase_record
             columns:
               - column:
                   name: id
@@ -13,7 +13,17 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: pk_purchase_record_details
+                    primaryKeyName: pk_purchase_record
+              - column:
+                  name: purchase_type
+                  type: varchar(16)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: purchase_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
               - column:
                   name: base_price
                   type: numeric(10, 2)
@@ -46,10 +56,10 @@ databaseChangeLog:
   - changeSet:
       id: 2
       author: shams
-      comment: Adding new table purchase_record
+      comment: Adding new table car_purchase_record
       changes:
         - createTable:
-            tableName: purchase_record
+            tableName: car_purchase_record
             columns:
               - column:
                   name: id
@@ -57,37 +67,20 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: pk_purchase_record
+                    primaryKeyName: pk_car_purchase_record
               - column:
                   name: car_id
-                  type: bigint
+                  type: int
                   constraints:
                     nullable: false
                     referencedTableName: car
                     referencedColumnNames: id
                     foreignKeyName: FK_car_id__car_id
               - column:
-                  name: purchase_record_details_id
-                  type: bigint
-                  constraints:
-                    referencedTableName: purchase_record_details
-                    referencedColumnNames: id
-                    foreignKeyName: FK_purchase_record_details_id__purchase_record_details_id
-              - column:
-                  name: purchase_type
-                  type: varchar(16)
-                  constraints:
-                    nulllable: false
-              - column:
-                  name: purchase_date
-                  type: timestamp
+                  name: purchase_record_id
+                  type: int
                   constraints:
                     nullable: false
-  - changeSet:
-      id: 3
-      author: shams
-      comment: Car id unique for purchase_record
-      changes:
-        - addUniqueConstraint:
-            tableName: purchase_record
-            columnNames: car_id
+                    referencedTableName: purchase_record
+                    referencedColumnNames: id
+                    foreignKeyName: FK_purchase_record_id__purchase_record_id
