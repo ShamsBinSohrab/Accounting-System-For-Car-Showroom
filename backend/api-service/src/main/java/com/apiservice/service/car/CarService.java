@@ -42,7 +42,8 @@ public class CarService {
   }
 
   @Transactional
-  public Optional<Car> getByChassisNo(String chassisNo) {
-    return carRepository.findByChassisNo(chassisNo);
+  public Car getByChassisNo(String chassisNo) {
+    return carRepository.findByChassisNo(chassisNo)
+        .orElseThrow(); //TODO throw entity not found exception.
   }
 }

@@ -100,3 +100,23 @@ databaseChangeLog:
                     referencedTableName: purchase_record
                     referencedColumnNames: id
                     foreignKeyName: FK_purchase_record_id__purchase_record_id
+  - changeSet:
+      id: 3
+      author: shams
+      comment: Make car_id of car_purchase_record unique
+      changes:
+        - addUniqueConstraint:
+            tableName: car_purchase_record
+            columnNames: car_id
+            constraintName: UQ_car_purchase_record__car_id
+            validate: true
+  - changeSet:
+      id: 4
+      author: shams
+      comment: Make purchase_record_id of car_purchase_record unique
+      changes:
+        - addUniqueConstraint:
+            tableName: car_purchase_record
+            columnNames: purchase_record_id
+            constraintName: UQ_car_purchase_record__purchase_record_id
+            validate: true

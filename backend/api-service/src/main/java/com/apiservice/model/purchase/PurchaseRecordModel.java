@@ -1,7 +1,9 @@
 package com.apiservice.model.purchase;
 
-import com.apiservice.entity.purchase.PurchaseRecord;
+import com.apiservice.entity.purchase.CarPurchaseRecord;
 import com.apiservice.enums.purchase.PurchaseType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,28 +16,50 @@ public class PurchaseRecordModel {
   private static final ModelMapper mapper = new ModelMapper();
 
   static {
-    mapper.createTypeMap(PurchaseRecordModel.class, PurchaseRecord.class, "UpdateEntity")
-        .addMappings(m -> m.skip(PurchaseRecord::setId));
+    mapper.createTypeMap(PurchaseRecordModel.class, CarPurchaseRecord.class)
+        .addMappings(m -> m.skip(CarPurchaseRecord::setCar));
   }
 
-  private long id;
-  private ZonedDateTime purchaseDate = ZonedDateTime.now();
+  private Long id;
+
+  @JsonProperty("chassisNo")
+  private String carChassisNo;
 
   @Enumerated(EnumType.STRING)
   private PurchaseType purchaseType;
-  private String chassisNo;
-  private PurchaseRecordDetailsModel details;
 
-  public static PurchaseRecordModel toModel(PurchaseRecord purchaseRecord) {
-    return mapper.map(purchaseRecord, PurchaseRecordModel.class);
+  private ZonedDateTime purchaseDate;
+
+  @JsonProperty("basePrice")
+  private BigDecimal purchaseRecordBasePrice;
+
+  @JsonProperty("lcCharge")
+  private BigDecimal purchaseRecordLcCharge;
+
+  @JsonProperty("shippingCharge")
+  private BigDecimal purchaseRecordShippingCharge;
+
+  @JsonProperty("tax")
+  private BigDecimal purchaseRecordTax;
+
+  @JsonProperty("cnfCharge")
+  private BigDecimal purchaseRecordCnfCharge;
+
+  @JsonProperty("transportationCharge")
+  private BigDecimal purchaseRecordTransportationCharge;
+
+  @JsonProperty("garageCharge")
+  private BigDecimal purchaseRecordGarageCharge;
+
+  @JsonProperty("miscellaneousCharge")
+  private BigDecimal purchaseRecordMiscellaneousCharge;
+
+
+  public static PurchaseRecordModel toModel(CarPurchaseRecord carPurchaseRecord) {
+    return mapper.map(carPurchaseRecord, PurchaseRecordModel.class);
   }
 
-  public PurchaseRecord toEntity() {
-    return mapper.map(this, PurchaseRecord.class);
+  public CarPurchaseRecord toEntity() {
+    return mapper.map(this, CarPurchaseRecord.class);
   }
-
-  public void updateEntity(PurchaseRecord purchaseRecord) {
-    mapper.map(this, purchaseRecord, "UpdateEntity");
-  }
-
 }

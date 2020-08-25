@@ -73,3 +73,23 @@ databaseChangeLog:
                     referencedTableName: sell_record
                     referencedColumnNames: id
                     foreignKeyName: FK_sell_record_id__sell_record_id
+  - changeSet:
+      id: 3
+      author: shams
+      comment: Make car_id of car_sell_record unique
+      changes:
+        - addUniqueConstraint:
+            tableName: car_sell_record
+            columnNames: car_id
+            constraintName: UQ_car_car_sell_record__car_id
+            validate: true
+  - changeSet:
+      id: 4
+      author: shams
+      comment: Make sell_record_id of car_sell_record unique
+      changes:
+        - addUniqueConstraint:
+            tableName: car_sell_record
+            columnNames: sell_record_id
+            constraintName: UQ_car_sell_record__sell_record_id
+            validate: true
