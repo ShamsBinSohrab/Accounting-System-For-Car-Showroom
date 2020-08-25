@@ -2,7 +2,6 @@ package com.apiservice.controller.purchase;
 
 import com.apiservice.entity.purchase.CarPurchaseRecord;
 import com.apiservice.model.purchase.CarPurchaseRecordModel;
-import com.apiservice.service.car.CarService;
 import com.apiservice.service.purchase.CarPurchaseRecordService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,17 +45,19 @@ public class CarPurchaseRecordController {
   public CarPurchaseRecordModel create(
       @RequestBody @Valid CarPurchaseRecordModel model) {
     CarPurchaseRecord purchaseRecord = model.toEntity();
-    carPurchaseRecordService.save(purchaseRecord);
+    carPurchaseRecordService.save(purchaseRecord, model.getCarChassisNo());
     return CarPurchaseRecordModel.toModel(purchaseRecord);
   }
 
   @PutMapping("/purchaseRecords/{id}")
   public CarPurchaseRecordModel update(@PathVariable("id") long id,
       @RequestBody @Valid CarPurchaseRecordModel model) {
-    CarPurchaseRecord purchaseRecord = carPurchaseRecordService.getById(id);
-    model.updateEntity(purchaseRecord);
-    carPurchaseRecordService.save(purchaseRecord);
-    return CarPurchaseRecordModel.toModel(purchaseRecord);
+//    CarPurchaseRecord purchaseRecord = carPurchaseRecordService.getById(id);
+//    model.updateEntity(purchaseRecord);
+//    carPurchaseRecordService.save(purchaseRecord, model.getCarChassisNo());
+//    return CarPurchaseRecordModel.toModel(purchaseRecord);
+    //TODO fix purchase record update
+    return model;
   }
 
   @DeleteMapping("/purchaseRecords/{id}")
