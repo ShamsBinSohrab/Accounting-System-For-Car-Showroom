@@ -11,12 +11,12 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 
 @Data
-public class PurchaseRecordModel {
+public class CarPurchaseRecordModel {
 
   private static final ModelMapper mapper = new ModelMapper();
 
   static {
-    mapper.createTypeMap(PurchaseRecordModel.class, CarPurchaseRecord.class)
+    mapper.createTypeMap(CarPurchaseRecordModel.class, CarPurchaseRecord.class)
         .addMappings(m -> m.skip(CarPurchaseRecord::setCar));
   }
 
@@ -55,8 +55,8 @@ public class PurchaseRecordModel {
   private BigDecimal purchaseRecordMiscellaneousCharge;
 
 
-  public static PurchaseRecordModel toModel(CarPurchaseRecord carPurchaseRecord) {
-    return mapper.map(carPurchaseRecord, PurchaseRecordModel.class);
+  public static CarPurchaseRecordModel toModel(CarPurchaseRecord carPurchaseRecord) {
+    return mapper.map(carPurchaseRecord, CarPurchaseRecordModel.class);
   }
 
   public CarPurchaseRecord toEntity() {
