@@ -13,10 +13,10 @@ public class OperatorModel {
 
   private static final ModelMapper mapper = new ModelMapper();
 
-//  static {
-//    mapper.createTypeMap(OperatorModel.class, Operator.class, "UpdateEntity")
-//            .addMappings(mapper -> mapper.skip(Operator::setId));
-//  }
+  static {
+    mapper.createTypeMap(OperatorModel.class, Operator.class, "UpdateEntity")
+            .addMappings(mapper -> mapper.skip(Operator::setId));
+  }
   private String username;
   private String password;
   private OperatorRole role;
