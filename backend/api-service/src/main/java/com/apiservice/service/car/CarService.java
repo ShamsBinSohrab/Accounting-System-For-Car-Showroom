@@ -3,6 +3,7 @@ package com.apiservice.service.car;
 import com.apiservice.entity.car.Car;
 import com.apiservice.repository.car.CarRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
+import java.beans.Transient;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class CarService {
    */
   @Transactional
   public void delete(long id) {
+    //TODO delete car purchase record
     Car car = carRepository.findById(id)
         .orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
     carRepository.delete(car);

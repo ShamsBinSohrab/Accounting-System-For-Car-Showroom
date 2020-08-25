@@ -1,7 +1,9 @@
 package com.apiservice.service.purchase;
 
+import com.apiservice.entity.car.Car;
 import com.apiservice.entity.purchase.CarPurchaseRecord;
 import com.apiservice.entity.purchase.PurchaseRecord;
+import com.apiservice.repository.car.CarRepository;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CarPurchaseRecordService {
 
   private final CarPurchaseRecordRepository carPurchaseRecordRepository;
+  private final CarRepository carRepository;
 
   @Transactional(readOnly = true)
   public List<CarPurchaseRecord> getAll() {
@@ -28,6 +31,9 @@ public class CarPurchaseRecordService {
 
   @Transactional
   public void save(CarPurchaseRecord carPurchaseRecord) {
+    Car car = carRepository.findByChassisNo(carPurchaseRecord.getCar().getChassisNo())
+        .orElseThrow();
+    carPurchaseRecord.setCar(car);
     carPurchaseRecordRepository.save(carPurchaseRecord);
   }
 
