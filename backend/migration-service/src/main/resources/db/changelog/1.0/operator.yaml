@@ -39,3 +39,11 @@ databaseChangeLog:
             schemaName:  public
             tableName:  operator
             columnNames:  username
+  - changeSet:
+      id: 3
+      author: shams
+      comment: Adding login informations for admin operator
+      changes:
+        - sql:
+            sql: INSERT INTO operator (username, password, role) VALUES ('super-admin', '$2a$10$fhYEHaIqx9x4kCcF6jkQYugrcCRTQr8uKgCzddtTEQ5qb5mZl0fQG', 'ADMIN');
+            rollback: DELETE FROM operator where username = 'super-admin';

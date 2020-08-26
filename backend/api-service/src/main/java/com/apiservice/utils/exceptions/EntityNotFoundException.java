@@ -18,5 +18,9 @@ public class EntityNotFoundException extends RuntimeException {
         MessageFormat.format("No {0} found with id {1}", clazz.getSimpleName(), id));
   }
 
+  public static EntityNotFoundException of(Class<?> clazz, String message) {
+    return new EntityNotFoundException(message);
+  }
+
 
 }
