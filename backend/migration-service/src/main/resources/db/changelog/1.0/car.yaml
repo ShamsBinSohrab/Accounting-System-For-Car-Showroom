@@ -2,6 +2,45 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
+      changes:
+        - createTable:
+            comment: Adding new table car
+            tableName: car
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_car
+              - column:
+                  name: chassis_no
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: draft
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: car_details_id
+                  type: bigint
+        - sql:
+            comment: Check constraint for draft car
+            sql: >-
+              ALTER TABLE development.car ADD CONSTRAINT car_draft_check CHECK
+              (
+                (draft = true and car_details_id is NULL)
+              OR
+                (draft = false and car_details_id is NOT NULL)
+              );
+            rollback: ALTER TABLE car DROP CONSTRAINT car_draft_check;
+  - changeSet:
+      id: 2
+      author: shams
       comment: Adding new table car_details
       changes:
         - createTable:
@@ -39,36 +78,10 @@ databaseChangeLog:
                   type: varchar(10)
                   constraints:
                     nullable: false
-  - changeSet:
-      id: 2
-      author: shams
-      comment: Adding new table car
-      changes:
-        - createTable:
-            tableName: car
-            columns:
-              - column:
-                  name: id
-                  type: bigserial
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: pk_car
-              - column:
-                  name: chassis_no
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-                    unique: true
-              - column:
-                  name: draft
-                  type: boolean
-                  constraints:
-                    nullable: false
-              - column:
-                  name: car_details_id
-                  type: bigint
-                  constraints:
-                    referencedTableName: car_details
-                    referencedColumnNames: id
-                    foreignKeyName: FK_car_details_id__car_details_id
+        - addForeignKeyConstraint:
+            baseTableName: car
+            baseColumnNames: car_details_id
+            referencedTableName: car_details
+            referencedColumnNames: id
+            validate: true
+            constraintName: FK_car_details_id__car_details_id

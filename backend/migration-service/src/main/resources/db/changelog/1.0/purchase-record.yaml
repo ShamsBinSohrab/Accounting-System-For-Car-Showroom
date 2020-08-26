@@ -2,50 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: shams
-      comment: Adding new table purchase_record_details
-      changes:
-        - createTable:
-            tableName: purchase_record_details
-            columns:
-              - column:
-                  name: id
-                  type: bigserial
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: pk_purchase_record_details
-              - column:
-                  name: base_price
-                  type: numeric(10, 2)
-                  constraints:
-                    nulllable: false
-              - column:
-                  name: lc_charge
-                  type: numeric(10, 2)
-              - column:
-                  name: shipping_charge
-                  type: numeric(10, 2)
-              - column:
-                  name: tax
-                  type: numeric(10, 2)
-              - column:
-                  name: ait
-                  type: numeric(10, 2)
-              - column:
-                  name: cnf_charge
-                  type: numeric(10, 2)
-              - column:
-                  name: transportation_charge
-                  type: numeric(10, 2)
-              - column:
-                  name: garage_charge
-                  type: numeric(10, 2)
-              - column:
-                  name: miscellaneous_charge
-                  type: numeric(10, 2)
-  - changeSet:
-      id: 2
-      author: shams
       comment: Adding new table purchase_record
       changes:
         - createTable:
@@ -59,35 +15,108 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: pk_purchase_record
               - column:
-                  name: car_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-                    referencedTableName: car
-                    referencedColumnNames: id
-                    foreignKeyName: FK_car_id__car_id
-              - column:
-                  name: purchase_record_details_id
-                  type: bigint
-                  constraints:
-                    referencedTableName: purchase_record_details
-                    referencedColumnNames: id
-                    foreignKeyName: FK_purchase_record_details_id__purchase_record_details_id
-              - column:
                   name: purchase_type
                   type: varchar(16)
                   constraints:
                     nulllable: false
               - column:
                   name: purchase_date
-                  type: timestamp
+                  type: timestamptz
                   constraints:
                     nullable: false
+              - column:
+                  name: base_price
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: lc_charge
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: shipping_charge
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: tax
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: ait
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: cnf_charge
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: transportation_charge
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: garage_charge
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: miscellaneous_charge
+                  type: numeric(10, 2)
+                  constraints:
+                    nulllable: false
+  - changeSet:
+      id: 2
+      author: shams
+      comment: Adding new table car_purchase_record
+      changes:
+        - createTable:
+            tableName: car_purchase_record
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_car_purchase_record
+              - column:
+                  name: car_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    referencedTableName: car
+                    referencedColumnNames: id
+                    foreignKeyName: FK_car_id__car_id
+              - column:
+                  name: purchase_record_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    referencedTableName: purchase_record
+                    referencedColumnNames: id
+                    foreignKeyName: FK_purchase_record_id__purchase_record_id
   - changeSet:
       id: 3
       author: shams
-      comment: Car id unique for purchase_record
+      comment: Make car_id of car_purchase_record unique
       changes:
         - addUniqueConstraint:
-            tableName: purchase_record
+            tableName: car_purchase_record
             columnNames: car_id
+            constraintName: UQ_car_purchase_record__car_id
+            validate: true
+  - changeSet:
+      id: 4
+      author: shams
+      comment: Make purchase_record_id of car_purchase_record unique
+      changes:
+        - addUniqueConstraint:
+            tableName: car_purchase_record
+            columnNames: purchase_record_id
+            constraintName: UQ_car_purchase_record__purchase_record_id
+            validate: true
