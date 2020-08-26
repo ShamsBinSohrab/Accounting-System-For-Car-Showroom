@@ -37,12 +37,5 @@ public class JwtAuthenticationController {
     final String token = jwtTokenUtil.generateToken(userDetails);
     return JwtResponse.of(token);
   }
-
-  @PostMapping(value = "/register")
-  @ResponseStatus(HttpStatus.CREATED)
-  public void saveUser(@RequestBody OperatorModel operatorModel) {
-    final Operator operator = operatorModel.toUsers(passwordEncoder);
-    userDetailsService.save(operator);
-  }
 }
 
