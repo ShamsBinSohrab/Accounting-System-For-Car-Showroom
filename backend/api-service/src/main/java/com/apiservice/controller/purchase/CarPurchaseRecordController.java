@@ -1,7 +1,10 @@
 package com.apiservice.controller.purchase;
 
+import com.apiservice.entity.car.Car;
 import com.apiservice.entity.purchase.CarPurchaseRecord;
 import com.apiservice.model.purchase.CarPurchaseRecordModel;
+import com.apiservice.model.purchase.PurchaseRecordCar;
+import com.apiservice.service.car.CarService;
 import com.apiservice.service.purchase.CarPurchaseRecordService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarPurchaseRecordController {
 
   private final CarPurchaseRecordService carPurchaseRecordService;
+  private final CarService carService;
 
   @GetMapping("/purchaseRecords")
   public List<CarPurchaseRecordModel> purchaseRecords() {
@@ -43,21 +47,27 @@ public class CarPurchaseRecordController {
   @PostMapping("/purchaseRecords")
   @ResponseStatus(HttpStatus.CREATED)
   public CarPurchaseRecordModel create(
-      @RequestBody @Valid CarPurchaseRecordModel model) {
-    CarPurchaseRecord purchaseRecord = model.toEntity();
-    carPurchaseRecordService.save(purchaseRecord, model.getCarChassisNo());
+      @RequestBody @Valid CarPurchaseRecordModel model, PurchaseRecordCar purchaseRecordCar) {
+    final CarPurchaseRecord purchaseRecord = model.toEntity();
+    final Car car =
+        carService.getByChassisNoAndDraft(model.getCarChassisNo(), purchaseRecordCar.isDraftCar());
+    purchaseRecord.setCar(car);
+    carPurchaseRecordService.save(purchaseRecord);
     return CarPurchaseRecordModel.toModel(purchaseRecord);
   }
 
   @PutMapping("/purchaseRecords/{id}")
-  public CarPurchaseRecordModel update(@PathVariable("id") long id,
-      @RequestBody @Valid CarPurchaseRecordModel model) {
-//    CarPurchaseRecord purchaseRecord = carPurchaseRecordService.getById(id);
-//    model.updateEntity(purchaseRecord);
-//    carPurchaseRecordService.save(purchaseRecord, model.getCarChassisNo());
-//    return CarPurchaseRecordModel.toModel(purchaseRecord);
-    //TODO fix purchase record update
-    return model;
+  public CarPurchaseRecordModel update(
+      @PathVariable("id") long id,
+      @RequestBody @Valid CarPurchaseRecordModel model,
+      PurchaseRecordCar purchaseRecordCar) {
+    final CarPurchaseRecord purchaseRecordToUpdate = carPurchaseRecordService.getById(id);
+    final CarPurchaseRecord purchaseRecord = model.updateEntity(purchaseRecordToUpdate);
+    final Car car =
+        carService.getByChassisNoAndDraft(model.getCarChassisNo(), purchaseRecordCar.isDraftCar());
+    purchaseRecord.setCar(car);
+    carPurchaseRecordService.save(purchaseRecord);
+    return CarPurchaseRecordModel.toModel(purchaseRecord);
   }
 
   @DeleteMapping("/purchaseRecords/{id}")

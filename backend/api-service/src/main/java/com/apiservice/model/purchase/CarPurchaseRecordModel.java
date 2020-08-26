@@ -63,12 +63,11 @@ public class CarPurchaseRecordModel {
     return mapper.map(this, CarPurchaseRecord.class);
   }
 
-  public void updateEntity(CarPurchaseRecord carPurchaseRecord) {
-    long id = carPurchaseRecord.getId();
-    long purchaseRecordId = carPurchaseRecord.getPurchaseRecord().getId();
-    mapper.map(this, carPurchaseRecord);
-    carPurchaseRecord.setId(id);
-    carPurchaseRecord.getPurchaseRecord().setId(purchaseRecordId);
-    carPurchaseRecord.setCar(null);
+  public CarPurchaseRecord updateEntity(CarPurchaseRecord source) {
+    CarPurchaseRecord purchaseRecord =
+        mapper.map(this, CarPurchaseRecord.class);
+    purchaseRecord.setId(source.getId());
+    purchaseRecord.getPurchaseRecord().setId(source.getPurchaseRecord().getId());
+    return purchaseRecord;
   }
 }

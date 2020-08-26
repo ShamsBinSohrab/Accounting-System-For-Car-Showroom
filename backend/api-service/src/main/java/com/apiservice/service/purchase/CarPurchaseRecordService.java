@@ -30,10 +30,7 @@ public class CarPurchaseRecordService {
   }
 
   @Transactional
-  public void save(CarPurchaseRecord carPurchaseRecord, String chassisNo) {
-    Car car = carRepository.findByChassisNo(chassisNo)
-        .orElseThrow();
-    carPurchaseRecord.setCar(car);
+  public void save(CarPurchaseRecord carPurchaseRecord) {
     carPurchaseRecordRepository.save(carPurchaseRecord);
   }
 
