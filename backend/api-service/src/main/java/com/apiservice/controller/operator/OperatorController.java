@@ -1,12 +1,11 @@
 package com.apiservice.controller.operator;
 
-import com.apiservice.entity.car.Car;
 import com.apiservice.entity.operator.Operator;
-import com.apiservice.model.car.CarModel;
 import com.apiservice.service.operator.OperatorService;
 import com.apiservice.model.operator.OperatorModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,9 +19,11 @@ import java.util.stream.Collectors;
 public class OperatorController {
 
   private final OperatorService operatorService;
+  private final PasswordEncoder passwordEncoder;
 
   @GetMapping("/operators")
   public List<OperatorModel> operators() {
+    List<OperatorModel> p = operatorService.getAllOperators().stream().map(OperatorModel::toModel).collect(Collectors.toUnmodifiableList());
     return operatorService.getAllOperators().stream()
         .map(OperatorModel::toModel)
         .collect(Collectors.toUnmodifiableList());
@@ -30,14 +31,15 @@ public class OperatorController {
 
   @GetMapping("/operators/{id}")
   public OperatorModel Operator(@PathVariable long id) {
-    return OperatorModel.toModel(operatorService.getOperatorById(id));
+    Operator operator = operatorService.getOperatorById(id);
+    return OperatorModel.toModel(operator);
   }
 
   @PutMapping("/operators/{id}")
   public OperatorModel update(
           @RequestBody @Valid OperatorModel model, @PathVariable long id) {
     Operator operator = operatorService.getOperatorById(id);
-    model.updateEntity(operator);
+    model.updateEntity(operator,passwordEncoder);
     return OperatorModel.toModel(operatorService.save(operator));
   }
 
@@ -48,8 +50,9 @@ public class OperatorController {
 
   @PostMapping("/operators")
   @ResponseStatus(HttpStatus.CREATED)
-  public OperatorModel create(@RequestBody @Valid OperatorModel model) {
-    Operator operator = model.toEntity();
-    return OperatorModel.toModel(operatorService.save(operator));
+  public OperatorModel create(@RequestBody @Valid OperatorModel operatorModel) {
+    final Operator operator = operatorModel.toUsers(passwordEncoder);
+    operatorService.save(operator);
+    return OperatorModel.toModel(operator);
   }
 }
