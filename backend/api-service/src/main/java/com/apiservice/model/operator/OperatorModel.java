@@ -11,27 +11,27 @@ public class OperatorModel {
 
   private static final ModelMapper mapper = new ModelMapper();
 
-//  static {
-//    mapper.createTypeMap(OperatorModel.class, Operator.class, "UpdateEntity")
-//           .addMappings(mapper -> mapper.skip(Operator::setId));
-//  }
-
+  private long id;
   private String username;
   private String password;
   private OperatorRole role;
 
-  public Operator toUsers(PasswordEncoder passwordEncoder) {
-    Operator operator = mapper.map(this, Operator.class);
-    operator.setPassword(passwordEncoder.encode(this.getPassword()));
-    return operator;
-  }
   public static OperatorModel toModel(Operator operator) {
     return mapper.map(operator, OperatorModel.class);
   }
-  public void updateEntity(Operator operator,PasswordEncoder passwordEncoder) {
-    mapper.map(this, operator, "UpdateEntity");
-    operator.setPassword(passwordEncoder.encode(this.getPassword()));
+
+  public Operator toOperator() {
+    return mapper.map(this, Operator.class);
   }
+
+  public void updateEntity(Operator operator) {
+    final long id = operator.getId();
+    final String password = operator.getPassword();
+    mapper.map(this, operator);
+    operator.setId(id);
+    operator.setPassword(password);
+  }
+
   public Operator toEntity() {
     return mapper.map(this, Operator.class);
   }
