@@ -56,4 +56,8 @@ public class CarService {
                     EntityNotFoundException.of(
                         Car.class, "No Car found with chassis no: " + chassisNo));
   }
+  @Transactional(readOnly = true)
+  public Car getCarByChassisNo(String chassisNo) {
+    return carRepository.findByChassisNo(chassisNo).orElseThrow(() -> EntityNotFoundException.of(Car.class, "No Car found with chassis no: " + chassisNo));
+  }
 }
