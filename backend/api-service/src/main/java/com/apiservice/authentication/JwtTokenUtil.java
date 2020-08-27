@@ -23,7 +23,7 @@ public class JwtTokenUtil {
   @Value("${jwt.secret}")
   private String secret;
 
-  public String getUsernameFromToken(String token) {
+  public String getSubjectFromToken(String token) {
     return getClaimFromToken(token, Claims::getSubject);
   }
 
@@ -45,7 +45,7 @@ public class JwtTokenUtil {
     return expiration.before(new Date());
   }
 
-  public String generateToken(UserDetails userDetails) {
+  public String generateAuthToken(UserDetails userDetails) {
     final Map<String, Object> claims = new HashMap<>();
     final String authorities =
         userDetails.getAuthorities().stream()
@@ -55,7 +55,7 @@ public class JwtTokenUtil {
     return doGenerateToken(claims, userDetails.getUsername());
   }
 
-  public String generateToken(Company company) {
+  public String generateTenantToken(Company company) {
     final Map<String, Object> claims = new HashMap<>();
     return doGenerateToken(claims, company.getUuid().toString());
   }
@@ -70,9 +70,14 @@ public class JwtTokenUtil {
         .compact();
   }
 
-  public Boolean validateToken(String token, UserDetails userDetails) {
-    final String username = getUsernameFromToken(token);
+  public Boolean validateAuthToken(String token, UserDetails userDetails) {
+    final String username = getSubjectFromToken(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+  }
+
+  public Boolean validateTenantToken(String token, Company company) {
+    final String uuid = getSubjectFromToken(token);
+    return (uuid.equals(company.getUuid().toString()) && !isTokenExpired(token));
   }
 }
 

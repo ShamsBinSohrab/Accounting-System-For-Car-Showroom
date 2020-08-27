@@ -35,9 +35,8 @@ public class JwtAuthenticationController {
     authenticationManager.authenticate(authenticationToken);
     final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
     final Company company = userDetailsService.loadCompanyUuidByUsername(request.getUsername());
-    final String token = jwtTokenUtil.generateToken(userDetails);
-    final String tenantToken = jwtTokenUtil.generateToken(company);
-    return JwtResponse.of(token);
+    return JwtResponse.prepare(
+        userDetails, company, jwtTokenUtil::generateAuthToken, jwtTokenUtil::generateTenantToken);
   }
 }
 
