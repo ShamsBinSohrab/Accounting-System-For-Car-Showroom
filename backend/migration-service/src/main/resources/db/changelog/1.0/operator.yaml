@@ -47,3 +47,45 @@ databaseChangeLog:
         - sql:
             sql: INSERT INTO operator (username, password, role) VALUES ('super-admin', '$2a$10$fhYEHaIqx9x4kCcF6jkQYugrcCRTQr8uKgCzddtTEQ5qb5mZl0fQG', 'ADMIN');
             rollback: DELETE FROM operator where username = 'super-admin';
+  - changeSet:
+      id: 4
+      author: shams
+      comment: Adding company_id to operator
+      changes:
+        - addColumn:
+            schemaName: public
+            tableName: operator
+            columns:
+            - column:
+                name: company_id
+                type: int
+        - addForeignKeyConstraint:
+            baseTableName: operator
+            baseTableSchemaName: public
+            baseColumnNames: company_id
+            referencedTableName: company
+            referencedTableSchemaName: public
+            referencedColumnNames: id
+            validate: true
+            constraintName: FK_operator_company_id__company_id
+  - changeSet:
+      id: 5
+      author: shams
+      comment: Update super-admin role to SUPER_ADMIN
+      changes:
+        - sql:
+            sql: UPDATE operator SET role = 'SUPER_ADMIN' WHERE username = 'super-admin';
+            rollback: UPDATE operator SET role = 'ADMIN' WHERE username = 'super-admin';
+  - changeSet:
+      id: 6
+      author: shams
+      comment: Add constraint check that all but SUPER_ADMIN should have non null company_id
+      changes:
+        sql: >-
+          ALTER TABLE public.operator ADD CONSTRAINT company_id_check CHECK
+          (
+            (role = 'SUPER_ADMIN' and company_id is NULL)
+          OR
+            (role = 'SUPER_ADMIN' and company_id is NOT NULL)
+          );
+        rollback: ALTER TABLE public.operator DROP CONSTRAINT company_id_check;

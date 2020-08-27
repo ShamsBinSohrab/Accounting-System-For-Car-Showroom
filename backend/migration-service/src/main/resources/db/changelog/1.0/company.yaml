@@ -29,6 +29,6 @@ databaseChangeLog:
               - column:
                   name: uuid
                   type: uuid
-                  valueComputed: gen_random_uuid()
+                  defaultValueComputed: gen_random_uuid()
                   constraints:
                     nullable: false
