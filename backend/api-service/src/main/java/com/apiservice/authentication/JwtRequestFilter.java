@@ -31,6 +31,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws ServletException, IOException {
 
+    if (request.getServletPath().equalsIgnoreCase("/authenticate")) {
+      chain.doFilter(request, response);
+      return;
+    }
     Optional.ofNullable(request.getHeader("Authorization"))
         .ifPresentOrElse(
             header -> {

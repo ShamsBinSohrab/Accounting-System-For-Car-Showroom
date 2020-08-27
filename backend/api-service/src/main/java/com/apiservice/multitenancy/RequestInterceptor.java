@@ -17,6 +17,9 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
+    if (request.getServletPath().equalsIgnoreCase("/authenticate")) {
+      return true;
+    }
     Optional.ofNullable(request.getHeader("X-Tenant-Accessor-Token"))
         .ifPresentOrElse(
             TenantContext::setCurrentTenant,
