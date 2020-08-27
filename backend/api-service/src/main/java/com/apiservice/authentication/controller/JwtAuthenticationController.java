@@ -2,6 +2,7 @@ package com.apiservice.authentication.controller;
 
 import com.apiservice.authentication.JwtTokenUtil;
 import com.apiservice.authentication.service.JwtUserDetailsService;
+import com.apiservice.entity.company.Company;
 import com.apiservice.entity.operator.Operator;
 import com.apiservice.model.jwt.JwtRequest;
 import com.apiservice.model.jwt.JwtResponse;
@@ -26,7 +27,6 @@ public class JwtAuthenticationController {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenUtil jwtTokenUtil;
   private final JwtUserDetailsService userDetailsService;
-  private final PasswordEncoder passwordEncoder;
 
   @PostMapping(value = "/authenticate")
   public JwtResponse createAuthenticationToken(@RequestBody JwtRequest request) {
@@ -34,7 +34,9 @@ public class JwtAuthenticationController {
         new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
     authenticationManager.authenticate(authenticationToken);
     final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+    final Company company = userDetailsService.loadCompanyUuidByUsername(request.getUsername());
     final String token = jwtTokenUtil.generateToken(userDetails);
+    final String tenantToken = jwtTokenUtil.generateToken(company);
     return JwtResponse.of(token);
   }
 }

@@ -1,5 +1,6 @@
 package com.apiservice.authentication.service;
 
+import com.apiservice.entity.company.Company;
 import com.apiservice.entity.operator.Operator;
 import com.apiservice.service.operator.OperatorService;
 import java.util.Collections;
@@ -21,5 +22,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     Operator operator = operatorService.getByUsername(username);
     return new User(operator.getUsername(), operator.getPassword(),
         Collections.singletonList(operator.getRole()));
+  }
+
+  public Company loadCompanyUuidByUsername(String username) {
+    return operatorService.getByUsername(username).getCompany();
   }
 }

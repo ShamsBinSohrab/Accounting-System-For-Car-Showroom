@@ -1,5 +1,6 @@
 package com.apiservice.authentication;
 
+import com.apiservice.entity.company.Company;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -52,6 +53,11 @@ public class JwtTokenUtil {
             .collect(Collectors.joining(","));
     claims.putIfAbsent("AUTHORITIES", authorities);
     return doGenerateToken(claims, userDetails.getUsername());
+  }
+
+  public String generateToken(Company company) {
+    final Map<String, Object> claims = new HashMap<>();
+    return doGenerateToken(claims, company.getUuid().toString());
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {
