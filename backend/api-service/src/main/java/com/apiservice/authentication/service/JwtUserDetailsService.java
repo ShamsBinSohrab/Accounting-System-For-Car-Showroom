@@ -22,8 +22,4 @@ public class JwtUserDetailsService implements UserDetailsService {
     return new User(operator.getUsername(), operator.getPassword(),
         Collections.singletonList(operator.getRole()));
   }
-
-  public void save(Operator operator) {
-    operatorService.save(operator);
-  }
 }
