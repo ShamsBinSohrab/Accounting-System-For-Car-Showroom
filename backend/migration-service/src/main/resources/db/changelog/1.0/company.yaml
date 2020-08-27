@@ -32,3 +32,12 @@ databaseChangeLog:
                   defaultValueComputed: gen_random_uuid()
                   constraints:
                     nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: operator
+            baseTableSchemaName: public
+            baseColumnNames: company_id
+            referencedTableName: company
+            referencedTableSchemaName: public
+            referencedColumnNames: id
+            validate: true
+            constraintName: FK_operator_company_id__company_id

@@ -56,18 +56,9 @@ databaseChangeLog:
             schemaName: public
             tableName: operator
             columns:
-            - column:
-                name: company_id
-                type: int
-        - addForeignKeyConstraint:
-            baseTableName: operator
-            baseTableSchemaName: public
-            baseColumnNames: company_id
-            referencedTableName: company
-            referencedTableSchemaName: public
-            referencedColumnNames: id
-            validate: true
-            constraintName: FK_operator_company_id__company_id
+              - column:
+                  name: company_id
+                  type: int
   - changeSet:
       id: 5
       author: shams
@@ -86,6 +77,6 @@ databaseChangeLog:
           (
             (role = 'SUPER_ADMIN' and company_id is NULL)
           OR
-            (role = 'SUPER_ADMIN' and company_id is NOT NULL)
+            (role in ('ADMIN', 'SALES_OPERATOR', 'ACCOUNTS_OPERATOR') and company_id is NOT NULL)
           );
         rollback: ALTER TABLE public.operator DROP CONSTRAINT company_id_check;
