@@ -24,16 +24,6 @@ export const navItems: INavData[] = [
         name: 'Add Car',
         url: '/car/create',
         icon: 'icon-plus'
-      },
-      {
-        name: 'Liquidation/Interest A/Cs',
-        url: '/customer-position/liquidationinterestaccount',
-        icon: 'icon-drop'
-      },
-      {
-        name: 'Term And Demand Loans',
-        url: '/customer-position/termsanddemandloans',
-        icon: 'icon-drop'
       }
     ]
   },

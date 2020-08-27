@@ -19,65 +19,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>TOYOTA</td>
-              <td>Axio</td>
-              <td>SEDAN</td>
-              <td>2016</td>
-              <td>Blue</td>
-              <td>NZT260-986868</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>TOYOTA</td>
-              <td>Axio</td>
-              <td>SEDAN</td>
-              <td>2016</td>
-              <td>Blue</td>
-              <td>NZT260-986868</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>TOYOTA</td>
-              <td>Axio</td>
-              <td>SEDAN</td>
-              <td>2016</td>
-              <td>Blue</td>
-              <td>NZT260-986868</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>TOYOTA</td>
-              <td>Axio</td>
-              <td>SEDAN</td>
-              <td>2016</td>
-              <td>Blue</td>
-              <td>NZT260-986868</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>TOYOTA</td>
-              <td>Axio</td>
-              <td>SEDAN</td>
-              <td>2016</td>
-              <td>Blue</td>
-              <td>NZT260-986868</td>
+            <tr *ngFor="let car of data">
+              <td>{{car.details.make}}</td>
+              <td>{{car.details.name}}</td>
+              <td>{{car.details.type}}</td>
+              <td>{{car.details.modelYear}}</td>
+              <td>{{car.details.color}}</td>
+              <td>{{car.chassisNo}}</td>
               <td>
                 <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Details</button>
                 <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Edit</button>

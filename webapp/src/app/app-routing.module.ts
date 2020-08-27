@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    // canActivate:[AuthGuard],
+    canActivate: [AuthGuard],
     data: {
       title: 'Home'
     },
@@ -63,17 +63,9 @@ const routes: Routes = [
         path: 'car',
         loadChildren: () => import('./car_showroom_accounting_system/views/car/car.module').then(m => m.CarModule)
       },
-
-
-
-
-
-
       {
         path: 'change-password',
         component: ChangePasswordComponent
-        // tslint:disable-next-line:max-line-length
-        // loadChildren: () => import('./car_showroom_accounting_system/views/change-password/change-password.module').then(m => m.ChangePasswordModule)
       },
       {
         path: 'dashboard',
@@ -114,8 +106,6 @@ const routes: Routes = [
         // tslint:disable-next-line:max-line-length
         loadChildren: () => import('./car_showroom_accounting_system/views/Terms&Condition/terms-condition.module').then(e => e.TermsConditionModule),
       },
-
-
 
 
 

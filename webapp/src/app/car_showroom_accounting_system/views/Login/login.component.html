@@ -9,45 +9,32 @@
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
-                  
-                  <p *ngIf="username.hasError('pattern') && !username.hasError('required')">
-                    <small class="text-danger">Must be minimum 4 charecters.</small>
-                  </p>
                   <p *ngIf="username.hasError('required') && username.touched">
-                    <!-- <p [class.d-none]="username.valid || username.untouched"> -->
                     <small class="text-danger">Username is <strong>required</strong></small>
                   </p>
-
-                  <p *ngIf="password.hasError('pattern') && !password.hasError('required')">
-                    <small class="text-danger">Password must be between 6-14 charecters.</small>
-                  </p>
                   <p *ngIf="password.hasError('required') && password.touched">
-                    <!-- <p [class.d-none]="password.valid || password.untouched"> -->
                     <small class="text-danger">Password is <strong>required</strong></small>
                   </p>
 
-                  <!-- <div *ngIf="errorMessage">
-                    <p class="text-danger">{{errorMessage}}</p>
-                  </div> -->
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-                    <input type="text" class="form-control" pattern="^.{4,400}$" [formControl]="username" placeholder="Ex. Noyon892" required>
+                    <input type="text" class="form-control" formControlName="username" placeholder="Ex. Noyon892" required>
                   </div>
                   <div class="input-group mb-4">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-lock"></i></span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Password" pattern="^.{6,14}$" [formControl]="password" required>
-                    
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password" required>
+
                   </div>
                   <div class="row">
                     <div class="col-6">
                       <button type="submit" class="btn btn-primary px-4">Login</button>
                     </div>
                     <div class="col-6 text-right">
-                      <button type="button" class="btn btn-link px-0">Forgot password?</button>
+                      <button type="button" class="btn btn-link px-0" disabled>Forgot password?</button>
                     </div>
                   </div>
                 </form>
@@ -89,7 +76,7 @@
                         <mat-form-field class="example-full-width">
                             <mat-label>Username</mat-label>
                             <input matInput  pattern="^.{4,400}$" [formControl]="username" placeholder="Ex. Noyon892">
-                            
+
                             <mat-error *ngIf="username.hasError('pattern') && !username.hasError('required')">
                                 Username must be minimum 4 charecters.
                             </mat-error>
@@ -107,7 +94,7 @@
                                 Password is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
-                    </div>                   
+                    </div>
                     <div class="row">
                       <div class="col-6">
                         <button mat-raised-button color="primary" class="px-4">Login</button>
