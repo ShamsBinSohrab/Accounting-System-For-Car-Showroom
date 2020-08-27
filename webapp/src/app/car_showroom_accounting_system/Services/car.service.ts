@@ -13,13 +13,20 @@ export class CarService {
   {
     return this.http.post<any>(Common.baseUrl + '/cars', data);
   }
+  public updateCar(carId: any, data: any)
+  {
+    return this.http.put<any>(Common.baseUrl + '/cars/' + carId, data);
+  }
   public getCar()
   {
     return this.http.get<any>(Common.baseUrl + '/cars');
   }
-  public deleteCar(data: any)
+  public deleteCar(carId: any)
   {
-    console.log(data);
-    return this.http.delete<any>(Common.baseUrl + '/deletecCars', data);
+    return this.http.delete<any>(Common.baseUrl + '/cars/' + carId);
+  }
+  public getCarById(carId: any)
+  {
+    return this.http.get<any>(Common.baseUrl + '/cars/' + carId);
   }
 }

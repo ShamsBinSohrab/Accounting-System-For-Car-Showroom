@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <i class="fa fa-file-text"></i><strong> Car Details</strong>
+      </div>
+      <div class="card-body">
+        <div class="form-group row">
+          <label class="col-md-3" for="make"> <strong> Make</strong></label>
+          <label class="col-md-9" id="make">{{data.details.make}}</label>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3" for="name"> <strong> Name</strong></label>
+          <label class="col-md-9" id="name">{{data.details.name}}</label>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3" for="chassisNo"> <strong> Chassis No</strong></label>
+          <label class="col-md-9" id="chassisNo">{{data.chassisNo}}</label>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3" for="type"> <strong> Type</strong></label>
+          <label class="col-md-9" id="type">{{data.details.type}}</label>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3" for="modelYear"> <strong> Model Year</strong></label>
+          <label class="col-md-9" id="modelYear">{{data.details.modelYear}}</label>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3" for="color"> <strong> Color</strong></label>
+          <label class="col-md-9" id="color">{{data.details.color}}</label>
+        </div>
+        <hr>
+        <div class="text-right">
+          <button type="submit" class="btn btn-warning" (click)="updateCar()"><i class="fa fa-edit"></i> Update</button>
+          <button type="reset" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

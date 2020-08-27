@@ -27,9 +27,9 @@
               <td>{{car.details.color}}</td>
               <td>{{car.chassisNo}}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2">Delete</button>
+                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="carDetails(car.id)">Details</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCar(car.id)">Update</button>
+                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteCar(car.id)">Delete</button>
               </td>
             </tr>
           </tbody>

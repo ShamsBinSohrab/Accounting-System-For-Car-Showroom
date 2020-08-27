@@ -26,13 +26,34 @@ export class CarListComponent implements OnInit {
         .subscribe(
           data => {
             this.data = data;
-            console.log(this.data);
           },
           error => {
-            this.toastrService.error(error.statusText);
-            console.log(error);
+            this.toastrService.error(error.error);
           }
         );
+  }
+
+  deleteCar(carId: any)
+  {
+    this.carService.deleteCar(carId)
+    .subscribe(
+      data => {
+        this.toastrService.success('Delete Successful', 'Success');
+        this.ngOnInit();
+      },
+      error => {
+        this.toastrService.error(error.error);
+      }
+    );
+  }
+
+  carDetails(carId: any)
+  {
+    this.router.navigate(['/car/details', { carId }]);
+  }
+  updateCar(carId: any)
+  {
+    this.router.navigate(['/car/update', { carId }]);
   }
 
 }

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CarListComponent } from './car-list/car-list.component';
 import { AddCarComponent } from './add-car/add-car.component';
+import { CarDetailsComponent } from './car-details/car-details.component';
+import { CarUpdateComponent } from './car-update/car-update.component';
 
 const routes: Routes = [
   {
@@ -18,6 +20,14 @@ const routes: Routes = [
       {
         path: 'create',
         component: AddCarComponent
+      },
+      {
+        path: 'details',
+        component: CarDetailsComponent
+      },
+      {
+        path: 'update',
+        component: CarUpdateComponent
       },
 
     ]
