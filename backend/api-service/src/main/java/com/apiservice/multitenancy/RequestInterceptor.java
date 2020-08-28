@@ -27,7 +27,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     if (request.getServletPath().equalsIgnoreCase("/authenticate")) {
       return true;
     }
-    Optional.ofNullable(request.getHeader("X-Tenant-Accessor-Token"))
+    Optional.ofNullable(request.getHeader("x-company-accessor-token"))
         .ifPresentOrElse(
             token -> {
 
