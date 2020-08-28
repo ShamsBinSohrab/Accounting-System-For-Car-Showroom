@@ -1,4 +1,4 @@
-package com.apiservice.enums;
+package com.apiservice.enums.sell;
 
 public enum SellType {
 
