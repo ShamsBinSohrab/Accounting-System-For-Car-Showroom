@@ -35,8 +35,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       chain.doFilter(request, response);
       return;
     }
+    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     Optional.ofNullable(request.getHeader("Authorization"))
-        .ifPresentOrElse(
+        .ifPresent(
             header -> {
               try {
                 final String jwtToken = header.substring(7);
@@ -50,17 +51,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     authenticationToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    response.setStatus(HttpServletResponse.SC_OK);
                   }
-                } else {
-                  log.warn("Authentication already set");
                 }
               } catch (IllegalArgumentException ex) {
                 log.error("Unable to get JWT token");
               } catch (ExpiredJwtException ex) {
                 log.error("JWT token has expired");
               }
-            },
-            () -> log.warn("No authorization header found"));
+            });
     chain.doFilter(request, response);
   }
 }

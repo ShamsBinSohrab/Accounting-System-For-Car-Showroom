@@ -30,7 +30,6 @@ public class MultiTenantConnectionProvider implements
 
   @Override
   public Connection getConnection(String tenantIdentifier) throws SQLException {
-    log.info("Get connection for tenant {}", tenantIdentifier);
     final Connection connection = getAnyConnection();
     connection.setSchema(tenantIdentifier);
     return connection;
@@ -38,7 +37,6 @@ public class MultiTenantConnectionProvider implements
 
   @Override
   public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
-    log.info("Release connection for tenant {}", tenantIdentifier);
     connection.setSchema(constants.DEFAULT_COMPANY_IDENTIFIER);
     releaseAnyConnection(connection);
   }

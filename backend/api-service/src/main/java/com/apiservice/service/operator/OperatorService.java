@@ -58,4 +58,9 @@ public class OperatorService {
   public void update(Operator operator) {
     operatorRepository.save(operator);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isValidUser(String username) {
+    return operatorRepository.findByUsername(username).isPresent();
+  }
 }
