@@ -45,19 +45,19 @@ public class JwtTokenUtil {
     return expiration.before(new Date());
   }
 
-  public String generateAuthToken(UserDetails userDetails) {
-    final Map<String, Object> claims = new HashMap<>();
-    final String authorities =
-        userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-    claims.putIfAbsent("AUTHORITIES", authorities);
-    return doGenerateToken(claims, userDetails.getUsername());
-  }
+//  public String generateAuthToken(UserDetails userDetails) {
+//    final Map<String, Object> claims = new HashMap<>();
+//    final String authorities =
+//        userDetails.getAuthorities().stream()
+//            .map(GrantedAuthority::getAuthority)
+//            .collect(Collectors.joining(","));
+//    claims.putIfAbsent("AUTHORITIES", authorities);
+//    return doGenerateToken(claims, userDetails.getUsername());
+//  }
 
-  public String generateTenantToken(Company company) {
+  public String generateToken(String value) {
     final Map<String, Object> claims = new HashMap<>();
-    return doGenerateToken(claims, company.getUuid().toString());
+    return doGenerateToken(claims, value);
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {

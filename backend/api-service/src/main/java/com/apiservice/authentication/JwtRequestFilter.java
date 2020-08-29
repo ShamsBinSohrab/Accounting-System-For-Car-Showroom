@@ -1,6 +1,6 @@
 package com.apiservice.authentication;
 
-import com.apiservice.authentication.service.JwtUserDetailsService;
+import com.apiservice.authentication.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import java.util.Objects;
@@ -23,7 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-  private final JwtUserDetailsService jwtUserDetailsService;
+  private final UserDetailsServiceImpl userDetailsServiceImpl;
   private final JwtTokenUtil jwtTokenUtil;
 
   @Override
@@ -42,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 final String jwtToken = header.substring(7);
                 final String username = jwtTokenUtil.getSubjectFromToken(jwtToken);
                 if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-                  final UserDetails details = jwtUserDetailsService.loadUserByUsername(username);
+                  final UserDetails details = userDetailsServiceImpl.loadUserByUsername(username);
                   if (jwtTokenUtil.validateAuthToken(jwtToken, details)) {
                     UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(

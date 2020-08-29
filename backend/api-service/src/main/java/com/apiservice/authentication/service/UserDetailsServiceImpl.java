@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class JwtUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
   private final OperatorService operatorService;
 
@@ -22,9 +22,5 @@ public class JwtUserDetailsService implements UserDetailsService {
     Operator operator = operatorService.getByUsername(username);
     return new User(operator.getUsername(), operator.getPassword(),
         Collections.singletonList(operator.getRole()));
-  }
-
-  public Company loadCompanyUuidByUsername(String username) {
-    return operatorService.getByUsername(username).getCompany();
   }
 }
