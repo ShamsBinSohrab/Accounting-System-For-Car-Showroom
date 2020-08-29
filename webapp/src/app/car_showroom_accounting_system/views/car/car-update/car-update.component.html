@@ -10,45 +10,54 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="chassisNo"> <strong>Chassis No</strong> </label>
             <div class="col-md-9">
-              <input type="text" id="chassisNo" name="chassisNo" class="form-control" placeholder="Enter Chassis No.." formControlName="chassisNo">
+              <input type="text" id="chassisNo" name="chassisNo" class="form-control" placeholder="Enter Chassis No(Required)" formControlName="chassisNo">
             </div>
           </div>
           <div formGroupName="details">
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="make"><strong> Make</strong> </label>
               <div class="col-md-9">
-                <input type="text" id="make" name="make" class="form-control" placeholder="Enter Make.." formControlName="make">
+                <!-- <input type="text" id="make" name="make" class="form-control" placeholder="Enter Make.." formControlName="make"> -->
+
+                <select name="make" id="make" class="form-control" formControlName="make">
+                  <option value="">Select Make</option>
+                  <option *ngFor="let make of makeList" value="{{make}}">{{make|titlecase}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="name"><strong> Name</strong> </label>
               <div class="col-md-9">
-                <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name.." formControlName="name">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name(Required)" formControlName="name">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="type"><strong> Type</strong> </label>
               <div class="col-md-9">
-                <input type="text" id="type" name="type" class="form-control" placeholder="Enter Type.." formControlName="type">
+                <!-- <input type="text" id="type" name="type" class="form-control" placeholder="Enter Type.." formControlName="type"> -->
+
+                <select name="type" id="type" class="form-control" formControlName="type">
+                  <option value="">Select Type</option>
+                  <option *ngFor="let type of typeList" value="{{type}}">{{type|titlecase}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="modelYear"><strong> Model Year</strong> </label>
               <div class="col-md-9">
-                <input type="text" id="modelYear" name="modelYear" class="form-control" placeholder="Enter Model Year.." formControlName="modelYear">
+                <input type="text" id="modelYear" name="modelYear" class="form-control" placeholder="Enter Model Year(Required)" formControlName="modelYear">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="color"><strong> Color</strong> </label>
               <div class="col-md-9">
-                <input type="text" id="color" name="color" class="form-control" placeholder="Enter Color.." formControlName="color">
+                <input type="text" id="color" name="color" class="form-control" placeholder="Enter Color(Required)" formControlName="color">
               </div>
             </div>
           </div>
           <div class="text-right">
             <button type="submit" class="btn btn-warning"><i class="fa fa-edit"></i> Update</button>
-            <button type="reset" class="btn btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
-            <button type="reset" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+            <button type="button" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
           </div>
         </form>
       </div>

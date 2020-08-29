@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class AddCarComponent implements OnInit {
   CarForm: FormGroup;
+  makeList: string[];
+  typeList: string[];
   constructor(
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
@@ -20,6 +22,8 @@ export class AddCarComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadFrom();
+    this.getMake();
+    this.getType();
   }
 
   loadFrom()
@@ -37,6 +41,19 @@ export class AddCarComponent implements OnInit {
     });
   }
 
+  getMake()
+  {
+    this.makeList = [
+      'TOYOTA', 'NISSAN', 'HONDA', 'BMW', 'AUDI', 'LAND_ROVER', 'MERCEDES', 'VOLVO', 'FORD', 'JAGUAR', 'MITSUBISHI', 'SUBARU', 'TESLA', 'VOLKSWAGEN'
+    ];
+  }
+  getType()
+  {
+    this.typeList = [
+      'CONVERTIBLE', 'COUPE', 'HATCHBACK', 'JEEP', 'MINIVAN', 'PICKUP_TRUCK', 'SEDAN', 'SPORTS_CAR', 'STATION_WAGON', 'SUV'
+    ];
+  }
+
   onSubmit()
   {
     if (this.CarForm.invalid)
@@ -48,9 +65,11 @@ export class AddCarComponent implements OnInit {
                           .subscribe(
                             data => {
                               this.toastrService.success('Successfully Added Car', 'Success!');
+                              this.ngOnInit();
+                              this.route.navigate(['/car/list']);
                             },
                             error => {
-                              this.toastrService.error(error, 'Error!');
+                              this.toastrService.error(error.error, 'Error!');
                               console.log(error.error);
                             }
                           );

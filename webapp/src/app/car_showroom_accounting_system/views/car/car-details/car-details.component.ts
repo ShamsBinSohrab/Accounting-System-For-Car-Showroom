@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-car-details',
@@ -16,7 +17,8 @@ export class CarDetailsComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private carService: CarService,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private location: Location
     ) { }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class CarDetailsComponent implements OnInit {
 
   back()
   {
-    this.router.navigate(['/car/list']);
+    this.location.back();
   }
 
   updateCar()

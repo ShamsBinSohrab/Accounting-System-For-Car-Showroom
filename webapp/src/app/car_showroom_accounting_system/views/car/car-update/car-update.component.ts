@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-car-update',
@@ -14,18 +15,23 @@ export class CarUpdateComponent implements OnInit {
   id: any;
   data: any;
   updateCar: FormGroup;
+  makeList: string[];
+  typeList: string[];
 
   constructor(
     private activeRoute: ActivatedRoute,
     private carService: CarService,
     private route: Router,
     private toastrService: ToastrService,
-    private formBiulder: FormBuilder
+    private formBiulder: FormBuilder,
+    private location: Location
     ) { }
 
   ngOnInit() {
     this.id = this.activeRoute.snapshot.paramMap.get('carId');
     this.loadForm();
+    this.getMake();
+    this.getType();
     this.getDetails(this.id);
   }
 
@@ -71,6 +77,20 @@ export class CarUpdateComponent implements OnInit {
                     );
   }
 
+
+  getMake()
+  {
+    this.makeList = [
+      'TOYOTA', 'NISSAN', 'HONDA', 'BMW', 'AUDI', 'LAND_ROVER', 'MERCEDES', 'VOLVO', 'FORD', 'JAGUAR', 'MITSUBISHI', 'SUBARU', 'TESLA', 'VOLKSWAGEN'
+    ];
+  }
+  getType()
+  {
+    this.typeList = [
+      'CONVERTIBLE', 'COUPE', 'HATCHBACK', 'JEEP', 'MINIVAN', 'PICKUP_TRUCK', 'SEDAN', 'SPORTS_CAR', 'STATION_WAGON', 'SUV'
+    ];
+  }
+
   onSubmit()
   {
     if (this.updateCar.invalid)
@@ -83,7 +103,7 @@ export class CarUpdateComponent implements OnInit {
                     data => {
                       this.toastrService.success('Update Successful', 'Success');
                       this.ngOnInit();
-                      this.route.navigate(['/car/list']);
+                      this.location.back();
                     },
                     error => {
                       console.log(error.error);
@@ -94,6 +114,6 @@ export class CarUpdateComponent implements OnInit {
 
   back()
   {
-    this.route.navigate(['/car/list']);
+    this.location.back();
   }
 }

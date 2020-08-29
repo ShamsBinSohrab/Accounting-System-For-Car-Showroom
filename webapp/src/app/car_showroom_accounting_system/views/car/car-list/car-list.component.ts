@@ -53,6 +53,7 @@ export class CarListComponent implements OnInit {
   }
   updateCar(carId: any)
   {
+    localStorage.setItem('returnPage', '/car/list');
     this.router.navigate(['/car/update', { carId }]);
   }
 

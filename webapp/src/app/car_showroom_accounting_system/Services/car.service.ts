@@ -29,4 +29,13 @@ export class CarService {
   {
     return this.http.get<any>(Common.baseUrl + '/cars/' + carId);
   }
+
+  public getCarMakeList()
+  {
+    // const make: Array<string> = ['TOYOTA', 'NISSAN', 'HONDA', 'BMW', 'AUDI', 'LAND_ROVER', 'MERCEDES', 'VOLVO', 'FORD', 'JAGUAR', 'MITSUBISHI', 'SUBARU', 'TESLA', 'VOLKSWAGEN'];
+
+    const make = '';
+
+    return make;
+  }
 }

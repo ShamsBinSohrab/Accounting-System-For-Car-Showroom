@@ -12,7 +12,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 col-form-label" for="chassisNo">Chassis No</label>
                     <div class="col-md-8">
-                      <input type="text" id="chassisNo" name="chassisNo" class="form-control" placeholder="Ex: NZT260-3171396" formControlName="chassisNo">
+                      <input type="text" id="chassisNo" name="chassisNo" class="form-control" placeholder="Enter Chassis No(Required)" formControlName="chassisNo">
                       <!-- <span class="help-block">Please enter no of transaction</span> -->
                     </div>
                   </div>
@@ -20,7 +20,12 @@
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="make">Make</label>
                       <div class="col-md-8">
-                        <input type="text" id="make" name="make" class="form-control " placeholder="Ex: Toyota" formControlName="make" (keyup)="toUpperCase_make($event.target.value)">
+                        <!-- <input type="text" id="make" name="make" class="form-control " placeholder="Ex: Toyota" formControlName="make" (keyup)="toUpperCase_make($event.target.value)"> -->
+
+                        <select name="make" id="make" class="form-control" formControlName="make">
+                          <option value="">Select Make</option>
+                          <option *ngFor="let make of makeList" value="{{make}}">{{make|titlecase}}</option>
+                        </select>
                         <!-- <span class="help-block">Please enter no of transaction</span> -->
                       </div>
                     </div>
@@ -28,28 +33,34 @@
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="name">Name</label>
                       <div class="col-md-8">
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Ex: Premio F-EX" formControlName="name">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name(Required)" formControlName="name">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="type">Type</label>
                       <div class="col-md-8">
-                        <input type="text" id="type" name="type" class="form-control" placeholder="Ex: SEDAN" formControlName="type" (keyup)="toUpperCase_type($event.target.value)">
+                        <!-- <input type="text" id="type" name="type" class="form-control" placeholder="Ex: SEDAN" formControlName="type" (keyup)="toUpperCase_type($event.target.value)"> -->
+
+
+                        <select name="type" id="type" class="form-control" formControlName="type">
+                          <option value="">Select Type</option>
+                          <option *ngFor="let type of typeList" value="{{type}}">{{type|titlecase}}</option>
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="modelYear">Model Year</label>
                       <div class="col-md-8">
-                        <input type="text" id="modelYear" name="modelYear" class="form-control" placeholder="Ex: 2016" formControlName="modelYear">
+                        <input type="text" id="modelYear" name="modelYear" class="form-control" placeholder="Enter Model Year(Required)" formControlName="modelYear">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="color">Color</label>
                       <div class="col-md-8">
-                        <input type="text" id="color" name="color" class="form-control" placeholder="Ex: Pearl" formControlName="color">
+                        <input type="text" id="color" name="color" class="form-control" placeholder="Enter Color(Required)" formControlName="color">
                       </div>
                     </div>
                   </div>
@@ -57,7 +68,7 @@
               <div class="card-footer text-right">
                 <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
                 <button type="reset" class="btn btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
-                <button type="reset" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="button" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
               </div>
             </form>
           </div>
