@@ -34,9 +34,8 @@ public class CompanyController {
 
   @PostMapping("/companies")
   @ResponseStatus(HttpStatus.CREATED)
-  public CompanyModel create(@RequestBody @Valid CompanyModel model) {
+  public void create(@RequestBody @Valid CompanyModel model) {
     final Company company = model.toEntity();
-    companyService.save(company);
-    return CompanyModel.toModel(company);
+    companyService.create(company);
   }
 }

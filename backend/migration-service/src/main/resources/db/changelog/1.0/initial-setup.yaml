@@ -1,18 +1,6 @@
 databaseChangeLog:
-#  - changeSet:
-#      id: 1
-#      author: shams
-#      comment: Adding development schema
-#      preConditions:
-#        - onFail: MARK_RAN
-#        - not:
-#            - schemaExists:
-#                schemaName: development
-#      changes:
-#        - sql:
-#            sql: CREATE SCHEMA development
   - changeSet:
-      id: 2
+      id: 1
       author: shams
       comment: Adding extension pgcrypto
       preConditions:

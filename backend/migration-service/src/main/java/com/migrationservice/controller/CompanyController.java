@@ -2,6 +2,8 @@ package com.migrationservice.controller;
 
 import com.migrationservice.entity.Company;
 import com.migrationservice.utils.TenantMigrationsUtils;
+import java.sql.SQLException;
+import liquibase.exception.LiquibaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +16,10 @@ public class CompanyController {
 
   private final TenantMigrationsUtils tenantMigrationsUtils;
 
-  @PostMapping("internal/createTenant")
-  public ResponseEntity<Void> createTenant(@RequestBody Company company) {
-
+  @PostMapping("/internal/createTenant")
+  public ResponseEntity<Void> createTenant(@RequestBody Company company)
+      throws LiquibaseException, SQLException {
+    tenantMigrationsUtils.createNewCompany(company);
     return ResponseEntity.ok().build();
   }
 

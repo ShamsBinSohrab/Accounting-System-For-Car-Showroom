@@ -1,14 +1,18 @@
 package com.migrationservice.utils;
 
+import com.migrationservice.entity.Company;
 import com.migrationservice.repository.CompanyRepository;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.annotation.PostConstruct;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.DatabaseException;
+import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +29,6 @@ public class TenantMigrationsUtils {
   @Value("${spring.datasource.url}")
   private String url;
 
-  @Value("${spring.datasource.dataSourceClassName:org.postgresql.ds.PGSimpleDataSource}")
-  private String dataSourceClassName;
-
   @Value("${spring.datasource.username}")
   private String user;
 
@@ -42,7 +43,7 @@ public class TenantMigrationsUtils {
             company -> {
               try {
                 final HikariConfig masterConfig =
-                    getDbConfig(dataSourceClassName, url, user, password);
+                    getDbConfig(url, user, password);
                 final HikariDataSource masterDataSource = new HikariDataSource(masterConfig);
                 final PreparedStatement schemaExists =
                     masterDataSource.getConnection()
@@ -52,43 +53,55 @@ public class TenantMigrationsUtils {
                 if (schemaExists.executeQuery().next()) {
                   schemaExists.close();
                   masterDataSource.close();
-                  try {
-                    final String schemaName = url + "?currentSchema=" + company.getUuid();
-                    log.info("Configuring datasource {} {} {}", dataSourceClassName, schemaName, user);
-                    final HikariConfig config = getDbConfig(dataSourceClassName, url, user, password);
-                    config.addDataSourceProperty("currentSchema", company.getUuid());
-                    HikariDataSource dataSource = new HikariDataSource(config);
-                    try {
-                      Database database = DatabaseFactory.getInstance()
-                          .findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
-                      Liquibase liquibase = new Liquibase("db/changelog/changelog.yaml", new ClassLoaderResourceAccessor(),
-                          database);
-                      liquibase.update("test, production");
-                      database.close();
-                    } catch (Exception ex) {
-                      ex.printStackTrace();
-                    }
-                  } catch (Exception ex) {
-                    ex.printStackTrace();
-                  }
+                  runTenantMigration(company.getUuid().toString());
                 }
               } catch (Exception ex) {
-                ex.printStackTrace();
+                log.error(ex.getMessage(), ex);
               }
             });
   }
 
+  public void createNewCompany(Company company) throws SQLException, LiquibaseException {
+    createSingleTenant(company.getUuid().toString());
+    runTenantMigration(company.getUuid().toString());
+  }
+
+  private void runTenantMigration(String schema) throws LiquibaseException, SQLException {
+    log.info("Configuring datasource {} {}", schema, user);
+    final HikariConfig config = getDbConfig(url, user, password);
+    config.addDataSourceProperty("currentSchema", schema);
+    HikariDataSource dataSource = new HikariDataSource(config);
+    Database database = DatabaseFactory.getInstance()
+        .findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
+    Liquibase liquibase = new Liquibase("db/changelog/db.changelog-tenant.yaml", new ClassLoaderResourceAccessor(),
+        database);
+    liquibase.update("production");
+    database.close();
+  }
+
+  public void createSingleTenant(String schema) throws DatabaseException, SQLException {
+    final HikariConfig config = getDbConfig(url, user, password);
+    final HikariDataSource dataSource = new HikariDataSource(config);
+    final Database database = DatabaseFactory.getInstance()
+        .findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
+    final JdbcConnection connection = (JdbcConnection) database.getConnection();
+    final String createSchemaQuery = "CREATE SCHEMA \"" + schema + "\"";
+    final PreparedStatement createSchema = connection.prepareStatement(createSchemaQuery);
+    createSchema.executeUpdate();
+    connection.commit();
+    createSchema.close();
+    connection.close();
+    dataSource.close();
+  }
+
   private HikariConfig getDbConfig(
-      String dataSourceClassName,
       String url,
       String user,
       String password) {
-    url = url.replace("jdbc:postgresql://", "");
     HikariConfig config = new HikariConfig();
-    config.setDataSourceClassName(dataSourceClassName);
-    config.addDataSourceProperty("serverName", url);
-    config.addDataSourceProperty("user", user);
-    config.addDataSourceProperty("password", password);
+    config.setJdbcUrl(url);
+    config.setUsername(user);
+    config.setPassword(password);
     config.setMinimumIdle(2);
     config.setIdleTimeout(120000);
     config.setMaximumPoolSize(5);
