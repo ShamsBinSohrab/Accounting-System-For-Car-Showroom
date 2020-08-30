@@ -1,9 +1,13 @@
 package com.apiservice.service.operator;
 
 import com.apiservice.entity.master.operator.Operator;
+import com.apiservice.multitenancy.TenantContext;
+import com.apiservice.repository.company.CompanyRepository;
 import com.apiservice.repository.operator.OperatorRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +20,7 @@ public class OperatorService {
 
   private final OperatorRepository operatorRepository;
   private final PasswordEncoder passwordEncoder;
+  private final CompanyRepository companyRepository;
 
   @Transactional(readOnly = true)
   public Operator getByUsername(String username) {
@@ -51,6 +56,15 @@ public class OperatorService {
     final String encodedPassword = passwordEncoder.encode(operator.getPassword());
     operator.setPassword(encodedPassword);
     operatorRepository.save(operator);
+  }
+
+  @Transactional
+  public void createNewOperator(Operator operator) {
+    Optional.ofNullable(TenantContext.getCurrentTenant())
+        .map(UUID::fromString)
+        .map(companyRepository::findByUuid)
+        .ifPresent(operator::setCompany);
+    save(operator);
   }
 
   @Transactional

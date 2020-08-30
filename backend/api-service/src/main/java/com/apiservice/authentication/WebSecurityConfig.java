@@ -1,5 +1,6 @@
 package com.apiservice.authentication;
 
+import com.apiservice.entity.master.operator.OperatorRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/authenticate")
         .permitAll()
+        .antMatchers("/su/*")
+        .hasAuthority(OperatorRole.SUPER_ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()

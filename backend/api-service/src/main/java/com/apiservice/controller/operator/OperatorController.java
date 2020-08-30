@@ -48,7 +48,7 @@ public class OperatorController {
   @ResponseStatus(HttpStatus.CREATED)
   public OperatorModel create(@RequestBody @Valid OperatorModel operatorModel) {
     final Operator operator = operatorModel.toOperator();
-    operatorService.save(operator);
+    operatorService.createNewOperator(operator);
     return OperatorModel.toModel(operator);
   }
 

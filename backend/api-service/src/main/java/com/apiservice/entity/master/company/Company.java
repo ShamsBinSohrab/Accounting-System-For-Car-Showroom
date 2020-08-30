@@ -26,4 +26,8 @@ public class Company {
 
   @Column(name = "uuid", nullable = false, unique = true)
   private UUID uuid;
+
+  public Company() {
+    uuid = UUID.randomUUID();
+  }
 }
