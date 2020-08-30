@@ -17,8 +17,6 @@
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="make"><strong> Make</strong> </label>
               <div class="col-md-9">
-                <!-- <input type="text" id="make" name="make" class="form-control" placeholder="Enter Make.." formControlName="make"> -->
-
                 <select name="make" id="make" class="form-control" formControlName="make">
                   <option value="">Select Make</option>
                   <option *ngFor="let make of makeList" value="{{make}}">{{make|titlecase}}</option>
@@ -34,8 +32,6 @@
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="type"><strong> Type</strong> </label>
               <div class="col-md-9">
-                <!-- <input type="text" id="type" name="type" class="form-control" placeholder="Enter Type.." formControlName="type"> -->
-
                 <select name="type" id="type" class="form-control" formControlName="type">
                   <option value="">Select Type</option>
                   <option *ngFor="let type of typeList" value="{{type}}">{{type|titlecase}}</option>

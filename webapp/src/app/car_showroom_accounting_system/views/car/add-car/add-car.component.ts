@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-add-car',
@@ -18,6 +19,7 @@ export class AddCarComponent implements OnInit {
     private toastrService: ToastrService,
     private carService: CarService,
     private route: Router,
+    private location: Location,
     ) { }
 
   ngOnInit(): void {
@@ -90,7 +92,7 @@ export class AddCarComponent implements OnInit {
 
   back()
   {
-    this.route.navigate(['/car/list']);
+    this.location.back();
   }
 
 }
