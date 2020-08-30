@@ -1,6 +1,5 @@
-package com.apiservice.authentication.controller;
+package com.apiservice.authentication;
 
-import com.apiservice.authentication.TokenGenerator;
 import com.apiservice.model.jwt.AuthRequest;
 import com.apiservice.model.jwt.AuthResponse;
 import java.util.concurrent.ExecutionException;

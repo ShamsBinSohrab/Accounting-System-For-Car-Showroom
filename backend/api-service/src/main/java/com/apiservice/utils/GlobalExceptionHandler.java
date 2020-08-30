@@ -1,5 +1,6 @@
 package com.apiservice.utils;
 
+import com.apiservice.authentication.AuthenticationException;
 import com.apiservice.model.operator.PasswordChangeValidationException;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       PasswordChangeValidationException ex, WebRequest request) {
     return handleExceptionInternal(
         ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+  }
+
+  @ExceptionHandler(AuthenticationException.class)
+  protected ResponseEntity<Object> handleAuthenticationException(
+      AuthenticationException ex, WebRequest request) {
+    return handleExceptionInternal(
+        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
   }
 
   @ExceptionHandler(Exception.class)

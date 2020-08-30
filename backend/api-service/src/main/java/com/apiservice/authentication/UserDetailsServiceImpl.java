@@ -1,4 +1,4 @@
-package com.apiservice.authentication.service;
+package com.apiservice.authentication;
 
 import com.apiservice.entity.company.Company;
 import com.apiservice.entity.operator.Operator;

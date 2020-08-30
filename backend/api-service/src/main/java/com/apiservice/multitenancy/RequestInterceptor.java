@@ -2,6 +2,7 @@ package com.apiservice.multitenancy;
 
 import com.apiservice.authentication.JwtTokenUtil;
 import com.apiservice.entity.company.Company;
+import com.apiservice.repository.operator.OperatorRepository;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
   private final JwtTokenUtil jwtTokenUtil;
+  private final OperatorRepository operatorRepository;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {

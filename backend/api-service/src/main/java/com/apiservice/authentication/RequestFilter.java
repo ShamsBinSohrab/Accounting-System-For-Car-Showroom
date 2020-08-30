@@ -1,6 +1,5 @@
 package com.apiservice.authentication;
 
-import com.apiservice.authentication.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import java.util.Objects;
@@ -21,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class RequestFilter extends OncePerRequestFilter {
 
   private final UserDetailsServiceImpl userDetailsServiceImpl;
   private final JwtTokenUtil jwtTokenUtil;
@@ -37,7 +36,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     Optional.ofNullable(request.getHeader("Authorization"))
-        .ifPresent(
+        .ifPresentOrElse(
             header -> {
               try {
                 final String jwtToken = header.substring(7);
@@ -54,11 +53,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     response.setStatus(HttpServletResponse.SC_OK);
                   }
                 }
-              } catch (IllegalArgumentException ex) {
-                log.error("Unable to get JWT token");
-              } catch (ExpiredJwtException ex) {
-                log.error("JWT token has expired");
+              } catch (IllegalArgumentException | ExpiredJwtException ex) {
+                log.error(ex.getMessage());
+                throw new AuthenticationException(ex.getCause());
               }
+            },
+            () -> {
+              throw new AuthenticationException();
             });
     chain.doFilter(request, response);
   }
