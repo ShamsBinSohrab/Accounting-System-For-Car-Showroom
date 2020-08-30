@@ -1,7 +1,6 @@
 package com.apiservice.service.operator;
 
-import com.apiservice.entity.operator.Operator;
-import com.apiservice.model.operator.ChangePasswordModel;
+import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.repository.operator.OperatorRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.util.List;

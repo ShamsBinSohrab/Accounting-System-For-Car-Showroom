@@ -1,7 +1,7 @@
 package com.apiservice.model.jwt;
 
-import com.apiservice.entity.company.Company;
-import com.apiservice.entity.operator.Operator;
+import com.apiservice.entity.master.company.Company;
+import com.apiservice.entity.master.operator.Operator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;

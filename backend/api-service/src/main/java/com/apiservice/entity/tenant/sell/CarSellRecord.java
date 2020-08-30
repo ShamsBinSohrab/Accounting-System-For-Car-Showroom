@@ -1,6 +1,6 @@
-package com.apiservice.entity.sell;
+package com.apiservice.entity.tenant.sell;
 
-import com.apiservice.entity.car.Car;
+import com.apiservice.entity.tenant.car.Car;
 import lombok.Data;
 
 import javax.persistence.*;

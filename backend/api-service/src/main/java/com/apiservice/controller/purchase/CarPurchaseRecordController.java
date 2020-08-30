@@ -1,7 +1,7 @@
 package com.apiservice.controller.purchase;
 
-import com.apiservice.entity.car.Car;
-import com.apiservice.entity.purchase.CarPurchaseRecord;
+import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.model.purchase.CarPurchaseRecordModel;
 import com.apiservice.model.purchase.PurchaseRecordCar;
 import com.apiservice.service.car.CarService;

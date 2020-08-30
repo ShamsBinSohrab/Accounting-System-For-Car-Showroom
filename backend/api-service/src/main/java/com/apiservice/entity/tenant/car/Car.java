@@ -1,6 +1,5 @@
-package com.apiservice.entity.purchase;
+package com.apiservice.entity.tenant.car;
 
-import com.apiservice.entity.car.Car;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,21 +14,21 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "car_purchase_record")
-public class CarPurchaseRecord {
+@Table(name = "car")
+public class Car {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @JoinColumn(name = "car_id", unique = true)
-  @OneToOne(
-      fetch = FetchType.EAGER,
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  private Car car;
+  @Column(name = "chassis_no", nullable = false, unique = true)
+  private String chassisNo;
 
-  @JoinColumn(name = "purchase_record_id", unique = true)
+  @Column(name = "draft", nullable = false)
+  private boolean draft;
+
+  @JoinColumn(name = "car_details_id")
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private PurchaseRecord purchaseRecord;
+  private CarDetails details;
 }

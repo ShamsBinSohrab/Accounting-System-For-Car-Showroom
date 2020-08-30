@@ -1,4 +1,4 @@
-package com.apiservice.entity.sell;
+package com.apiservice.entity.tenant.sell;
 
 import com.apiservice.enums.sell.SellType;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.apiservice.entity.purchase;
+package com.apiservice.entity.tenant.purchase;
 
 import com.apiservice.enums.purchase.PurchaseType;
 import java.math.BigDecimal;

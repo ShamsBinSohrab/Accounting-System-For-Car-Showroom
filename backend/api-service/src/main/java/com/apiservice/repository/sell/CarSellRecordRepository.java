@@ -1,6 +1,6 @@
 package com.apiservice.repository.sell;
 
-import com.apiservice.entity.sell.CarSellRecord;
+import com.apiservice.entity.tenant.sell.CarSellRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.apiservice.service.sell;
 
-import com.apiservice.entity.sell.CarSellRecord;
-import com.apiservice.entity.sell.SellRecord;
+import com.apiservice.entity.tenant.sell.CarSellRecord;
+import com.apiservice.entity.tenant.sell.SellRecord;
 import com.apiservice.repository.car.CarRepository;
 import com.apiservice.repository.sell.CarSellRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;

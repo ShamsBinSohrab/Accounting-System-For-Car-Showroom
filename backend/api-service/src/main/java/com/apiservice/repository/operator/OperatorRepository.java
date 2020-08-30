@@ -1,8 +1,9 @@
 package com.apiservice.repository.operator;
 
-import com.apiservice.entity.operator.Operator;
+import com.apiservice.entity.master.operator.Operator;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,6 +1,6 @@
 package com.apiservice.model.operator;
 
-import com.apiservice.entity.operator.Operator;
+import com.apiservice.entity.master.operator.Operator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

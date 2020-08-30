@@ -1,6 +1,6 @@
-package com.apiservice.entity.operator;
+package com.apiservice.entity.master.operator;
 
-import com.apiservice.entity.company.Company;
+import com.apiservice.entity.master.company.Company;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

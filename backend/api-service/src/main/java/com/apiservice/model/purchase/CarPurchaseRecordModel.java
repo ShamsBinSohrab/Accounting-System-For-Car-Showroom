@@ -1,6 +1,6 @@
 package com.apiservice.model.purchase;
 
-import com.apiservice.entity.purchase.CarPurchaseRecord;
+import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.enums.purchase.PurchaseType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;

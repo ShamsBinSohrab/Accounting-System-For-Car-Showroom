@@ -1,4 +1,4 @@
-package com.apiservice.entity.company;
+package com.apiservice.entity.master.company;
 
 import java.util.UUID;
 import javax.persistence.Column;

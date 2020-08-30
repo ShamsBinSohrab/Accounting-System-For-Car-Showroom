@@ -1,7 +1,7 @@
 package com.apiservice.authentication;
 
-import com.apiservice.entity.company.Company;
-import com.apiservice.entity.operator.Operator;
+import com.apiservice.entity.master.company.Company;
+import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.service.operator.OperatorService;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;

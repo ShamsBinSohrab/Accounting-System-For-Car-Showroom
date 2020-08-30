@@ -1,10 +1,9 @@
 package com.apiservice.model.operator;
 
-import com.apiservice.entity.operator.Operator;
-import com.apiservice.entity.operator.OperatorRole;
+import com.apiservice.entity.master.operator.Operator;
+import com.apiservice.entity.master.operator.OperatorRole;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
 public class OperatorModel {

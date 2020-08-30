@@ -1,4 +1,4 @@
-package com.apiservice.entity.operator;
+package com.apiservice.entity.master.operator;
 
 import org.springframework.security.core.GrantedAuthority;
 

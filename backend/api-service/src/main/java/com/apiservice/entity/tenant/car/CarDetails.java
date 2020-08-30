@@ -1,4 +1,4 @@
-package com.apiservice.entity.car;
+package com.apiservice.entity.tenant.car;
 
 import com.apiservice.enums.car.CarMake;
 import com.apiservice.enums.car.CarType;
