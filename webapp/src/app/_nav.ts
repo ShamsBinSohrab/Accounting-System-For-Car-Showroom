@@ -24,72 +24,25 @@ export const navItems: INavData[] = [
         name: 'Add Car',
         url: '/car/create',
         icon: 'icon-plus'
-      },
-      {
-        name: 'Liquidation/Interest A/Cs',
-        url: '/customer-position/liquidationinterestaccount',
-        icon: 'icon-drop'
-      },
-      {
-        name: 'Term And Demand Loans',
-        url: '/customer-position/termsanddemandloans',
-        icon: 'icon-drop'
       }
     ]
   },
   {
-    name: 'Account Statement',
-    url: '/account-statement',
-    icon: 'icon-notebook'
-  },
-  {
-    name: 'Transfer',
-    url: '/transfer',
-    icon: 'icon-paper-plane',
+    name: 'Company',
+    url: '/company',
+    icon: 'icon-speedometer',
     children: [
-        {
-          name: 'Manage Beneficiary',
-          url: '/transfer/beneficiary',
-          icon: 'icon-drop'
-        },
-        {
-          name: 'Generate OTP',
-          url: '/transfer/otp',
-          icon: 'icon-drop'
-        },
-        {
-          name: 'Execute Transfer',
-          url: '/transfer/execute-transfer',
-          icon: 'icon-drop'
-        },
-        {
-          name: 'Transcation History',
-          url: '/transfer/history',
-          icon: 'icon-drop'
-        }
-      ]
-  },
-  {
-    name: 'Bill Payment',
-    url: '/bill-payment',
-    icon: 'icon-wallet',
-    children: [
-        {
-          name: 'DESCO',
-          url: '/bill-payment/desco',
-          icon: 'icon-drop'
-        },
-        {
-          name: 'DPDC',
-          url: '/bill-payment/dpdc',
-          icon: 'icon-drop'
-        },
-        {
-          name: 'BTCL',
-          url: '/bill-payment/btcl',
-          icon: 'icon-drop'
-        }
-      ]
+      {
+        name: 'Company List',
+        url: '/company/list',
+        icon: 'icon-list'
+      },
+      {
+        name: 'Add Company',
+        url: '/company/create',
+        icon: 'icon-plus'
+      }
+    ]
   },
   {
     name: 'Change Password',

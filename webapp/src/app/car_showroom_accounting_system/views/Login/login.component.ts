@@ -12,14 +12,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  dummyObj;
+  dummyObj: any;
   loading = false;
   submitted = false;
   errorMessage = '';
 
   constructor(
-                // tslint:disable-next-line:variable-name
-                private _formBuilder: FormBuilder,
+                private formBuilder: FormBuilder,
                 private loginService: LoginService,
                 private encryptObj: EncryptionDescryptionService,
                 private router: Router,
@@ -27,9 +26,9 @@ export class LoginComponent implements OnInit {
       ) { }
 
   ngOnInit(): void {
-    this.loginForm = this._formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern]],
-      password: ['', [Validators.required, Validators.pattern]]
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
   });
   }
   get username()
@@ -42,29 +41,27 @@ export class LoginComponent implements OnInit {
   }
   onSubmit()
   {
-    this.submitted = true;
-    if (this.loginForm.invalid) {
+    // this.dummyObj = {
+    //   username: this.encryptObj.encryptData(this.username.value),
+    //   password: this.encryptObj.encryptData(this.password.value)
+    // };
+
+    if (this.loginForm.get('username').hasError('required')) {
+      this.toastr.warning('Username Can not be empty.', 'Warning!');
       return;
     }
-    this.loading = true;
+    if (this.loginForm.get('password').hasError('required')) {
+      this.toastr.warning('Password Can not be empty.', 'Warning!');
+      return;
+    }
 
-    this.dummyObj = {
-      username: this.encryptObj.encryptData(this.username.value),
-      password: this.encryptObj.encryptData(this.password.value)
-    };
-
-    // console.log(this.encryptObj.encryptData("Noyon892"));
-    //  console.log(this.encryptObj.encryptData("123456"));
-
-    // console.log(this.dummyObj);
-
-    this.loginService.authenticate(this.dummyObj)
+    this.loginService.authenticate(this.loginForm.value)
                             .subscribe(
                                       data => {
                                         this.router.navigate(['/']);
                                       },
                                       error => {
-                                          this.errorMessage = error.error;
+                                          console.log(error);
                                           this.toastr.error(error.error);
                                       });
   }

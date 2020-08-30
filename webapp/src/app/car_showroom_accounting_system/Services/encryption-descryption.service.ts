@@ -1,60 +1,61 @@
-import { Injectable } from '@angular/core';
-import * as CryptoJS from 'crypto-js'; 
+import { Injectable, OnInit } from '@angular/core';
+import * as CryptoJS from 'crypto-js';
 import sha256 from 'sha256';
 import {Buffer} from 'buffer';
-//import * as Rijndael from 'rijndael-js'
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class EncryptionDescryptionService {
+export class EncryptionDescryptionService implements OnInit {
 
   // private strKey="HALTech^%$#@!Trn";
   // private byteArray = sha256(this.strKey, { asBytes: true });
   // private hexString = new Buffer(this.byteArray).toString('hex').slice(0,32);
-  
+
   // private key = CryptoJS.enc.Utf8.parse(this.hexString);
   // private iv = CryptoJS.enc.Utf8.parse(this.strKey);
 
-  private strKey="";
+  private strKey = '';
   private byteArray;
   private hexString;
-  
+
   private key;
   private iv;
 
 
   constructor() {}
 
+  // tslint:disable-next-line:contextual-lifecycle
   ngOnInit(): void {}
 
 private getKey()
 {
-  if(localStorage.getItem('token')==null)
+  if (localStorage.getItem('token') == null)
   {
-    this.strKey="HALTech^%$#@!Trn";
+    this.strKey = 'HALTech^%$#@!Trn';
   }
   else
   {
-    var temp=localStorage.getItem('token')+ localStorage.getItem('username');
-    this.strKey=temp.slice(temp.length-32,temp.length);
+    const temp = localStorage.getItem('token') + localStorage.getItem('username');
+    this.strKey = temp.slice(temp.length - 32, temp.length);
   }
 
   this.byteArray = sha256(this.strKey, { asBytes: true });
-  this.hexString = new Buffer(this.byteArray).toString('hex').slice(0,32);
-  
+  // tslint:disable-next-line: deprecation
+  this.hexString = new Buffer(this.byteArray).toString('hex').slice(0, 32);
+
   this.key = CryptoJS.enc.Utf8.parse(this.hexString);
   this.iv = CryptoJS.enc.Utf8.parse(this.strKey);
 
-  //console.log(this.strKey);
+  // console.log(this.strKey);
 }
 
-  //method is used to encrypt and decrypt the text  
+  // method is used to encrypt and decrypt the text
   public encryptData(data) {
     try {
       this.getKey();
-      var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data.toString()), this.key,
+      const encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data.toString()), this.key,
       {
           keySize: 128 / 8,
           iv: this.iv,
@@ -69,7 +70,7 @@ private getKey()
   public decryptData(data) {
     try {
       this.getKey();
-      var decrypted = CryptoJS.AES.decrypt(data, this.key, {
+      const decrypted = CryptoJS.AES.decrypt(data, this.key, {
           keySize: 128 / 8,
           iv: this.iv,
           mode: CryptoJS.mode.CBC,

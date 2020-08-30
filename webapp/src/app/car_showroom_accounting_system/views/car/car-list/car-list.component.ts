@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { LoginService } from 'src/app/car_showroom_accounting_system/Services/login.service';
+import { EncryptionDescryptionService } from 'src/app/car_showroom_accounting_system/Services/encryption-descryption.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
 
 @Component({
   selector: 'app-car-list',
@@ -6,10 +12,49 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./car-list.component.css']
 })
 export class CarListComponent implements OnInit {
-
-  constructor() { }
+  data: Array<any>;
+  constructor(
+                private formBuilder: FormBuilder,
+                private carService: CarService,
+                private router: Router,
+                private toastrService: ToastrService
+  ) { }
 
   ngOnInit(): void {
+    this.data = new Array();
+    this.carService.getCar()
+        .subscribe(
+          data => {
+            this.data = data;
+          },
+          error => {
+            this.toastrService.error(error.error);
+          }
+        );
+  }
+
+  deleteCar(carId: any)
+  {
+    this.carService.deleteCar(carId)
+    .subscribe(
+      data => {
+        this.toastrService.success('Delete Successful', 'Success');
+        this.ngOnInit();
+      },
+      error => {
+        this.toastrService.error(error.error);
+      }
+    );
+  }
+
+  carDetails(carId: any)
+  {
+    this.router.navigate(['/car/details', { carId }]);
+  }
+  updateCar(carId: any)
+  {
+    localStorage.setItem('returnPage', '/car/list');
+    this.router.navigate(['/car/update', { carId }]);
   }
 
 }

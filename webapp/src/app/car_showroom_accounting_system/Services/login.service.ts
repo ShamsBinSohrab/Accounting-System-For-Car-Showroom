@@ -9,17 +9,18 @@ import {Common} from '../Common/common';
 export class LoginService {
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public authenticate(loginData)
+  public authenticate(loginData: any)
   {
-    var reqHeader=new HttpHeaders({'No-Auth':'True'});
-    return this.http.post<any>(Common.baseUrl + '/Auth/login',loginData,{headers:reqHeader})
+    const reqHeader = new HttpHeaders({'No-Auth': 'True'});
+    return this.http.post<any>(Common.url + '/authenticate', loginData, {headers: reqHeader})
     .pipe(map(user => {
-      if (user && user.token) {
+      if (user && user.jwtToken) {
+          console.log(user);
           // store user details in local storage to keep user logged in
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('username', user.username);          
+          localStorage.setItem('token', user.jwtToken);
+          // localStorage.setItem('username', user.username);
       }
   }));
   }

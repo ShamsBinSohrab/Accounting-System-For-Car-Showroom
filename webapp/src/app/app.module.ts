@@ -92,12 +92,12 @@ const APP_CONTAINERS = [
   providers: [
     LoginService,
     EncryptionDescryptionService,
-    // AuthGuard,
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi: true
-    // },
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
