@@ -31,7 +31,7 @@ databaseChangeLog:
         - sql:
             comment: Check constraint for draft car
             sql: >-
-              ALTER TABLE development.car ADD CONSTRAINT car_draft_check CHECK
+              ALTER TABLE car ADD CONSTRAINT car_draft_check CHECK
               (
                 (draft = true and car_details_id is NULL)
               OR
