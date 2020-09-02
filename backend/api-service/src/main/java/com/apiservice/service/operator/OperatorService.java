@@ -32,7 +32,9 @@ public class OperatorService {
 
   @Transactional(readOnly = true)
   public List<Operator> getAllOperators() {
-    return operatorRepository.findAll();
+    final UUID companyUuid = Optional.ofNullable(TenantContext.getCurrentTenant())
+            .map(UUID::fromString).orElseThrow();
+    return operatorRepository.findAllOperatorsByCompanyUuid(companyUuid);
   }
 
   @Transactional(readOnly = true)
