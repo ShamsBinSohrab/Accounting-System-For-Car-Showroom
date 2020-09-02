@@ -41,12 +41,12 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     final String username = SecurityContextHolder.getContext().getAuthentication().getName();
     final Operator operator = operatorService.getByUsername(username);
     Optional.ofNullable(request.getHeader("x-company-accessor-token"))
-        .ifPresentOrElse(token -> tokenPresentHandler(token, operator),
+        .ifPresentOrElse(token -> tokenPresentHandler(token, response, operator),
             () -> tokenNotPresentHandler(response, operator));
     return TenantContext.isTenantSet();
   }
 
-  private void tokenPresentHandler(String token, Operator operator) {
+  private void tokenPresentHandler(String token, HttpServletResponse response, Operator operator) {
     try {
       final String tenant = jwtTokenUtil.getSubjectFromToken(token);
       final Company company =
@@ -54,8 +54,13 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
               : operator.getCompany();
       if (company.isActive() && jwtTokenUtil.validateTenantToken(token, company)) {
         TenantContext.setCurrentTenant(tenant);
+      } else {
+        response
+            .getWriter()
+            .write("invalid x-company-accessor-token");
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
       }
-    } catch (IllegalArgumentException ex) {
+    } catch (IllegalArgumentException | IOException ex) {
       log.error(ex.getMessage());
     }
 
@@ -68,7 +73,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
       } else {
         response
             .getWriter()
-            .write("X-Tenant-Accessor-Token not present in the Request Header");
+            .write("x-company-accessor-token not present in the Request Header");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
       }
     } catch (IOException ex) {
