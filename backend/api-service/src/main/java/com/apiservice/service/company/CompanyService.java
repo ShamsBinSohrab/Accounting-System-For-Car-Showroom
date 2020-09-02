@@ -6,6 +6,7 @@ import com.apiservice.model.company.CompanyCreationException;
 import com.apiservice.repository.company.CompanyRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.net.URI;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -65,5 +66,11 @@ public class CompanyService {
       log.error("Unable to create company", ex);
       throw new CompanyCreationException();
     }
+  }
+
+  @Transactional(readOnly = true)
+  public Company getByUuid(UUID uuid) {
+    return companyRepository.findByUuid(uuid).orElseThrow(
+        () -> EntityNotFoundException.of(Company.class, "No company found with uuid: " + uuid));
   }
 }

@@ -63,6 +63,7 @@ public class OperatorService {
     Optional.ofNullable(TenantContext.getCurrentTenant())
         .map(UUID::fromString)
         .map(companyRepository::findByUuid)
+        .map(Optional::get)
         .ifPresent(operator::setCompany);
     save(operator);
   }

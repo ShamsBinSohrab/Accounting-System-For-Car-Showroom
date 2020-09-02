@@ -1,14 +1,14 @@
 package com.apiservice.multitenancy;
 
-import static java.util.Objects.nonNull;
-
 import com.apiservice.authentication.JwtTokenUtil;
+import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.operator.Operator;
-import com.apiservice.entity.master.operator.OperatorRole;
+import com.apiservice.service.company.CompanyService;
 import com.apiservice.service.operator.OperatorService;
 import com.apiservice.utils.Constants;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 
   private final JwtTokenUtil jwtTokenUtil;
   private final OperatorService operatorService;
+  private final CompanyService companyService;
   private final Constants constants;
 
   @Override
@@ -37,33 +38,44 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     if (request.getServletPath().equalsIgnoreCase("/authenticate")) {
       return true;
     }
-
-    final Optional<String> token =
-        Optional.ofNullable(request.getHeader("x-company-accessor-token"));
     final String username = SecurityContextHolder.getContext().getAuthentication().getName();
     final Operator operator = operatorService.getByUsername(username);
+    Optional.ofNullable(request.getHeader("x-company-accessor-token"))
+        .ifPresentOrElse(token -> tokenPresentHandler(token, operator),
+            () -> tokenNotPresentHandler(response, operator));
+    return TenantContext.isTenantSet();
+  }
 
-    if (token.isPresent()) {
-      if (operator.getRole().equals(OperatorRole.SUPER_ADMIN)
-          || (nonNull(operator.getCompany())
-              && jwtTokenUtil.validateTenantToken(token.get(), operator.getCompany()))) {
-        final String tenant = jwtTokenUtil.getSubjectFromToken(token.get());
+  private void tokenPresentHandler(String token, Operator operator) {
+    try {
+      final String tenant = jwtTokenUtil.getSubjectFromToken(token);
+      final Company company =
+          operator.isSuperAdmin() ? companyService.getByUuid(UUID.fromString(tenant))
+              : operator.getCompany();
+      if (company.isActive() && jwtTokenUtil.validateTenantToken(token, company)) {
         TenantContext.setCurrentTenant(tenant);
       }
-    } else if (operator.getRole().equals(OperatorRole.SUPER_ADMIN)) {
-      TenantContext.setCurrentTenant(constants.DEFAULT_COMPANY_IDENTIFIER);
-    } else {
-      try {
+    } catch (IllegalArgumentException ex) {
+      log.error(ex.getMessage());
+    }
+
+  }
+
+  private void tokenNotPresentHandler(HttpServletResponse response, Operator operator) {
+    try {
+      if (operator.isSuperAdmin()) {
+        TenantContext.setCurrentTenant(constants.DEFAULT_COMPANY_IDENTIFIER);
+      } else {
         response
             .getWriter()
             .write("X-Tenant-Accessor-Token not present in the Request Header");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-      } catch (IOException ex) {
-        log.error(ex.getMessage(), ex);
       }
+    } catch (IOException ex) {
+      log.error(ex.getMessage());
     }
-    return TenantContext.isTenantSet();
   }
+
 
   @Override
   public void postHandle(

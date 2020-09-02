@@ -66,7 +66,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(DataIntegrityViolationException.class)
   protected ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
     return handleExceptionInternal(
-        ex, "Data integrity violated", new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
   }
 
   @ExceptionHandler(Exception.class)
