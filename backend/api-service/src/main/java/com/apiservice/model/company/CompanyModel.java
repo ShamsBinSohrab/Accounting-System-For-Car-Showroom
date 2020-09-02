@@ -14,8 +14,8 @@ public class CompanyModel {
 
   private long id;
 
+  @Size(max = 100)
   @NotBlank(message = "company name can not be empty")
-  @Size(min = 1, max = 100)
   private String companyName;
 
   private boolean active;
