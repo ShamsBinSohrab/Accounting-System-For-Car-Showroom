@@ -36,4 +36,8 @@ public class Operator {
   @JoinColumn(name = "company_id", updatable = false)
   @OneToOne(fetch = FetchType.EAGER)
   private Company company;
+
+  public boolean isSuperAdmin() {
+    return role.equals(OperatorRole.SUPER_ADMIN);
+  }
 }

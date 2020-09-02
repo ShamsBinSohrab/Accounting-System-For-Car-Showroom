@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class CompanyController {
+public class CompanyControllerInternal {
 
   private final TenantMigrationsUtils tenantMigrationsUtils;
 
   @PostMapping("/internal/createTenant")
-  public ResponseEntity<Void> createTenant(@RequestBody Company company)
+  public String createTenant(@RequestBody Company company)
       throws LiquibaseException, SQLException {
-    tenantMigrationsUtils.createNewCompany(company);
-    return ResponseEntity.ok().build();
+    return tenantMigrationsUtils.createNewCompany(company);
   }
 
 }

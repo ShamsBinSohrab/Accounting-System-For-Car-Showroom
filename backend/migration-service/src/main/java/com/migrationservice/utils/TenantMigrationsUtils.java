@@ -61,9 +61,11 @@ public class TenantMigrationsUtils {
             });
   }
 
-  public void createNewCompany(Company company) throws SQLException, LiquibaseException {
-    createSingleTenant(company.getUuid().toString());
-    runTenantMigration(company.getUuid().toString());
+  public String createNewCompany(Company company) throws SQLException, LiquibaseException {
+    final String schema = company.getUuid().toString();
+    createSingleTenant(schema);
+    runTenantMigration(schema);
+    return schema;
   }
 
   private void runTenantMigration(String schema) throws LiquibaseException, SQLException {
