@@ -1,6 +1,7 @@
 package com.apiservice.utils;
 
 import com.apiservice.authentication.AuthenticationException;
+import com.apiservice.model.company.CompanyCreationException;
 import com.apiservice.model.operator.PasswordChangeValidationException;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +41,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       AuthenticationException ex, WebRequest request) {
     return handleExceptionInternal(
         ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+  }
+
+  @ExceptionHandler(CompanyCreationException.class)
+  protected ResponseEntity<Object> handleCompanyCreationException(
+      CompanyCreationException ex, WebRequest request) {
+    return handleExceptionInternal(
+        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
   }
 
   @ExceptionHandler(Exception.class)
