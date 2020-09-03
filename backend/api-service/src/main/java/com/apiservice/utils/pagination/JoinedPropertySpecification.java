@@ -19,16 +19,16 @@ import org.springframework.data.jpa.domain.Specification;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JoinedPropertySpecification<T, R> {
 
-  @With private String joinFieldName;
+  @With private String joinPropertyName;
   @With private String propertyName;
   @With private PropertySpecificationOperator operator;
   @With private Object value1;
   @With private Object value2;
 
-  public static <T, R> Specification<T> joinedQuery(String joinFieldName, String propertyName, PropertySpecificationOperator operator, Object v1) {
+  public static <T, R> Specification<T> joinedQuery(String joinPropertyName, String propertyName, PropertySpecificationOperator operator, Object v1) {
     if (operator.requiresOneOperand()) {
       return new JoinedPropertySpecification<T, R>()
-          .withJoinFieldName(joinFieldName)
+          .withJoinPropertyName(joinPropertyName)
           .withPropertyName(propertyName)
           .withOperator(operator)
           .withValue1(v1)
@@ -38,10 +38,10 @@ public class JoinedPropertySpecification<T, R> {
   }
 
   public static <T, R> Specification<T> joinedQuery(
-      String joinFieldName, String propertyName, PropertySpecificationOperator operator, Object v1, Object v2) {
+      String joinPropertyName, String propertyName, PropertySpecificationOperator operator, Object v1, Object v2) {
     if (operator.requiresTwoOperand()) {
       return new JoinedPropertySpecification<T, R>()
-          .withJoinFieldName(joinFieldName)
+          .withJoinPropertyName(joinPropertyName)
           .withPropertyName(propertyName)
           .withOperator(operator)
           .withValue1(v1)
@@ -54,14 +54,14 @@ public class JoinedPropertySpecification<T, R> {
   private Specification<T> build() {
     if (Objects.nonNull(value1)) {
       return switch (operator) {
-        case equal -> new EqualValueSpecification<T, R>(joinFieldName, propertyName, value1);
-        case like -> new LikeValueSpecification<T, R>(joinFieldName, propertyName, (String) value1);
-        case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<T, R>(joinFieldName, propertyName, (ZonedDateTime) value1);
-        case dateLessThanOrEqual -> new DateLessThanOrEqual<T, R>(joinFieldName, propertyName,
+        case equal -> new EqualValueSpecification<T, R>(joinPropertyName, propertyName, value1);
+        case like -> new LikeValueSpecification<T, R>(joinPropertyName, propertyName, (String) value1);
+        case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<T, R>(joinPropertyName, propertyName, (ZonedDateTime) value1);
+        case dateLessThanOrEqual -> new DateLessThanOrEqual<T, R>(joinPropertyName, propertyName,
             (ZonedDateTime) value1);
         case dateBetween -> new DateBetweenSpecification<T, R>(
-            joinFieldName, propertyName, (ZonedDateTime) value1, (ZonedDateTime) value2);
-        case graterThanOrEqual -> new GraterThanOrEqualSpecification<T, R>(joinFieldName, propertyName, value1);
+            joinPropertyName, propertyName, (ZonedDateTime) value1, (ZonedDateTime) value2);
+        case graterThanOrEqual -> new GraterThanOrEqualSpecification<T, R>(joinPropertyName, propertyName, value1);
       };
     }
     return Specification.where(null);
@@ -70,13 +70,13 @@ public class JoinedPropertySpecification<T, R> {
   @RequiredArgsConstructor
   private static class EqualValueSpecification<T, R> implements Specification<T> {
 
-    private final String joinFieldName;
+    private final String joinPropertyName;
     private final String propertyName;
     private final Object value;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      final Join<T, R> join = root.join(joinFieldName);
+      final Join<T, R> join = root.join(joinPropertyName);
       final Class<?> type = join.get(propertyName).getJavaType();
       if (type.equals(Integer.class) || type.equals(int.class)) {
         return builder.equal(join.<Integer>get(propertyName), value);
@@ -97,13 +97,13 @@ public class JoinedPropertySpecification<T, R> {
   @RequiredArgsConstructor
   private static class LikeValueSpecification<T, R> implements Specification<T> {
 
-    private final String joinFieldName;
+    private final String joinPropertyName;
     private final String propertyName;
     private final String value;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      final Join<T, R> join = root.join(joinFieldName);
+      final Join<T, R> join = root.join(joinPropertyName);
       return builder.like(join.get(propertyName), StringUtils.appendIfMissing(value, "%"));
     }
   }
@@ -111,14 +111,14 @@ public class JoinedPropertySpecification<T, R> {
   @RequiredArgsConstructor
   private static class DateBetweenSpecification<T, R> implements Specification<T> {
 
-    private final String joinFieldName;
+    private final String joinPropertyName;
     private final String propertyName;
     private final ZonedDateTime from;
     private final ZonedDateTime to;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      final Join<T, R> join = root.join(joinFieldName);
+      final Join<T, R> join = root.join(joinPropertyName);
       return builder.between(join.get(propertyName), from, to);
     }
   }
@@ -126,13 +126,13 @@ public class JoinedPropertySpecification<T, R> {
   @RequiredArgsConstructor
   private static class DateGreaterThanOrEqual<T, R> implements Specification<T> {
 
-    private final String joinFieldName;
+    private final String joinPropertyName;
     private final String propertyName;
     private final ZonedDateTime date;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      final Join<T, R> join = root.join(joinFieldName);
+      final Join<T, R> join = root.join(joinPropertyName);
       return builder.greaterThanOrEqualTo(join.get(propertyName), date);
     }
   }
@@ -140,26 +140,26 @@ public class JoinedPropertySpecification<T, R> {
   @RequiredArgsConstructor
   private static class DateLessThanOrEqual<T, R> implements Specification<T> {
 
-    private final String joinFieldName;
+    private final String joinPropertyName;
     private final String propertyName;
     private final ZonedDateTime date;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      final Join<T, R> join = root.join(joinFieldName);
+      final Join<T, R> join = root.join(joinPropertyName);
       return builder.lessThanOrEqualTo(join.get(propertyName), date);
     }
   }
 
   @RequiredArgsConstructor
   private static class GraterThanOrEqualSpecification<T, R> implements Specification<T> {
-    private final String joinFieldName;
+    private final String joinPropertyName;
     private final String propertyName;
     private final Object value;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      final Join<T, R> join = root.join(joinFieldName);
+      final Join<T, R> join = root.join(joinPropertyName);
       final Class<?> type = root.get(propertyName).getJavaType();
       if (type.equals(Integer.class) || type.equals(int.class)) {
         return builder.greaterThanOrEqualTo(join.get(propertyName), (Integer) value);
