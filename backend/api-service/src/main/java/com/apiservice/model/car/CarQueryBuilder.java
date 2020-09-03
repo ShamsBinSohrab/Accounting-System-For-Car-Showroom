@@ -13,34 +13,34 @@ import org.springframework.data.jpa.domain.Specification;
 @RequiredArgsConstructor
 public class CarQueryBuilder implements QueryBuilder<Car> {
 
-  private final CarCriteria criteria;
+  private final CarFilter filter;
 
   private Specification<Car> queryForChassisNo() {
-    return query("chassisNo", like, criteria.getChassisNo());
+    return query("chassisNo", like, filter.getChassisNo());
   }
 
   private Specification<Car> queryForDraft() {
-    return query("draft", equal, criteria.isDraft());
+    return query("draft", equal, filter.isDraft());
   }
 
   private Specification<Car> queryForMake() {
-    return joinedQuery("carDetails", "make", equal, criteria.getMake());
+    return joinedQuery("carDetails", "make", equal, filter.getMake());
   }
 
   private Specification<Car> queryForName() {
-    return joinedQuery("carDetails", "name", like, criteria.getName());
+    return joinedQuery("carDetails", "name", like, filter.getName());
   }
 
   private Specification<Car> queryForType() {
-    return joinedQuery("carDetails", "type", equal, criteria.getType());
+    return joinedQuery("carDetails", "type", equal, filter.getType());
   }
 
   private Specification<Car> queryForModelYear() {
-    return joinedQuery("carDetails", "modelYear", equal, criteria.getModelYear());
+    return joinedQuery("carDetails", "modelYear", equal, filter.getModelYear());
   }
 
   private Specification<Car> queryForColor() {
-    return joinedQuery("carDetails", "color", like, criteria.getColor());
+    return joinedQuery("carDetails", "color", like, filter.getColor());
   }
 
   @Override

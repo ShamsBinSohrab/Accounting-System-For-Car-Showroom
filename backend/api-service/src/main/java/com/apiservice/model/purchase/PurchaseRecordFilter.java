@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Data
-public class PurchaseRecordCriteria {
+public class PurchaseRecordFilter {
 
   private String chassisNo;
   private PurchaseType purchaseType;

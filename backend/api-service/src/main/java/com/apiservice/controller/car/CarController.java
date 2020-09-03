@@ -1,7 +1,7 @@
 package com.apiservice.controller.car;
 
 import com.apiservice.entity.tenant.car.Car;
-import com.apiservice.model.car.CarCriteria;
+import com.apiservice.model.car.CarFilter;
 import com.apiservice.model.car.CarModel;
 import com.apiservice.service.car.CarService;
 import java.util.List;
@@ -30,8 +30,8 @@ public class CarController {
   private final CarService carService;
 
   @GetMapping("/cars")
-  public List<CarModel> cars(CarCriteria criteria, Pageable pageable) {
-    return carService.getAllWithPaginationAndFilter(criteria, pageable).stream()
+  public List<CarModel> cars(CarFilter filter, Pageable pageable) {
+    return carService.getAllWithPaginationAndFilter(filter, pageable).stream()
         .map(CarModel::toModel)
         .collect(Collectors.toUnmodifiableList());
   }

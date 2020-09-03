@@ -16,30 +16,30 @@ import org.springframework.data.jpa.domain.Specification;
 @RequiredArgsConstructor
 public class PurchaseRecordQueryBuilder implements QueryBuilder<CarPurchaseRecord> {
 
-  private final PurchaseRecordCriteria criteria;
+  private final PurchaseRecordFilter filter;
 
   private Specification<CarPurchaseRecord> queryForChassisNo() {
-    return joinedQuery("car", "chassisNo", like, criteria.getChassisNo());
+    return joinedQuery("car", "chassisNo", like, filter.getChassisNo());
   }
 
   private Specification<CarPurchaseRecord> queryForPurchaseType() {
-    return joinedQuery("purchaseRecord", "purchaseType", equal, criteria.getPurchaseType());
+    return joinedQuery("purchaseRecord", "purchaseType", equal, filter.getPurchaseType());
   }
 
   private Specification<CarPurchaseRecord> queryForPurchaseDate() {
-    if (Objects.isNull(criteria.getPurchaseDateFrom())) {
+    if (Objects.isNull(filter.getPurchaseDateFrom())) {
       return joinedQuery(
-          "purchaseRecord", "purchaseDate", dateLessThanOrEqual, criteria.getPurchaseDateTo());
-    } else if (Objects.isNull(criteria.getPurchaseDateTo())) {
+          "purchaseRecord", "purchaseDate", dateLessThanOrEqual, filter.getPurchaseDateTo());
+    } else if (Objects.isNull(filter.getPurchaseDateTo())) {
       return joinedQuery(
-          "purchaseRecord", "purchaseDate", dateGreaterThanOrEqual, criteria.getPurchaseDateFrom());
+          "purchaseRecord", "purchaseDate", dateGreaterThanOrEqual, filter.getPurchaseDateFrom());
     } else {
       return joinedQuery(
           "purchaseRecord",
           "purchaseDate",
           dateBetween,
-          criteria.getPurchaseDateFrom(),
-          criteria.getPurchaseDateTo());
+          filter.getPurchaseDateFrom(),
+          filter.getPurchaseDateTo());
     }
   }
 

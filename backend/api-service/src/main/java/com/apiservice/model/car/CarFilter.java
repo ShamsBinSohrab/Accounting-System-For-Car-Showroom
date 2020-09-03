@@ -5,7 +5,7 @@ import com.apiservice.enums.car.CarType;
 import lombok.Data;
 
 @Data
-public class CarCriteria {
+public class CarFilter {
 
   private String chassisNo;
   private boolean draft;

@@ -2,7 +2,7 @@ package com.apiservice.service.purchase;
 
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.entity.tenant.purchase.PurchaseRecord;
-import com.apiservice.model.purchase.PurchaseRecordCriteria;
+import com.apiservice.model.purchase.PurchaseRecordFilter;
 import com.apiservice.model.purchase.PurchaseRecordQueryBuilder;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
@@ -23,8 +23,8 @@ public class CarPurchaseRecordService {
 
   @Transactional(readOnly = true)
   public Page<CarPurchaseRecord> getAllWithPaginationAndFilter(
-      PurchaseRecordCriteria criteria, Pageable pageable) {
-    final QueryBuilder<CarPurchaseRecord> queryBuilder = new PurchaseRecordQueryBuilder(criteria);
+      PurchaseRecordFilter filter, Pageable pageable) {
+    final QueryBuilder<CarPurchaseRecord> queryBuilder = new PurchaseRecordQueryBuilder(filter);
     return paginationService.paginate(carPurchaseRecordRepository, queryBuilder, pageable);
   }
 

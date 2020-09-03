@@ -4,7 +4,7 @@ import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.model.purchase.CarPurchaseRecordModel;
 import com.apiservice.model.purchase.PurchaseRecordCar;
-import com.apiservice.model.purchase.PurchaseRecordCriteria;
+import com.apiservice.model.purchase.PurchaseRecordFilter;
 import com.apiservice.service.car.CarService;
 import com.apiservice.service.purchase.CarPurchaseRecordService;
 import java.util.List;
@@ -35,8 +35,8 @@ public class CarPurchaseRecordController {
 
   @GetMapping("/purchaseRecords")
   public List<CarPurchaseRecordModel> purchaseRecords(
-      PurchaseRecordCriteria criteria, Pageable pageable) {
-    return carPurchaseRecordService.getAllWithPaginationAndFilter(criteria, pageable).stream()
+      PurchaseRecordFilter filter, Pageable pageable) {
+    return carPurchaseRecordService.getAllWithPaginationAndFilter(filter, pageable).stream()
         .map(CarPurchaseRecordModel::toModel)
         .collect(Collectors.toUnmodifiableList());
   }
