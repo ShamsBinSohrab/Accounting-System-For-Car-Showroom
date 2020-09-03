@@ -53,7 +53,7 @@ public class PropertySpecification<T> {
    * @param <T> Type.
    * @return
    */
-  public static <T, R> Specification<T> query(
+  public static <T> Specification<T> query(
       String propertyName, PropertySpecificationOperator operator, Object v1, Object v2) {
     if (operator.requiresTwoOperand()) {
       return new PropertySpecification<T>()
@@ -61,16 +61,16 @@ public class PropertySpecification<T> {
           .withOperator(operator)
           .withValue1(v1)
           .withValue2(v2)
-          .<R>build();
+          .build();
     }
     throw new IllegalArgumentException(operator.name() + " requires 2 operands");
   }
 
-  private <R> Specification<T> build() {
+  private Specification<T> build() {
     if (Objects.nonNull(value1)) {
       return switch (operator) {
         case equal -> new EqualValueSpecification<T>(propertyName, value1);
-        case like -> new LikeValueSpecification<T, R>(propertyName, (String) value1);
+        case like -> new LikeValueSpecification<T>(propertyName, (String) value1);
         case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<T>(propertyName,
             (ZonedDateTime) value1);
         case dateLessThanOrEqual -> new DateLessThanOrEqual<T>(propertyName,
@@ -110,7 +110,7 @@ public class PropertySpecification<T> {
   }
 
   @RequiredArgsConstructor
-  private static class LikeValueSpecification<T, R> implements Specification<T> {
+  private static class LikeValueSpecification<T> implements Specification<T> {
 
     private final String propertyName;
     private final String value;
