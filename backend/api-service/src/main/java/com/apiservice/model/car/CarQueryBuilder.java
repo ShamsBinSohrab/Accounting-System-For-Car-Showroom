@@ -24,23 +24,23 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
   }
 
   private Specification<Car> queryForMake() {
-    return joinedQuery("carDetails", "make", equal, filter.getMake());
+    return joinedQuery("details", "make", equal, filter.getMake());
   }
 
   private Specification<Car> queryForName() {
-    return joinedQuery("carDetails", "name", like, filter.getName());
+    return joinedQuery("details", "name", like, filter.getName());
   }
 
   private Specification<Car> queryForType() {
-    return joinedQuery("carDetails", "type", equal, filter.getType());
+    return joinedQuery("details", "type", equal, filter.getType());
   }
 
   private Specification<Car> queryForModelYear() {
-    return joinedQuery("carDetails", "modelYear", equal, filter.getModelYear());
+    return joinedQuery("details", "modelYear", equal, filter.getModelYear());
   }
 
   private Specification<Car> queryForColor() {
-    return joinedQuery("carDetails", "color", like, filter.getColor());
+    return joinedQuery("details", "color", like, filter.getColor());
   }
 
   @Override

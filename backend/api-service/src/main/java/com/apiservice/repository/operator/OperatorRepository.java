@@ -16,4 +16,6 @@ public interface OperatorRepository extends JpaRepository<Operator, Long> {
   Optional<Operator> findByUsername(String username);
 
   List<Operator> findAllOperatorsByCompanyUuid(UUID uuid);
+
+  Optional<Operator> findByIdAndCompanyUuid(long id, UUID uuid);
 }
