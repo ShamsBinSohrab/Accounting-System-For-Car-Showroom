@@ -18,7 +18,7 @@ class LikeValueSpecification<T> implements Specification<T> {
 
   @Override
   public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-    Expression<String> expression = StringUtils.isNotBlank(joinPropertyName)
+    final Expression<String> expression = StringUtils.isNotBlank(joinPropertyName)
         ? root.join(joinPropertyName).get(propertyName)
         : root.get(propertyName);
     return builder.like(expression, StringUtils.appendIfMissing(value, "%"));

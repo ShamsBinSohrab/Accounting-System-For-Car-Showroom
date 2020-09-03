@@ -112,15 +112,16 @@ public class PropertySpecification<T> {
   private Specification<T> build() {
     if (Objects.nonNull(value1)) {
       return switch (operation) {
-        case equal -> new EqualValueSpecification<T>(propertyName, value1);
-        case like -> new LikeValueSpecification<T>(joinPropertyName, propertyName, (String) value1);
-        case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<T>(propertyName,
+        case equal -> new EqualValueSpecification<>(joinPropertyName, propertyName, value1);
+        case like -> new LikeValueSpecification<>(joinPropertyName, propertyName, (String) value1);
+        case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<>(joinPropertyName, propertyName,
             (ZonedDateTime) value1);
-        case dateLessThanOrEqual -> new DateLessThanOrEqual<T>(propertyName,
+        case dateLessThanOrEqual -> new DateLessThanOrEqual<>(joinPropertyName, propertyName,
             (ZonedDateTime) value1);
-        case dateBetween -> new DateBetweenSpecification<T>(
-            propertyName, (ZonedDateTime) value1, (ZonedDateTime) value2);
-        case graterThanOrEqual -> new GraterThanOrEqualSpecification<T>(propertyName, value1);
+        case dateBetween -> new DateBetweenSpecification<>(
+            joinPropertyName, propertyName, (ZonedDateTime) value1, (ZonedDateTime) value2);
+        case graterThanOrEqual -> new GraterThanOrEqualSpecification<>(joinPropertyName,
+            propertyName, value1);
       };
     }
     return Specification.where(null);
