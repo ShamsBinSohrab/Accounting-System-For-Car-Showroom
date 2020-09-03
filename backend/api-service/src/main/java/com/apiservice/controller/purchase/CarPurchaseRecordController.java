@@ -4,12 +4,14 @@ import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.model.purchase.CarPurchaseRecordModel;
 import com.apiservice.model.purchase.PurchaseRecordCar;
+import com.apiservice.model.purchase.PurchaseRecordCriteria;
 import com.apiservice.service.car.CarService;
 import com.apiservice.service.purchase.CarPurchaseRecordService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +34,9 @@ public class CarPurchaseRecordController {
   private final CarService carService;
 
   @GetMapping("/purchaseRecords")
-  public List<CarPurchaseRecordModel> purchaseRecords() {
-    return carPurchaseRecordService.getAll().stream()
+  public List<CarPurchaseRecordModel> purchaseRecords(
+      PurchaseRecordCriteria criteria, Pageable pageable) {
+    return carPurchaseRecordService.getAllWithPaginationAndFilter(criteria, pageable).stream()
         .map(CarPurchaseRecordModel::toModel)
         .collect(Collectors.toUnmodifiableList());
   }
