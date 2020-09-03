@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -54,6 +55,7 @@ public class JoinedPropertySpecification<T, R> {
     if (Objects.nonNull(value1)) {
       return switch (operator) {
         case equal -> new EqualValueSpecification<T, R>(joinFieldName, propertyName, value1);
+        case like -> new LikeValueSpecification<T, R>(joinFieldName, propertyName, (String) value1);
         case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<T, R>(joinFieldName, propertyName, (ZonedDateTime) value1);
         case dateLessThanOrEqual -> new DateLessThanOrEqual<T, R>(joinFieldName, propertyName,
             (ZonedDateTime) value1);
@@ -89,6 +91,20 @@ public class JoinedPropertySpecification<T, R> {
       } else {
         return builder.equal(join.get(propertyName), value);
       }
+    }
+  }
+
+  @RequiredArgsConstructor
+  private static class LikeValueSpecification<T, R> implements Specification<T> {
+
+    private final String joinFieldName;
+    private final String propertyName;
+    private final String value;
+
+    @Override
+    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+      final Join<T, R> join = root.join(joinFieldName);
+      return builder.like(join.get(propertyName), StringUtils.appendIfMissing(value, "%"));
     }
   }
 

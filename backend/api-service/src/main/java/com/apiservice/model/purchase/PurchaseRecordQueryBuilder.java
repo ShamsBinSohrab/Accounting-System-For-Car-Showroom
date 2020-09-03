@@ -1,5 +1,10 @@
 package com.apiservice.model.purchase;
 
+import static com.apiservice.utils.pagination.PropertySpecificationOperator.dateBetween;
+import static com.apiservice.utils.pagination.PropertySpecificationOperator.dateLessThanOrEqual;
+import static com.apiservice.utils.pagination.PropertySpecificationOperator.equal;
+import static com.apiservice.utils.pagination.PropertySpecificationOperator.like;
+
 import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.entity.tenant.purchase.PurchaseRecord;
@@ -17,24 +22,18 @@ public class PurchaseRecordQueryBuilder implements QueryBuilder<CarPurchaseRecor
 
   private Specification<CarPurchaseRecord> queryForChassisNo() {
     return JoinedPropertySpecification.<CarPurchaseRecord, Car>joinedQuery(
-        "car", "chassisNo", PropertySpecificationOperator.equal, criteria.getChassisNo());
+        "car", "chassisNo", like, criteria.getChassisNo());
   }
 
   private Specification<CarPurchaseRecord> queryForPurchaseType() {
     return JoinedPropertySpecification.<CarPurchaseRecord, PurchaseRecord>joinedQuery(
-        "purchaseRecord",
-        "purchaseType",
-        PropertySpecificationOperator.equal,
-        criteria.getPurchaseType());
+        "purchaseRecord", "purchaseType", equal, criteria.getPurchaseType());
   }
 
   private Specification<CarPurchaseRecord> queryForPurchaseDate() {
     if (Objects.isNull(criteria.getPurchaseDateFrom())) {
       return JoinedPropertySpecification.<CarPurchaseRecord, PurchaseRecord>joinedQuery(
-          "purchaseRecord",
-          "purchaseDate",
-          PropertySpecificationOperator.dateLessThanOrEqual,
-          criteria.getPurchaseDateTo());
+          "purchaseRecord", "purchaseDate", dateLessThanOrEqual, criteria.getPurchaseDateTo());
     } else if (Objects.isNull(criteria.getPurchaseDateTo())) {
       return JoinedPropertySpecification.<CarPurchaseRecord, PurchaseRecord>joinedQuery(
           "purchaseRecord",
@@ -45,7 +44,7 @@ public class PurchaseRecordQueryBuilder implements QueryBuilder<CarPurchaseRecor
       return JoinedPropertySpecification.<CarPurchaseRecord, PurchaseRecord>joinedQuery(
           "purchaseRecord",
           "purchaseDate",
-          PropertySpecificationOperator.dateBetween,
+          dateBetween,
           criteria.getPurchaseDateFrom(),
           criteria.getPurchaseDateTo());
     }

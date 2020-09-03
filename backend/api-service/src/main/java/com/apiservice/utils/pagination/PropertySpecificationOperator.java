@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum PropertySpecificationOperator {
   equal,
+  like,
   dateGreaterThanOrEqual,
   dateLessThanOrEqual,
   dateBetween,
@@ -11,7 +12,7 @@ public enum PropertySpecificationOperator {
 
   public boolean requiresOneOperand() {
     return Arrays
-        .asList(equal, dateGreaterThanOrEqual, dateLessThanOrEqual, graterThanOrEqual)
+        .asList(equal, like, dateGreaterThanOrEqual, dateLessThanOrEqual, graterThanOrEqual)
         .contains(this);
   }
 
