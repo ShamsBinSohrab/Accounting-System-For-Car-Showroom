@@ -1,9 +1,11 @@
 package com.apiservice.utils.pagination;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import lombok.AccessLevel;
@@ -18,8 +20,9 @@ import org.springframework.data.jpa.domain.Specification;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PropertySpecification<T> {
 
+  @With private String joinPropertyName;
   @With private String propertyName;
-  @With private PropertySpecificationOperator operator;
+  @With private Operations operation;
   @With private Object value1;
   @With private Object value2;
 
@@ -27,50 +30,97 @@ public class PropertySpecification<T> {
    * Create a {@link Specification} based on the given parameters.
    *
    * @param propertyName The property to filter
-   * @param operator The filter operation
+   * @param operation The filter operation
    * @param v1 The filter value
    * @param <T> Type.
    * @return
    */
-  public static <T> Specification<T> query(String propertyName, PropertySpecificationOperator operator, Object v1) {
-    if (operator.requiresOneOperand()) {
+  public static <T> Specification<T> query(String propertyName, Operations operation, Object v1) {
+    if (operation.requiresOneOperand()) {
       return new PropertySpecification<T>()
           .withPropertyName(propertyName)
-          .withOperator(operator)
+          .withOperation(operation)
           .withValue1(v1)
           .build();
     }
-    throw new IllegalArgumentException(operator.name() + " requires 1 operand");
+    throw new IllegalArgumentException(operation.name() + " requires 1 operand");
+  }
+
+  /**
+   * Create a {@link Specification} based on the given parameters.
+   *
+   * @param joinPropertyName The property to join.
+   * @param propertyName The property to filter.
+   * @param operation The filter operation.
+   * @param v1 The first filter value.
+   * @param <T> Type.
+   * @return
+   */
+  public static <T> Specification<T> joinedQuery(String joinPropertyName, String propertyName, Operations operation, Object v1) {
+    if (operation.requiresOneOperand()) {
+      return new PropertySpecification<T>()
+          .withJoinPropertyName(joinPropertyName)
+          .withPropertyName(propertyName)
+          .withOperation(operation)
+          .withValue1(v1)
+          .build();
+    }
+    throw new IllegalArgumentException(operation.name() + " requires 1 operand");
   }
 
   /**
    * Create a {@link Specification} based on the given parameters.
    *
    * @param propertyName The property to filter.
-   * @param operator The filter operation.
+   * @param operation The filter operation.
    * @param v1 The first filter value.
    * @param v2 The second filter value
    * @param <T> Type.
    * @return
    */
   public static <T> Specification<T> query(
-      String propertyName, PropertySpecificationOperator operator, Object v1, Object v2) {
-    if (operator.requiresTwoOperand()) {
+      String propertyName, Operations operation, Object v1, Object v2) {
+    if (operation.requiresTwoOperand()) {
       return new PropertySpecification<T>()
           .withPropertyName(propertyName)
-          .withOperator(operator)
+          .withOperation(operation)
           .withValue1(v1)
           .withValue2(v2)
           .build();
     }
-    throw new IllegalArgumentException(operator.name() + " requires 2 operands");
+    throw new IllegalArgumentException(operation.name() + " requires 2 operands");
   }
 
-  private Specification<T> build() {
+
+  /**
+   * Create a {@link Specification} based on the given parameters.
+   *
+   * @param joinPropertyName The property to join.
+   * @param propertyName The property to filter.
+   * @param operation The filter operation.
+   * @param v1 The first filter value.
+   * @param v2 The second filter value
+   * @param <T> Type.
+   * @return
+   */
+  public static <T> Specification<T> joinedQuery(String joinPropertyName, String propertyName, Operations operation, Object v1, Object v2) {
+    if (operation.requiresOneOperand()) {
+      return new PropertySpecification<T>()
+          .withJoinPropertyName(joinPropertyName)
+          .withPropertyName(propertyName)
+          .withOperation(operation)
+          .withValue1(v1)
+          .withValue2(v2)
+          .build();
+    }
+    throw new IllegalArgumentException(operation.name() + " requires 1 operand");
+  }
+
+  private <R> Specification<T> build() {
     if (Objects.nonNull(value1)) {
-      return switch (operator) {
+      return switch (operation) {
         case equal -> new EqualValueSpecification<T>(propertyName, value1);
-        case like -> new LikeValueSpecification<T>(propertyName, (String) value1);
+        case like -> new LikeValueSpecification<T>(joinPropertyName, propertyName, (String) value1);
         case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<T>(propertyName,
             (ZonedDateTime) value1);
         case dateLessThanOrEqual -> new DateLessThanOrEqual<T>(propertyName,
@@ -112,12 +162,16 @@ public class PropertySpecification<T> {
   @RequiredArgsConstructor
   private static class LikeValueSpecification<T> implements Specification<T> {
 
+    private final String joinPropertyName;
     private final String propertyName;
     private final String value;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-      return builder.like(root.get(propertyName), StringUtils.appendIfMissing(value, "%"));
+      Expression<String> expression = StringUtils.isNotBlank(joinPropertyName)
+          ? root.join(joinPropertyName).get(propertyName)
+          : root.get(propertyName);
+      return builder.like(expression, StringUtils.appendIfMissing(value, "%"));
     }
   }
 
@@ -178,6 +232,25 @@ public class PropertySpecification<T> {
       } else {
         throw new IllegalArgumentException(value + " is not a number");
       }
+    }
+  }
+
+  public enum Operations {
+    equal,
+    like,
+    dateGreaterThanOrEqual,
+    dateLessThanOrEqual,
+    dateBetween,
+    graterThanOrEqual;
+
+    public boolean requiresOneOperand() {
+      return Arrays
+          .asList(equal, like, dateGreaterThanOrEqual, dateLessThanOrEqual, graterThanOrEqual)
+          .contains(this);
+    }
+
+    public boolean requiresTwoOperand() {
+      return this == dateBetween;
     }
   }
 }
