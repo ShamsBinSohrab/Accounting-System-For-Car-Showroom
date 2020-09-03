@@ -1,12 +1,14 @@
 package com.apiservice.controller.car;
 
 import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.model.car.CarCriteria;
 import com.apiservice.model.car.CarModel;
 import com.apiservice.service.car.CarService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +30,8 @@ public class CarController {
   private final CarService carService;
 
   @GetMapping("/cars")
-  public List<CarModel> cars() {
-    return carService.getAllCars().stream()
+  public List<CarModel> cars(CarCriteria criteria, Pageable pageable) {
+    return carService.getAllWithPaginationAndFilter(criteria, pageable).stream()
         .map(CarModel::toModel)
         .collect(Collectors.toUnmodifiableList());
   }

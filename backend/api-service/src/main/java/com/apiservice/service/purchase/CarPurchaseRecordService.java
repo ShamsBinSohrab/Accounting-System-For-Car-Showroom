@@ -8,7 +8,6 @@ import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import com.apiservice.utils.pagination.PaginationService;
 import com.apiservice.utils.pagination.QueryBuilder;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,15 +21,11 @@ public class CarPurchaseRecordService {
   private final CarPurchaseRecordRepository carPurchaseRecordRepository;
   private final PaginationService<CarPurchaseRecord> paginationService;
 
+  @Transactional(readOnly = true)
   public Page<CarPurchaseRecord> getAllWithPaginationAndFilter(
       PurchaseRecordCriteria criteria, Pageable pageable) {
     final QueryBuilder<CarPurchaseRecord> queryBuilder = new PurchaseRecordQueryBuilder(criteria);
     return paginationService.paginate(carPurchaseRecordRepository, queryBuilder, pageable);
-  }
-
-  @Transactional(readOnly = true)
-  public List<CarPurchaseRecord> getAll() {
-    return carPurchaseRecordRepository.findAll();
   }
 
   @Transactional(readOnly = true)
