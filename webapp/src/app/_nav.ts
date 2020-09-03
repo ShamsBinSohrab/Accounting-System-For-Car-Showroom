@@ -310,3 +310,37 @@ export const navItems: INavData[] = [
   //   attributes: { target: '_blank', rel: 'noopener' }
   // }
 ];
+
+export const saNavItems: INavData[] = [
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'icon-graph',
+    // badge: {
+    //   variant: 'info',
+    //   text: 'NEW'
+    // }
+  },
+  {
+    name: 'Company',
+    url: '/company',
+    icon: 'icon-speedometer',
+    children: [
+      {
+        name: 'Company List',
+        url: '/company/list',
+        icon: 'icon-list'
+      },
+      {
+        name: 'Add Company',
+        url: '/company/create',
+        icon: 'icon-plus'
+      }
+    ]
+  },
+  {
+    name: 'Change Password',
+    url: '/change-password',
+    icon: 'icon-key'
+  }
+];

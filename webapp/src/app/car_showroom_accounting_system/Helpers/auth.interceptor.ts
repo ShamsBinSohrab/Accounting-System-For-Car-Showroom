@@ -13,9 +13,20 @@ export class AuthInterceptor implements HttpInterceptor
             return next.handle(req.clone());
         }
         if (localStorage.getItem('token') != null) {
+            // let clonedreq = null;
+            // if (req.headers.get('No-Company-Token') === 'True') {
             const clonedreq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+                .set('x-company-accessor-token', localStorage.getItem('company-token'))
             });
+            // }
+            // else
+            // {
+            //   clonedreq = req.clone({
+            //     headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+            //     .set('x-company-accessor-token', localStorage.getItem('company-token'))
+            //   });
+            // }
             return next.handle(clonedreq)
                 .do(
                 succ => { },

@@ -16,10 +16,11 @@ export class LoginService {
     const reqHeader = new HttpHeaders({'No-Auth': 'True'});
     return this.http.post<any>(Common.url + '/authenticate', loginData, {headers: reqHeader})
     .pipe(map(user => {
-      if (user && user.jwtToken) {
+      if (user && user.authenticationToken) {
           console.log(user);
           // store user details in local storage to keep user logged in
-          localStorage.setItem('token', user.jwtToken);
+          localStorage.setItem('token', user.authenticationToken);
+          localStorage.setItem('company-token', user.tenantAccessorToken);
           // localStorage.setItem('username', user.username);
       }
   }));
@@ -33,6 +34,7 @@ export class LoginService {
   public logout() {
     // remove user data from local storage for log out
     localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    localStorage.removeItem('company-token');
+    localStorage.clear();
 }
 }
