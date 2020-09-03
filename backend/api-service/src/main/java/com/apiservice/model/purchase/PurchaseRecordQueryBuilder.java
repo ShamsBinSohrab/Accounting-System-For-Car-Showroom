@@ -1,11 +1,11 @@
 package com.apiservice.model.purchase;
 
-import static com.apiservice.utils.pagination.PropertySpecification.Operations.dateBetween;
-import static com.apiservice.utils.pagination.PropertySpecification.Operations.dateGreaterThanOrEqual;
-import static com.apiservice.utils.pagination.PropertySpecification.Operations.dateLessThanOrEqual;
-import static com.apiservice.utils.pagination.PropertySpecification.Operations.equal;
-import static com.apiservice.utils.pagination.PropertySpecification.Operations.like;
-import static com.apiservice.utils.pagination.PropertySpecification.joinedQuery;
+import static com.apiservice.utils.pagination.Operations.dateBetween;
+import static com.apiservice.utils.pagination.Operations.dateGreaterThanOrEqual;
+import static com.apiservice.utils.pagination.Operations.dateLessThanOrEqual;
+import static com.apiservice.utils.pagination.Operations.equal;
+import static com.apiservice.utils.pagination.Operations.like;
+import static com.apiservice.utils.pagination.specification.PropertySpecification.joinedQuery;
 
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.utils.pagination.QueryBuilder;
