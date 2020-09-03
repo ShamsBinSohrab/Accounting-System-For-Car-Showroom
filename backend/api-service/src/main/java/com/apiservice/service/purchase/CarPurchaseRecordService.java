@@ -1,8 +1,8 @@
 package com.apiservice.service.purchase;
 
-import com.apiservice.entity.car.Car;
-import com.apiservice.entity.purchase.CarPurchaseRecord;
-import com.apiservice.entity.purchase.PurchaseRecord;
+import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
+import com.apiservice.entity.tenant.purchase.PurchaseRecord;
 import com.apiservice.repository.car.CarRepository;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;

@@ -1,6 +1,6 @@
 package com.apiservice.model.sell;
 
-import com.apiservice.entity.sell.CarSellRecord;
+import com.apiservice.entity.tenant.sell.CarSellRecord;
 import com.apiservice.enums.sell.SellType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

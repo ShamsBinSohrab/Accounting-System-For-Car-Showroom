@@ -1,6 +1,6 @@
 package com.apiservice.model.car;
 
-import com.apiservice.entity.car.Car;
+import com.apiservice.entity.tenant.car.Car;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 

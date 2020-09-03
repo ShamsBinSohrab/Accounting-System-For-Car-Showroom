@@ -1,5 +1,6 @@
 package com.apiservice.authentication;
 
+import com.apiservice.entity.master.company.Company;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,9 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +21,7 @@ public class JwtTokenUtil {
   @Value("${jwt.secret}")
   private String secret;
 
-  public String getUsernameFromToken(String token) {
+  public String getSubjectFromToken(String token) {
     return getClaimFromToken(token, Claims::getSubject);
   }
 
@@ -44,14 +43,19 @@ public class JwtTokenUtil {
     return expiration.before(new Date());
   }
 
-  public String generateToken(UserDetails userDetails) {
+//  public String generateAuthToken(UserDetails userDetails) {
+//    final Map<String, Object> claims = new HashMap<>();
+//    final String authorities =
+//        userDetails.getAuthorities().stream()
+//            .map(GrantedAuthority::getAuthority)
+//            .collect(Collectors.joining(","));
+//    claims.putIfAbsent("AUTHORITIES", authorities);
+//    return doGenerateToken(claims, userDetails.getUsername());
+//  }
+
+  public String generateToken(String value) {
     final Map<String, Object> claims = new HashMap<>();
-    final String authorities =
-        userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-    claims.putIfAbsent("AUTHORITIES", authorities);
-    return doGenerateToken(claims, userDetails.getUsername());
+    return doGenerateToken(claims, value);
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {
@@ -64,9 +68,14 @@ public class JwtTokenUtil {
         .compact();
   }
 
-  public Boolean validateToken(String token, UserDetails userDetails) {
-    final String username = getUsernameFromToken(token);
+  public Boolean validateAuthToken(String token, UserDetails userDetails) {
+    final String username = getSubjectFromToken(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+  }
+
+  public Boolean validateTenantToken(String token, Company company) {
+    final String uuid = getSubjectFromToken(token);
+    return (uuid.equals(company.getUuid().toString()) && !isTokenExpired(token));
   }
 }
 

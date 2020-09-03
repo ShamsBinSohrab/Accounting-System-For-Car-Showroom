@@ -1,6 +1,6 @@
 package com.apiservice.controller.operator;
 
-import com.apiservice.entity.operator.Operator;
+import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.model.operator.ChangePasswordModel;
 import com.apiservice.model.operator.OperatorModel;
 import com.apiservice.model.operator.PasswordChangeValidator;
@@ -48,7 +48,7 @@ public class OperatorController {
   @ResponseStatus(HttpStatus.CREATED)
   public OperatorModel create(@RequestBody @Valid OperatorModel operatorModel) {
     final Operator operator = operatorModel.toOperator();
-    operatorService.save(operator);
+    operatorService.createNewOperator(operator);
     return OperatorModel.toModel(operator);
   }
 

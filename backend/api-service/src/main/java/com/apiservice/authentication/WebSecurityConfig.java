@@ -1,5 +1,6 @@
 package com.apiservice.authentication;
 
+import com.apiservice.entity.master.operator.OperatorRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +23,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  private final AuthenticationEntryPointImpl authenticationEntryPoint;
   private final UserDetailsService jwtUserDetailsService;
-  private final JwtRequestFilter jwtRequestFilter;
+  private final RequestFilter requestFilter;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
@@ -48,15 +49,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/**")
         .permitAll()
+        .antMatchers("/su/*")
+        .hasAuthority(OperatorRole.SUPER_ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()
         .exceptionHandling()
-        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .authenticationEntryPoint(authenticationEntryPoint)
         .and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    httpSecurity.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
   }
 }
 

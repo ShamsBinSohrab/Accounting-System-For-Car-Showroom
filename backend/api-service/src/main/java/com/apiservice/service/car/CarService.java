@@ -1,6 +1,6 @@
 package com.apiservice.service.car;
 
-import com.apiservice.entity.car.Car;
+import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.model.car.CarModel;
 import com.apiservice.repository.car.CarRepository;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;

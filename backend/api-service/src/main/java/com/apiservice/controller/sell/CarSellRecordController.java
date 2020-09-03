@@ -1,7 +1,7 @@
 package com.apiservice.controller.sell;
 
-import com.apiservice.entity.car.Car;
-import com.apiservice.entity.sell.CarSellRecord;
+import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.entity.tenant.sell.CarSellRecord;
 import com.apiservice.model.sell.CarSellRecordModel;
 import com.apiservice.service.car.CarService;
 import com.apiservice.service.sell.CarSellRecordService;

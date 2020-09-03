@@ -2,10 +2,6 @@ databaseChangeLog:
   - include:
       - file: db/changelog/1.0/initial-setup.yaml
   - include:
-      - file: db/changelog/1.0/car.yaml
-  - include:
-      - file: db/changelog/1.0/purchase-record.yaml
-  - include:
       - file: db/changelog/1.0/operator.yaml
   - include:
-      - file: db/changelog/1.0/sell-record.yaml
+      - file: db/changelog/1.0/company.yaml
