@@ -114,14 +114,14 @@ public class PropertySpecification<T> {
       return switch (operation) {
         case equal -> new EqualValueSpecification<>(joinPropertyName, propertyName, value1);
         case like -> new LikeValueSpecification<>(joinPropertyName, propertyName, (String) value1);
-        case dateGreaterThanOrEqual -> new DateGreaterThanOrEqual<>(joinPropertyName, propertyName,
-            (ZonedDateTime) value1);
-        case dateLessThanOrEqual -> new DateLessThanOrEqual<>(joinPropertyName, propertyName,
-            (ZonedDateTime) value1);
-        case dateBetween -> new DateBetweenSpecification<>(
-            joinPropertyName, propertyName, (ZonedDateTime) value1, (ZonedDateTime) value2);
-        case graterThanOrEqual -> new GraterThanOrEqualSpecification<>(joinPropertyName,
-            propertyName, value1);
+        case dateGreaterThanOrEqual ->
+            new DateGreaterThanOrEqual<>(joinPropertyName, propertyName, (ZonedDateTime) value1);
+        case dateLessThanOrEqual ->
+            new DateLessThanOrEqual<>(joinPropertyName, propertyName, (ZonedDateTime) value1);
+        case dateBetween ->
+            new DateBetweenSpecification<>(joinPropertyName, propertyName, (ZonedDateTime) value1, (ZonedDateTime) value2);
+        case graterThanOrEqual ->
+            new GraterThanOrEqualSpecification<>(joinPropertyName, propertyName, value1);
       };
     }
     return Specification.where(null);
