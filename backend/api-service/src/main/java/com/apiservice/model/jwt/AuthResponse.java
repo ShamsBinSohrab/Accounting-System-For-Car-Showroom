@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthResponse {
 
-  private final String authenticationToken;
-  private final String tenantAccessorToken;
+  private final String authToken;
+  private final String companyToken;
 
   public static AuthResponse prepare(String authenticationToken, String tenantAccessorToken) {
     return new AuthResponse(authenticationToken, tenantAccessorToken);

@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.OPTIONS)
         .permitAll()
         .anyRequest()
-        .fullyAuthenticated()
+        .authenticated()
         .and()
         .exceptionHandling()
         .authenticationEntryPoint(authenticationEntryPoint)
