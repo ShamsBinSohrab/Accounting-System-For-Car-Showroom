@@ -32,7 +32,8 @@ public class RequestFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws ServletException, IOException {
 
-    if (request.getServletPath().equalsIgnoreCase("/authenticate")) {
+    if (request.getServletPath().equalsIgnoreCase("/authenticate")
+        || request.getMethod().equalsIgnoreCase("OPTIONS")) {
       chain.doFilter(request, response);
       return;
     }
