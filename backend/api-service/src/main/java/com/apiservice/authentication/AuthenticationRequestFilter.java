@@ -20,10 +20,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
-@Order(1)
 @Component
 @RequiredArgsConstructor
-public class RequestFilter extends OncePerRequestFilter {
+public class AuthenticationRequestFilter extends OncePerRequestFilter {
 
   private final UserDetailsService userDetailsService;
   private final JwtTokenUtil jwtTokenUtil;

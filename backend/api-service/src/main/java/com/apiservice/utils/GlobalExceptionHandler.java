@@ -23,7 +23,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleEntityNotFoundException(
       RuntimeException ex, WebRequest request) {
     return handleExceptionInternal(
-        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
