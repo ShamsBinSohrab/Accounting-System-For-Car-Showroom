@@ -12,6 +12,6 @@ public class CarFilter {
   private CarMake make;
   private String name;
   private CarType type;
-  private int modelYear;
+  private String modelYear;
   private String color;
 }
