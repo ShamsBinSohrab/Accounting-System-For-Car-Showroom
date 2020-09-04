@@ -14,6 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,7 +25,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class RequestFilter extends OncePerRequestFilter {
 
-  private final UserDetailsServiceImpl userDetailsServiceImpl;
+  private final UserDetailsService userDetailsService;
   private final JwtTokenUtil jwtTokenUtil;
 
   @Override
@@ -44,7 +45,7 @@ public class RequestFilter extends OncePerRequestFilter {
                 final String jwtToken = header.substring(7);
                 final String username = jwtTokenUtil.getSubjectFromToken(jwtToken);
                 if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-                  final UserDetails details = userDetailsServiceImpl.loadUserByUsername(username);
+                  final UserDetails details = userDetailsService.loadUserByUsername(username);
                   if (jwtTokenUtil.validateAuthToken(jwtToken, details)) {
                     UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(

@@ -47,10 +47,14 @@ public class JwtTokenUtil {
     return expiration.before(new Date());
   }
 
-  public String generateAuthToken(Operator operator) {
+  public String generateAuthToken(UserDetails userDetails) {
     final Map<String, Object> claims = new HashMap<>();
-    claims.putIfAbsent("AUTHORITIES", operator.getRole().name());
-    return doGenerateToken(claims, operator.getUsername());
+    final String authorities =
+        userDetails.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
+    claims.putIfAbsent("AUTHORITIES", authorities);
+    return doGenerateToken(claims, userDetails.getUsername());
   }
 
   public String generateCompanyToken(Company company) {
