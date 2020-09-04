@@ -1,14 +1,18 @@
 package com.apiservice.authentication;
 
 import com.apiservice.entity.master.company.Company;
+import com.apiservice.entity.master.operator.Operator;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -43,19 +47,15 @@ public class JwtTokenUtil {
     return expiration.before(new Date());
   }
 
-//  public String generateAuthToken(UserDetails userDetails) {
-//    final Map<String, Object> claims = new HashMap<>();
-//    final String authorities =
-//        userDetails.getAuthorities().stream()
-//            .map(GrantedAuthority::getAuthority)
-//            .collect(Collectors.joining(","));
-//    claims.putIfAbsent("AUTHORITIES", authorities);
-//    return doGenerateToken(claims, userDetails.getUsername());
-//  }
-
-  public String generateToken(String value) {
+  public String generateAuthToken(Operator operator) {
     final Map<String, Object> claims = new HashMap<>();
-    return doGenerateToken(claims, value);
+    claims.putIfAbsent("AUTHORITIES", operator.getRole().name());
+    return doGenerateToken(claims, operator.getUsername());
+  }
+
+  public String generateCompanyToken(Company company) {
+    final Map<String, Object> claims = new HashMap<>();
+    return doGenerateToken(claims, company.getUuid().toString());
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {

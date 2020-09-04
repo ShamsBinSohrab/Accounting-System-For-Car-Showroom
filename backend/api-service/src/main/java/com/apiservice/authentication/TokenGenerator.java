@@ -1,8 +1,11 @@
 package com.apiservice.authentication;
 
+import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.model.jwt.AuthResponse;
 import com.apiservice.service.operator.OperatorService;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -25,6 +28,9 @@ public class TokenGenerator implements Callable<AuthResponse> {
   @Override
   public AuthResponse call() throws UsernameNotFoundException {
     final Operator operator = operatorService.getByUsername(username);
-    return AuthResponse.prepare(operator, jwtTokenUtil::generateToken);
+    final String authToken = jwtTokenUtil.generateAuthToken(operator);
+    final String companyToken = Optional.ofNullable(operator.getCompany())
+        .map(jwtTokenUtil::generateCompanyToken).orElse("");
+    return AuthResponse.prepare(authToken, companyToken);
   }
 }
