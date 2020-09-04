@@ -1,12 +1,17 @@
 package com.apiservice.service.car;
 
 import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.model.car.CarFilter;
 import com.apiservice.model.car.CarModel;
+import com.apiservice.model.car.CarQueryBuilder;
 import com.apiservice.repository.car.CarRepository;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
-import java.util.List;
+import com.apiservice.utils.pagination.PaginationService;
+import com.apiservice.utils.pagination.QueryBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +21,13 @@ public class CarService {
 
   private final CarRepository carRepository;
   private final CarPurchaseRecordRepository carPurchaseRecordRepository;
+  private final PaginationService<Car> paginationService;
 
   @Transactional(readOnly = true)
-  public List<Car> getAllCars() {
-    return carRepository.findAll();
+  public Page<Car> getAllWithPaginationAndFilter(
+      CarFilter filter, Pageable pageable) {
+    final QueryBuilder<Car> queryBuilder = new CarQueryBuilder(filter);
+    return paginationService.paginate(carRepository, queryBuilder, pageable);
   }
 
   @Transactional(readOnly = true)
