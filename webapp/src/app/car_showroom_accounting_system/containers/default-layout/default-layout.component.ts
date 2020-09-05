@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { navItems, saNavItems } from 'src/app/_nav';
+import { navItems, saNavItems, saCompanyNavItems } from 'src/app/_nav';
 import { LoginService } from 'src/app/car_showroom_accounting_system/Services/login.service';
 import { Router } from '@angular/router';
 
@@ -20,13 +20,17 @@ export class DefaultLayoutComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
-    if (localStorage.getItem('company-token') != null)
+    if (localStorage.getItem('company_token') !== '' && localStorage.getItem('user_role') === 'SUPER_ADMIN')
     {
-      this.navItems = navItems;
+      this.navItems = saCompanyNavItems;
+    }
+    else if (localStorage.getItem('company_token') === '')
+    {
+      this.navItems = saNavItems;
     }
     else
     {
-      this.navItems = saNavItems;
+      this.navItems = navItems;
     }
   }
 

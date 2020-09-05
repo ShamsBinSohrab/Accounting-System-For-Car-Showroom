@@ -13,17 +13,17 @@ export class CompanyService {
   public addCompany(data: any)
   {
     // const reqHeader = new HttpHeaders({'No-Company-Token': 'True'});, {headers: reqHeader}
-    return this.http.post<any>(Common.suBaseUrl + '/companies', data);
+    return this.http.post<any>(Common.baseUrl + '/companies', data);
   }
   public getCompanyToken(data: any)
   {
     // const reqHeader = new HttpHeaders({'No-Company-Token': 'True'});, {headers: reqHeader}
-    return this.http.get<any>(Common.suBaseUrl + '/companies/' + data + '/token')
+    return this.http.get<any>(Common.baseUrl + '/companies/' + data + '/token')
     .pipe(map(company => {
-      if (company && company.tenantAccessorToken) {
+      if (company && company.companyToken) {
           console.log(company);
           // store company token details in local storage
-          localStorage.setItem('company-token', company.tenantAccessorToken);
+          localStorage.setItem('company_token', company.companyToken);
       }
   }));
   }

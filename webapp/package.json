@@ -37,6 +37,7 @@
     "highcharts": "^8.1.2",
     "highcharts-angular": "^2.4.0",
     "jspdf": "^1.5.3",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.25.1",
     "mutationobserver-shim": "^0.3.5",
     "ng2-charts": "^2.3.0",
