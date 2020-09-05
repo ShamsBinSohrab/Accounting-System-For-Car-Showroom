@@ -34,9 +34,8 @@ public class CarDetails {
   @Column(name = "type", nullable = false)
   private CarType type;
 
-  @Digits(integer = 4, fraction = 0)
   @Column(name = "model_year", nullable = false)
-  private int modelYear;
+  private String modelYear;
 
   @Column(name = "color", nullable = false)
   private String color;
