@@ -56,7 +56,7 @@ public class OperatorController {
   public OperatorModel update(@RequestBody @Valid OperatorModel model, @PathVariable long id) {
     final Operator operator = operatorService.getOperatorById(id);
     model.updateEntity(operator);
-    operatorService.update(operator);
+    operatorService.save(operator);
     return OperatorModel.toModel(operator);
   }
 
@@ -66,7 +66,7 @@ public class OperatorController {
     final Operator operator = operatorService.getOperatorById(id);
     passwordChangeValidator.validate(model, operator);
     operator.setPassword(model.getNewPassword());
-    operatorService.save(operator);
+    operatorService.changePassword(operator);
   }
 
   @DeleteMapping("/operators/{id}")

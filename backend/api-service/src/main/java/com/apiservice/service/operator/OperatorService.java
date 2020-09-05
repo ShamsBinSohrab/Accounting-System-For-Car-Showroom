@@ -1,5 +1,6 @@
 package com.apiservice.service.operator;
 
+import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.multitenancy.TenantContext;
 import com.apiservice.repository.company.CompanyRepository;
@@ -32,51 +33,57 @@ public class OperatorService {
 
   @Transactional(readOnly = true)
   public List<Operator> getAllOperators() {
-    final UUID companyUuid = Optional.ofNullable(TenantContext.getCurrentTenant())
-            .map(UUID::fromString).orElseThrow();
+    final UUID companyUuid = getCurrentCompanyUuid();
     return operatorRepository.findAllOperatorsByCompanyUuid(companyUuid);
   }
 
   @Transactional(readOnly = true)
   public Operator getOperatorById(long id) {
+    final UUID companyUuid = getCurrentCompanyUuid();
     return operatorRepository
-        .findById(id)
+        .findByIdAndCompanyUuid(id, companyUuid)
         .orElseThrow(() -> EntityNotFoundException.of(Operator.class, id));
   }
 
   @Transactional
   public void delete(long id) {
-    Operator operator =
+    final UUID companyUuid = getCurrentCompanyUuid();
+    final Operator operator =
         operatorRepository
-            .findById(id)
+            .findByIdAndCompanyUuid(id, companyUuid)
             .orElseThrow(() -> EntityNotFoundException.of(Operator.class, id));
     operatorRepository.delete(operator);
   }
 
   @Transactional
   public void save(Operator operator) {
-    final String encodedPassword = passwordEncoder.encode(operator.getPassword());
-    operator.setPassword(encodedPassword);
     operatorRepository.save(operator);
   }
 
   @Transactional
   public void createNewOperator(Operator operator) {
-    Optional.ofNullable(TenantContext.getCurrentTenant())
-        .map(UUID::fromString)
-        .map(companyRepository::findByUuid)
-        .map(Optional::get)
-        .ifPresent(operator::setCompany);
+    final UUID companyUuid = getCurrentCompanyUuid();
+    final Company company =
+        companyRepository.findByUuid(companyUuid).orElseThrow();
+    operator.setCompany(company);
+    encodePassword(operator);
     save(operator);
   }
 
   @Transactional
-  public void update(Operator operator) {
-    operatorRepository.save(operator);
+  public void changePassword(Operator operator) {
+    encodePassword(operator);
+    save(operator);
   }
 
-  @Transactional(readOnly = true)
-  public boolean isValidUser(String username) {
-    return operatorRepository.findByUsername(username).isPresent();
+  private void encodePassword(Operator operator) {
+    final String encodedPassword = passwordEncoder.encode(operator.getPassword());
+    operator.setPassword(encodedPassword);
   }
+
+  private UUID getCurrentCompanyUuid() {
+    return Optional.ofNullable(TenantContext.getCurrentTenant())
+        .map(UUID::fromString).orElseThrow();
+  }
+
 }

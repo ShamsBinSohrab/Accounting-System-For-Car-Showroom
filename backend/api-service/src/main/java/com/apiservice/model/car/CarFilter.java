@@ -2,20 +2,16 @@ package com.apiservice.model.car;
 
 import com.apiservice.enums.car.CarMake;
 import com.apiservice.enums.car.CarType;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.Digits;
 import lombok.Data;
 
 @Data
-public class CarDetailsModel {
+public class CarFilter {
 
+  private String chassisNo;
+  private boolean draft;
   private CarMake make;
   private String name;
-  private String color;
-
-  @Enumerated(value = EnumType.STRING)
   private CarType type;
-
   private String modelYear;
+  private String color;
 }
