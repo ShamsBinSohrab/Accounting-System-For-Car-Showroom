@@ -2,9 +2,8 @@ package com.apiservice.controller.company;
 
 import com.apiservice.entity.master.company.Company;
 import com.apiservice.model.company.CompanyModel;
-import com.apiservice.model.company.CompanyModel.CompanyTokenResponse;
+import com.apiservice.model.company.CompanyTokenResponse;
 import com.apiservice.service.company.CompanyService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,7 +11,15 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -47,14 +54,14 @@ public class CompanyController {
 
   @GetMapping("/companies/{id}")
   public CompanyModel details(@PathVariable long id) {
-    Company company = companyService.getCompanyById(id);
+    final Company company = companyService.getCompanyById(id);
     return CompanyModel.from(company);
   }
 
   @PutMapping("/companies/{id}")
   public CompanyModel update(@PathVariable long id,@RequestBody @Valid CompanyModel model) {
-    Company company = companyService.getCompanyById(id);
-    Company updatedCompany = model.updateEntity(company);
+    final Company company = companyService.getCompanyById(id);
+    final Company updatedCompany = model.updateEntity(company);
     companyService.save(updatedCompany);
     return CompanyModel.from(updatedCompany);
   }
