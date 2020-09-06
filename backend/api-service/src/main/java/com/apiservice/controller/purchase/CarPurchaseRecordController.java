@@ -3,7 +3,6 @@ package com.apiservice.controller.purchase;
 import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.model.purchase.CarPurchaseRecordModel;
-import com.apiservice.model.purchase.PurchaseRecordCar;
 import com.apiservice.model.purchase.PurchaseRecordFilter;
 import com.apiservice.service.car.CarService;
 import com.apiservice.service.purchase.CarPurchaseRecordService;
@@ -47,13 +46,12 @@ public class CarPurchaseRecordController {
     return CarPurchaseRecordModel.toModel(purchaseRecord);
   }
 
-  @PostMapping("/purchaseRecords")
+  @PostMapping("cars/{carId}/purchaseRecords")
   @ResponseStatus(HttpStatus.CREATED)
   public CarPurchaseRecordModel create(
-      @RequestBody @Valid CarPurchaseRecordModel model, PurchaseRecordCar purchaseRecordCar) {
+      @PathVariable("carId") long carId, @RequestBody @Valid CarPurchaseRecordModel model) {
     final CarPurchaseRecord purchaseRecord = model.toEntity();
-    final Car car =
-        carService.getByChassisNoAndDraft(model.getCarChassisNo(), purchaseRecordCar.isDraftCar());
+    final Car car = carService.getCarById(carId);
     purchaseRecord.setCar(car);
     carPurchaseRecordService.save(purchaseRecord);
     return CarPurchaseRecordModel.toModel(purchaseRecord);
@@ -61,14 +59,9 @@ public class CarPurchaseRecordController {
 
   @PutMapping("/purchaseRecords/{id}")
   public CarPurchaseRecordModel update(
-      @PathVariable("id") long id,
-      @RequestBody @Valid CarPurchaseRecordModel model,
-      PurchaseRecordCar purchaseRecordCar) {
+      @PathVariable("id") long id, @RequestBody @Valid CarPurchaseRecordModel model) {
     final CarPurchaseRecord purchaseRecordToUpdate = carPurchaseRecordService.getById(id);
     final CarPurchaseRecord purchaseRecord = model.updateEntity(purchaseRecordToUpdate);
-    final Car car =
-        carService.getByChassisNoAndDraft(model.getCarChassisNo(), purchaseRecordCar.isDraftCar());
-    purchaseRecord.setCar(car);
     carPurchaseRecordService.save(purchaseRecord);
     return CarPurchaseRecordModel.toModel(purchaseRecord);
   }
