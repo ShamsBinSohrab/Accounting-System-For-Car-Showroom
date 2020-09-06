@@ -33,6 +33,7 @@ public class CompanyModel {
     Company company =
             mapper.map(this, Company.class);
     company.setId(source.getId());
+    company.setUuid(source.getUuid());
     return company;
   }
   @Data
