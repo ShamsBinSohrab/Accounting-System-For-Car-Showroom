@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class CompanyFilter {
     private String companyName;
-    private boolean active;
+    private Boolean active;
 }

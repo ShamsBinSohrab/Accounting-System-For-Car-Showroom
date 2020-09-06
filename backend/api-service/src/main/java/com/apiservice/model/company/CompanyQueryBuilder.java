@@ -17,7 +17,7 @@ public class CompanyQueryBuilder implements QueryBuilder<Company> {
     }
 
     private Specification<Company> queryForActive() {
-        return query("active", equal, filter.isActive());
+        return query("active", equal, filter.getActive());
     }
 
     @Override
