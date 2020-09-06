@@ -50,8 +50,7 @@ public class CarSellRecordModel {
         return mapper.map(this, CarSellRecord.class);
     }
     public CarSellRecord updateEntity(CarSellRecord source) {
-        CarSellRecord sellRecord =
-                mapper.map(this, CarSellRecord.class);
+        CarSellRecord sellRecord = mapper.map(this, CarSellRecord.class);
         sellRecord.setId(source.getId());
         sellRecord.getSellRecord().setId(source.getSellRecord().getId());
         return sellRecord;
