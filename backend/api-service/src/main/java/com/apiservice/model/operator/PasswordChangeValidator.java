@@ -11,7 +11,7 @@ public class PasswordChangeValidator {
 
   private final PasswordEncoder passwordEncoder;
 
-  public void validate(ChangePasswordModel model, Operator operator) {
+  public void validatePasswordChange(ChangePasswordModel model, Operator operator) {
     if (model.getNewPassword().equals(model.getConfirmPassword())) {
       if (!passwordEncoder.matches(model.getNewPassword(), operator.getPassword())) {
         if (passwordEncoder.matches(model.getOldPassword(), operator.getPassword())) {
@@ -22,5 +22,11 @@ public class PasswordChangeValidator {
       throw new PasswordChangeValidationException("new password cannot be same as old password");
     }
     throw new PasswordChangeValidationException("new password and confirm password must be same");
+  }
+
+  public void validatePasswordReset(ResetPasswordModel model) {
+    if (!model.getNewPassword().equals(model.getConfirmPassword())) {
+      throw new PasswordChangeValidationException("new password and confirm password must be same");
+    }
   }
 }
