@@ -101,7 +101,7 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 1
-            sql: SELECT COUNT(*) FROM information_schema.columns  WHERE table_name='car_sell_record' AND column_name='car_id';
+            sql: SELECT COUNT(*) FROM information_schema.columns WHERE table_name='car_sell_record' AND column_name='car_id';
       changes:
         - dropColumn:
             tableName: car_sell_record
