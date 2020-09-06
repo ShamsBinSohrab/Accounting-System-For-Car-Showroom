@@ -41,6 +41,7 @@ export class AddCompanyComponent implements OnInit {
       this.toastrService.warning('Please Fill All Field!', 'Warning!');
       return;
     }
+    console.log(this.CompanyForm.value);
     this.companyService.addCompany(this.CompanyForm.value)
                           .subscribe(
                             data => {

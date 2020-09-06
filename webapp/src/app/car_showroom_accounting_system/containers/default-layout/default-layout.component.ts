@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { navItems } from 'src/app/_nav';
+import { navItems, saNavItems, saCompanyNavItems } from 'src/app/_nav';
 import { LoginService } from 'src/app/car_showroom_accounting_system/Services/login.service';
 import { Router } from '@angular/router';
 
@@ -10,16 +10,30 @@ import { Router } from '@angular/router';
 })
 export class DefaultLayoutComponent implements OnInit {
 
+  public sidebarMinimized = false;
+  public navItems: any;
+
+
   constructor(
-              private loginSercice:LoginService,
-              private router:Router
+              private loginSercice: LoginService,
+              private router: Router
               ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('company_token') !== '' && localStorage.getItem('user_role') === 'SUPER_ADMIN')
+    {
+      this.navItems = saCompanyNavItems;
+    }
+    else if (localStorage.getItem('company_token') === '')
+    {
+      this.navItems = saNavItems;
+    }
+    else
+    {
+      this.navItems = navItems;
+    }
   }
 
-  public sidebarMinimized = false;
-  public navItems = navItems;
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;

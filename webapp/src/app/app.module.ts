@@ -38,7 +38,6 @@ import { LoginService } from './car_showroom_accounting_system/Services/login.se
 import { EncryptionDescryptionService } from './car_showroom_accounting_system/Services/encryption-descryption.service';
 import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
-import { AccountStatementComponent } from './car_showroom_accounting_system/views/account-statement/account-statement.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -60,7 +59,6 @@ const APP_CONTAINERS = [
     SignupComponent,
     ChangePasswordComponent,
     DashboardComponent,
-    AccountStatementComponent,
     ContactComponent,
 
 
