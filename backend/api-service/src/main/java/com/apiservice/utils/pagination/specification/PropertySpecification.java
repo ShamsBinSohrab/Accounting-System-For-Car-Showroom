@@ -1,5 +1,7 @@
 package com.apiservice.utils.pagination.specification;
 
+import static java.util.Objects.nonNull;
+
 import com.apiservice.utils.pagination.Operations;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -97,7 +99,7 @@ public class PropertySpecification<T> {
    * @return
    */
   public static <T> Specification<T> joinedQuery(String joinPropertyName, String propertyName, Operations operation, Object v1, Object v2) {
-    if (operation.requiresOneOperand()) {
+    if (operation.requiresTwoOperand()) {
       return new PropertySpecification<T>()
           .withJoinPropertyName(joinPropertyName)
           .withPropertyName(propertyName)
@@ -110,7 +112,7 @@ public class PropertySpecification<T> {
   }
 
   private Specification<T> build() {
-    if (Objects.nonNull(value1)) {
+    if (nonNull(value1)) {
       return switch (operation) {
         case equal -> new EqualValueSpecification<>(joinPropertyName, propertyName, value1);
         case like -> new LikeValueSpecification<>(joinPropertyName, propertyName, (String) value1);

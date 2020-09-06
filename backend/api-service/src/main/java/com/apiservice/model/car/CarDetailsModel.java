@@ -17,6 +17,5 @@ public class CarDetailsModel {
   @Enumerated(value = EnumType.STRING)
   private CarType type;
 
-  @Digits(integer = 4, fraction = 0)
-  private int modelYear;
+  private String modelYear;
 }

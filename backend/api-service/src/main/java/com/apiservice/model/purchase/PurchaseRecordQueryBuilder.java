@@ -6,6 +6,7 @@ import static com.apiservice.utils.pagination.Operations.dateLessThanOrEqual;
 import static com.apiservice.utils.pagination.Operations.equal;
 import static com.apiservice.utils.pagination.Operations.like;
 import static com.apiservice.utils.pagination.specification.PropertySpecification.joinedQuery;
+import static java.util.Objects.isNull;
 
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.utils.pagination.QueryBuilder;
@@ -27,10 +28,10 @@ public class PurchaseRecordQueryBuilder implements QueryBuilder<CarPurchaseRecor
   }
 
   private Specification<CarPurchaseRecord> queryForPurchaseDate() {
-    if (Objects.isNull(filter.getPurchaseDateFrom())) {
+    if (isNull(filter.getPurchaseDateFrom())) {
       return joinedQuery(
           "purchaseRecord", "purchaseDate", dateLessThanOrEqual, filter.getPurchaseDateTo());
-    } else if (Objects.isNull(filter.getPurchaseDateTo())) {
+    } else if (isNull(filter.getPurchaseDateTo())) {
       return joinedQuery(
           "purchaseRecord", "purchaseDate", dateGreaterThanOrEqual, filter.getPurchaseDateFrom());
     } else {
