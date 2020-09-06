@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface CarSellRecordRepository extends JpaRepository<CarSellRecord, Long> {
 
   Optional<CarSellRecord> findByCarId(long carId);
+
+  boolean existsByCarId(long carId);
 }
