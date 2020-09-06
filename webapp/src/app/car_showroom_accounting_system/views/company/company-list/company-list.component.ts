@@ -40,11 +40,9 @@ export class CompanyListComponent implements OnInit {
                       );
   }
 
-  resetCompany()
+  createCompany()
   {
-    localStorage.setItem('company_token', '');
-    this.toastrService.success('Company Reset Done', 'Success!');
-    this.defaultComponent.ngOnInit();
+    this.route.navigate(['/company/create']);
   }
 
 }

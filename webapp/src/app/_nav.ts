@@ -296,15 +296,15 @@ export const navItems: INavData[] = [
 
 
 export const saCompanyNavItems: INavData[] = [
-  {
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-graph',
-    // badge: {
-    //   variant: 'info',
-    //   text: 'NEW'
-    // }
-  },
+  // {
+  //   name: 'Dashboard',
+  //   url: '/dashboard',
+  //   icon: 'icon-graph',
+  //   // badge: {
+  //   //   variant: 'info',
+  //   //   text: 'NEW'
+  //   // }
+  // },
   {
     name: 'Car',
     url: '/car',
@@ -369,15 +369,15 @@ export const saCompanyNavItems: INavData[] = [
 ];
 
 export const saNavItems: INavData[] = [
-  {
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-graph',
-    // badge: {
-    //   variant: 'info',
-    //   text: 'NEW'
-    // }
-  },
+  // {
+  //   name: 'Dashboard',
+  //   url: '/dashboard',
+  //   icon: 'icon-graph',
+  //   // badge: {
+  //   //   variant: 'info',
+  //   //   text: 'NEW'
+  //   // }
+  // },
   {
     name: 'Company',
     url: '/company',
