@@ -4,6 +4,7 @@ import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.model.operator.ChangePasswordModel;
 import com.apiservice.model.operator.OperatorModel;
 import com.apiservice.model.operator.PasswordChangeValidator;
+import com.apiservice.model.operator.ResetPasswordModel;
 import com.apiservice.service.operator.OperatorService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,7 +65,16 @@ public class OperatorController {
   public void changePassword(
       @RequestBody @Valid ChangePasswordModel model, @PathVariable long id) {
     final Operator operator = operatorService.getOperatorById(id);
-    passwordChangeValidator.validate(model, operator);
+    passwordChangeValidator.validatePasswordChange(model, operator);
+    operator.setPassword(model.getNewPassword());
+    operatorService.changePassword(operator);
+  }
+
+  @PatchMapping("/operators/{id}/resetPassword")
+  public void changePassword(
+      @RequestBody @Valid ResetPasswordModel model, @PathVariable long id) {
+    final Operator operator = operatorService.getOperatorById(id);
+    passwordChangeValidator.validatePasswordReset(model);
     operator.setPassword(model.getNewPassword());
     operatorService.changePassword(operator);
   }
