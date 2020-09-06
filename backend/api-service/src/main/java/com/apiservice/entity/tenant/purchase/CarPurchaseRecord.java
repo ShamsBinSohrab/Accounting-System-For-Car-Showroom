@@ -24,9 +24,7 @@ public class CarPurchaseRecord {
   private Long id;
 
   @JoinColumn(name = "car_id", unique = true)
-  @OneToOne(
-      fetch = FetchType.EAGER,
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(fetch = FetchType.EAGER)
   private Car car;
 
   @JoinColumn(name = "purchase_record_id", unique = true)
