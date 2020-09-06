@@ -44,4 +44,10 @@ public class CarPurchaseRecordService {
   public void delete(long id) {
     carPurchaseRecordRepository.deleteById(id);
   }
+
+  @Transactional(readOnly = true)
+  public CarPurchaseRecord getByCarId(long carId) {
+    return carPurchaseRecordRepository.findByCarId(carId)
+        .orElseThrow();
+  }
 }

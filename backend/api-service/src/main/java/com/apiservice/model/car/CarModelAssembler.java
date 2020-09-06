@@ -25,19 +25,29 @@ public class CarModelAssembler implements RepresentationModelAssembler<Car, CarM
   @Override
   public CarModel toModel(Car car) {
     final CarModel model = modelMapper.map(car, CarModel.class);
-    final boolean purchaseRecordExists = purchaseRecordRepository.existsByCarId(car.getId());
-    final boolean sellRecordExists = sellRecordRepository.existsByCarId(car.getId());
     model.add(linkTo(methodOn(CarController.class).car(car.getId())).withSelfRel());
-    if (!purchaseRecordExists) {
-      model.add(
-          linkTo(methodOn(CarPurchaseRecordController.class).create(car.getId(), null))
-              .withRel("purchaseRecord"));
-    }
-    if (purchaseRecordExists && !sellRecordExists) {
-      model.add(
-          linkTo(methodOn(CarSellRecordController.class).create(car.getId(), null))
-              .withRel("sellRecord"));
-    }
+    purchaseRecordRepository
+        .findByCarId(car.getId())
+        .ifPresentOrElse(
+            pr -> {
+              if (!sellRecordRepository.existsByPurchaseRecordId(pr.getId())) {
+                addLinkToSellRecord(model, car);
+              }
+            },
+            () -> addLinkToPurchaseRecord(model, car));
+
     return model;
+  }
+
+  private void addLinkToSellRecord(CarModel model, Car car) {
+    model.add(
+        linkTo(methodOn(CarSellRecordController.class).create(car.getId(), null))
+            .withRel("sellRecord"));
+  }
+
+  private void addLinkToPurchaseRecord(CarModel model, Car car) {
+    model.add(
+        linkTo(methodOn(CarPurchaseRecordController.class).create(car.getId(), null))
+            .withRel("purchaseRecord"));
   }
 }

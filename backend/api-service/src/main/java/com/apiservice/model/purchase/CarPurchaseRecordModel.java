@@ -15,11 +15,6 @@ public class CarPurchaseRecordModel {
 
   private static final ModelMapper mapper = new ModelMapper();
 
-  static {
-    mapper.createTypeMap(CarPurchaseRecordModel.class, CarPurchaseRecord.class)
-        .addMappings(m -> m.skip(CarPurchaseRecord::setCar));
-  }
-
   private Long id;
 
   @JsonProperty("chassisNo")
@@ -68,6 +63,7 @@ public class CarPurchaseRecordModel {
         mapper.map(this, CarPurchaseRecord.class);
     purchaseRecord.setId(source.getId());
     purchaseRecord.getPurchaseRecord().setId(source.getPurchaseRecord().getId());
+    purchaseRecord.setCar(source.getCar());
     return purchaseRecord;
   }
 }

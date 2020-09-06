@@ -11,6 +11,4 @@ public interface CarPurchaseRecordRepository extends JpaRepository<CarPurchaseRe
     JpaSpecificationExecutor<CarPurchaseRecord> {
 
   Optional<CarPurchaseRecord> findByCarId(long carId);
-
-  boolean existsByCarId(long cardId);
 }

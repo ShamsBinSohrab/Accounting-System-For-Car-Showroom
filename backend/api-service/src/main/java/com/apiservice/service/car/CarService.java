@@ -25,8 +25,7 @@ public class CarService {
   private final PaginationService<Car> paginationService;
 
   @Transactional(readOnly = true)
-  public Page<Car> getAllWithPaginationAndFilter(
-      CarFilter filter, Pageable pageable) {
+  public Page<Car> getAllWithPaginationAndFilter(CarFilter filter, Pageable pageable) {
     final QueryBuilder<Car> queryBuilder = new CarQueryBuilder(filter);
     return paginationService.paginate(carRepository, queryBuilder, pageable);
   }
@@ -44,19 +43,18 @@ public class CarService {
   /** Set deleted flag to a car. */
   @Transactional
   public void delete(long id) {
-    Car car = carRepository.findById(id)
-        .orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
-
-    // Deleting any purchase record if exists
+    final Car car =
+        carRepository.findById(id).orElseThrow(() -> EntityNotFoundException.of(Car.class, id));
+    // Deleting any purchase record and sell record if exists
     purchaseRecordRepository
         .findByCarId(car.getId())
-        .ifPresent(purchaseRecordRepository::delete);
-
-    // Deleting any sell record if exists
-    sellRecordRepository
-        .findByCarId(car.getId())
-        .ifPresent(sellRecordRepository::delete);
-
+        .ifPresent(
+            pr -> {
+              sellRecordRepository
+                  .findByPurchaseRecordId(pr.getId())
+                  .ifPresent(sellRecordRepository::delete);
+              purchaseRecordRepository.delete(pr);
+            });
     carRepository.delete(car);
   }
 }

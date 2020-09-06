@@ -1,9 +1,10 @@
 package com.apiservice.controller.sell;
 
-import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.entity.tenant.sell.CarSellRecord;
 import com.apiservice.model.sell.CarSellRecordModel;
 import com.apiservice.service.car.CarService;
+import com.apiservice.service.purchase.CarPurchaseRecordService;
 import com.apiservice.service.sell.CarSellRecordService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,19 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CarSellRecordController {
 
-  private final CarSellRecordService carSellRecordService;
-  private final CarService carService;
+  private final CarSellRecordService sellRecordService;
+  private final CarPurchaseRecordService purchaseRecordService;
 
   @GetMapping("/sellRecords")
   public List<CarSellRecordModel> sellRecords() {
-    return carSellRecordService.getAll().stream()
+    return sellRecordService.getAll().stream()
         .map(CarSellRecordModel::toModel)
         .collect(Collectors.toUnmodifiableList());
   }
 
   @GetMapping("/sellRecords/{id}")
   public CarSellRecordModel sellRecord(@PathVariable("id") long id) {
-    final CarSellRecord sellRecord = carSellRecordService.getById(id);
+    final CarSellRecord sellRecord = sellRecordService.getById(id);
     return CarSellRecordModel.toModel(sellRecord);
   }
 
@@ -49,24 +50,24 @@ public class CarSellRecordController {
       @PathVariable("carId") long carId,
       @RequestBody @Valid CarSellRecordModel model) {
     final CarSellRecord sellRecord = model.toEntity();
-    final Car car = carService.getCarById(carId);
-    sellRecord.setCar(car);
-    carSellRecordService.save(sellRecord);
+    final CarPurchaseRecord purchaseRecord = purchaseRecordService.getByCarId(carId);
+    sellRecord.setPurchaseRecord(purchaseRecord);
+    sellRecordService.save(sellRecord);
     return CarSellRecordModel.toModel(sellRecord);
   }
 
   @PutMapping("/sellRecords/{id}")
   public CarSellRecordModel update(
       @PathVariable("id") long id, @RequestBody @Valid CarSellRecordModel model) {
-    final CarSellRecord sellRecordToUpdate = carSellRecordService.getById(id);
+    final CarSellRecord sellRecordToUpdate = sellRecordService.getById(id);
     final CarSellRecord sellRecord = model.updateEntity(sellRecordToUpdate);
-    carSellRecordService.save(sellRecord);
+    sellRecordService.save(sellRecord);
     return CarSellRecordModel.toModel(sellRecord);
   }
 
   @DeleteMapping("/sellRecords/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("id") long id) {
-    carSellRecordService.delete(id);
+    sellRecordService.delete(id);
   }
 }

@@ -15,15 +15,10 @@ public class CarSellRecordModel {
 
     private static final ModelMapper mapper = new ModelMapper();
 
-    static {
-        mapper.createTypeMap(CarSellRecordModel.class, CarSellRecord.class)
-                .addMappings(m -> m.skip(CarSellRecord::setCar));
-    }
-
     private Long id;
 
     @JsonProperty("chassisNo")
-    private String carChassisNo;
+    private String purchaseRecordCarChassisNo;
 
     @Enumerated(EnumType.STRING)
     private SellType sellType;
@@ -53,6 +48,7 @@ public class CarSellRecordModel {
         CarSellRecord sellRecord = mapper.map(this, CarSellRecord.class);
         sellRecord.setId(source.getId());
         sellRecord.getSellRecord().setId(source.getSellRecord().getId());
+        sellRecord.setPurchaseRecord(sellRecord.getPurchaseRecord());
         return sellRecord;
     }
 }
