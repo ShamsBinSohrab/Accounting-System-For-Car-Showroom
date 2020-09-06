@@ -1,5 +1,9 @@
 package com.apiservice.model.purchase;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.apiservice.controller.purchase.CarPurchaseRecordController;
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.enums.purchase.PurchaseType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,9 +13,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class CarPurchaseRecordModel {
+public class CarPurchaseRecordModel extends RepresentationModel<CarPurchaseRecordModel> {
 
   private static final ModelMapper mapper = new ModelMapper();
 
@@ -49,9 +54,8 @@ public class CarPurchaseRecordModel {
   @JsonProperty("miscellaneousCharge")
   private BigDecimal purchaseRecordMiscellaneousCharge;
 
-
   public static CarPurchaseRecordModel toModel(CarPurchaseRecord carPurchaseRecord) {
-    return mapper.map(carPurchaseRecord, CarPurchaseRecordModel.class);
+    return mapper.map(carPurchaseRecord, CarPurchaseRecordModel.class).addLinks();
   }
 
   public CarPurchaseRecord toEntity() {
@@ -59,11 +63,15 @@ public class CarPurchaseRecordModel {
   }
 
   public CarPurchaseRecord updateEntity(CarPurchaseRecord source) {
-    CarPurchaseRecord purchaseRecord =
-        mapper.map(this, CarPurchaseRecord.class);
+    CarPurchaseRecord purchaseRecord = mapper.map(this, CarPurchaseRecord.class);
     purchaseRecord.setId(source.getId());
     purchaseRecord.getPurchaseRecord().setId(source.getPurchaseRecord().getId());
     purchaseRecord.setCar(source.getCar());
     return purchaseRecord;
+  }
+
+  private CarPurchaseRecordModel addLinks() {
+    add(linkTo(methodOn(CarPurchaseRecordController.class).purchaseRecord(id)).withSelfRel());
+    return this;
   }
 }
