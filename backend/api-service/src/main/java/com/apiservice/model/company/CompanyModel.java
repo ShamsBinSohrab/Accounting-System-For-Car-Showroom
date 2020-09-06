@@ -3,6 +3,7 @@ package com.apiservice.model.company;
 import com.apiservice.entity.master.company.Company;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,13 +29,12 @@ public class CompanyModel {
     return mapper.map(company, CompanyModel.class);
   }
 
-  @Data
-  @RequiredArgsConstructor
-  public static class CompanyTokenResponse {
-    private final String companyToken;
-
-    public static CompanyTokenResponse of(String token) {
-      return new CompanyTokenResponse(token);
-    }
+  public Company updateEntity(Company source) {
+    Company company = mapper.map(this, Company.class);
+    company.setId(source.getId());
+    company.setUuid(source.getUuid());
+    return company;
   }
+
+
 }
