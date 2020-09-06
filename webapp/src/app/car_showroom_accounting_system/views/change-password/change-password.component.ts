@@ -5,6 +5,7 @@ import { ChangePasswordService } from 'src/app/car_showroom_accounting_system/Se
 import { EncryptionDescryptionService } from 'src/app/car_showroom_accounting_system/Services/encryption-descryption.service';
 import { AlertifyService } from '../../Common/alertify.service';
 import {ToastrService} from 'ngx-toastr';
+import { LoginService } from '../../Services/login.service';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -22,62 +23,66 @@ export class ChangePasswordComponent implements OnInit {
     private changePasswordService: ChangePasswordService,
     private encObj: EncryptionDescryptionService,
     private router: Router,
-    private alertify: AlertifyService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private loginService: LoginService
     ) {}
 
   ngOnInit(): void {
     this.ChangePassword = this.fb.group({
-      oldpassword: ['', [Validators.required, Validators.pattern]],
-      newpassword: ['', [Validators.required, Validators.pattern]],
-      newconfirmpassword: ['', [Validators.required, Validators.pattern]]
+      oldPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required, Validators.maxLength(14), Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.maxLength(14), Validators.minLength(6)]]
     });
   }
 
-
-get oldpassword()
-{
-  return this.ChangePassword.get('oldpassword');
-}
-
-get newpassword()
-{
-  return this.ChangePassword.get('newpassword');
-}
-
-get newconfirmpassword()
-{
-  return this.ChangePassword.get('newconfirmpassword');
-}
-
-
 onSubmit()
 {
+    if (this.ChangePassword.get('newPassword').value !== this.ChangePassword.get('confirmPassword').value) {
+      this.toastr.warning('Confirm password not matched', 'Warning!');
+      return;
+    }
+
+    if (this.ChangePassword.get('oldPassword').hasError('required')) {
+      this.toastr.warning('Old Password can not be empty!', 'Warning!');
+      return;
+    }
+    if (this.ChangePassword.get('newPassword').hasError('required')) {
+      this.toastr.warning('New Password can not be empty!', 'Warning!');
+      return;
+    }
+    if (this.ChangePassword.get('newPassword').hasError('minlength')) {
+      this.toastr.warning('New Password is between 6-14 charecters!', 'Warning!');
+      return;
+    }
+    if (this.ChangePassword.get('newPassword').hasError('maxlength')) {
+      this.toastr.warning('New Password is between 6-14 charecters!', 'Warning!');
+      return;
+    }
+    if (this.ChangePassword.get('confirmPassword').hasError('required')) {
+      this.toastr.warning('Confirm Password can not be empty!', 'Warning!');
+      return;
+    }
+    if (this.ChangePassword.get('confirmPassword').hasError('minlength')) {
+      this.toastr.warning('Confirm Password is between 6-14 charecters!', 'Warning!');
+      return;
+    }
+    if (this.ChangePassword.get('confirmPassword').hasError('maxlength')) {
+      this.toastr.warning('Confirm Password is between 6-14 charecters!', 'Warning!');
+      return;
+    }
+
     if (this.ChangePassword.invalid) {
       this.toastr.warning('Please fill the form correctly', 'Warning!');
       return;
     }
 
-    if (this.newpassword.value !== this.newconfirmpassword.value) {
-      this.toastr.warning('Confirm password not matched', 'Warning!');
-      return;
-    }
-
-    this.dummyObj = {
-      username: this.encObj.encryptData(localStorage.getItem('username')),
-      oldpassword: this.encObj.encryptData(this.oldpassword.value),
-      newpassword: this.encObj.encryptData(this.newpassword.value),
-      newconfirmpassword: this.encObj.encryptData(this.newconfirmpassword.value),
-    };
-    this.changePasswordService.changePassword(this.dummyObj)
+    this.changePasswordService.changePassword(this.ChangePassword.value)
                               .subscribe(
                                 success => {
-                                  this.ChangePassword.reset();
-                                  this.alertify.success(success.message);
-                                  this.toastr.success(success.message, 'Success!');
+                                  this.toastr.success('Password Reset Successful.', 'Success!');
+                                  this.loginService.logout();
                                 },
                                 error => {
-                                  this.alertify.error(error.error);
                                   this.toastr.error(error.error, 'Error!');
                                 }
                               );

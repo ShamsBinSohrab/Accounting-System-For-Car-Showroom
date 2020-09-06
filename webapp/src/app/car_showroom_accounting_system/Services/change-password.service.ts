@@ -13,6 +13,6 @@ export class ChangePasswordService {
 
   public changePassword(data)
   {
-    return this.http.post<any>(Common.baseUrl + '/Auth/ChangePassword', data);
+    return this.http.post<any>(Common.baseUrl + '/operators/' + data + '/changePassword', data);
   }
 }
