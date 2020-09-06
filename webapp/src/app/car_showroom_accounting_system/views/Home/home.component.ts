@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     this.loginService.Get()
         .subscribe(
                   data => {
-                    // localStorage.setItem('token',data.token);
+                    // localStorage.setItem('auth_token',data.authtoken);
                     console.log(data);
                     },
                   error => {

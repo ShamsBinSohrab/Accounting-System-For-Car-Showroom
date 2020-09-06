@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {Common} from '../Common/common';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-
-
   constructor(private http: HttpClient) { }
 
   public authenticate(loginData: any)
@@ -16,10 +15,14 @@ export class LoginService {
     const reqHeader = new HttpHeaders({'No-Auth': 'True'});
     return this.http.post<any>(Common.url + '/authenticate', loginData, {headers: reqHeader})
     .pipe(map(user => {
-      if (user && user.jwtToken) {
-          console.log(user);
+      if (user && user.authToken) {
+          // console.log(user);
+          // Decode Auth Token
+          const decodedAuthToken = jwt_decode(user.authToken);
           // store user details in local storage to keep user logged in
-          localStorage.setItem('token', user.jwtToken);
+          localStorage.setItem('auth_token', user.authToken);
+          localStorage.setItem('company_token', user.companyToken);
+          localStorage.setItem('user_role', decodedAuthToken.AUTHORITIES);
           // localStorage.setItem('username', user.username);
       }
   }));
@@ -32,7 +35,8 @@ export class LoginService {
 
   public logout() {
     // remove user data from local storage for log out
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('company_token');
+    localStorage.clear();
 }
 }

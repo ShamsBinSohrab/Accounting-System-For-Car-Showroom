@@ -58,7 +58,12 @@ export class LoginComponent implements OnInit {
     this.loginService.authenticate(this.loginForm.value)
                             .subscribe(
                                       data => {
-                                        this.router.navigate(['/']);
+                                        if (localStorage.getItem('user_role') === 'SUPER_ADMIN') {
+                                          this.router.navigate(['/company/list']);
+                                        }
+                                        else {
+                                          this.router.navigate(['/']);
+                                        }
                                       },
                                       error => {
                                           console.log(error);

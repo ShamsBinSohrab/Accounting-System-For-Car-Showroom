@@ -28,23 +28,6 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Company',
-    url: '/company',
-    icon: 'icon-speedometer',
-    children: [
-      {
-        name: 'Company List',
-        url: '/company/list',
-        icon: 'icon-list'
-      },
-      {
-        name: 'Add Company',
-        url: '/company/create',
-        icon: 'icon-plus'
-      }
-    ]
-  },
-  {
     name: 'Change Password',
     url: '/change-password',
     icon: 'icon-key'
@@ -309,4 +292,112 @@ export const navItems: INavData[] = [
   //   variant: 'danger',
   //   attributes: { target: '_blank', rel: 'noopener' }
   // }
+];
+
+
+export const saCompanyNavItems: INavData[] = [
+  // {
+  //   name: 'Dashboard',
+  //   url: '/dashboard',
+  //   icon: 'icon-graph',
+  //   // badge: {
+  //   //   variant: 'info',
+  //   //   text: 'NEW'
+  //   // }
+  // },
+  {
+    name: 'Car',
+    url: '/car',
+    icon: 'icon-speedometer',
+    children: [
+      {
+        name: 'Car List',
+        url: '/car/list',
+        icon: 'icon-list'
+      },
+      {
+        name: 'Add Car',
+        url: '/car/create',
+        icon: 'icon-plus'
+      }
+    ]
+  },
+  {
+    name: 'Company',
+    url: '/company',
+    icon: 'icon-speedometer',
+    children: [
+      {
+        name: 'Company List',
+        url: '/company/list',
+        icon: 'icon-list'
+      },
+      {
+        name: 'Add Company',
+        url: '/company/create',
+        icon: 'icon-plus'
+      }
+    ]
+  },
+  {
+    name: 'Change Password',
+    url: '/change-password',
+    icon: 'icon-key'
+  },
+  {
+    name: 'Terms & Condition',
+    url: '/terms',
+    icon: 'icon-drop',
+    children: [
+        {
+          name: 'Terms & Condition',
+          url: '/terms/terms&condition',
+          icon: 'icon-drop'
+        },
+        {
+          name: 'FAQ',
+          url: '/terms/faq',
+          icon: 'icon-drop'
+        }
+      ]
+  },
+  {
+    name: 'Contact Us',
+    url: '/contact',
+    icon: 'icon-plus'
+  },
+];
+
+export const saNavItems: INavData[] = [
+  // {
+  //   name: 'Dashboard',
+  //   url: '/dashboard',
+  //   icon: 'icon-graph',
+  //   // badge: {
+  //   //   variant: 'info',
+  //   //   text: 'NEW'
+  //   // }
+  // },
+  {
+    name: 'Company',
+    url: '/company',
+    icon: 'icon-speedometer',
+    children: [
+      {
+        name: 'Company List',
+        url: '/company/list',
+        icon: 'icon-list'
+      },
+      {
+        name: 'Add Company',
+        url: '/company/create',
+        icon: 'icon-plus'
+      }
+    ]
+  },
+  {
+    name: 'Change Password',
+    url: '/change-password',
+    icon: 'icon-key'
+  }
 ];

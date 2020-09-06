@@ -4,12 +4,16 @@ import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.model.operator.ChangePasswordModel;
 import com.apiservice.model.operator.OperatorModel;
 import com.apiservice.model.operator.PasswordChangeValidator;
+import com.apiservice.model.operator.ResetPasswordModel;
 import com.apiservice.service.operator.OperatorService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,12 +65,24 @@ public class OperatorController {
   }
 
   @PatchMapping("/operators/{id}/changePassword")
-  public void changePassword(
+  public ResponseEntity<Void> changePassword(
       @RequestBody @Valid ChangePasswordModel model, @PathVariable long id) {
     final Operator operator = operatorService.getOperatorById(id);
-    passwordChangeValidator.validate(model, operator);
+    passwordChangeValidator.validatePasswordChange(model, operator);
     operator.setPassword(model.getNewPassword());
     operatorService.changePassword(operator);
+    return ResponseEntity.ok().build();
+  }
+
+  @PatchMapping("/operators/{id}/resetPassword")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+  public ResponseEntity<Void> resetPassword(
+      @RequestBody @Valid ResetPasswordModel model, @PathVariable long id) {
+    final Operator operator = operatorService.getOperatorById(id);
+    passwordChangeValidator.validatePasswordReset(model);
+    operator.setPassword(model.getNewPassword());
+    operatorService.changePassword(operator);
+    return ResponseEntity.ok().build();
   }
 
   @DeleteMapping("/operators/{id}")

@@ -3,9 +3,10 @@ package com.apiservice.model.car;
 import com.apiservice.entity.tenant.car.Car;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class CarModel {
+public class CarModel extends RepresentationModel<CarModel> {
 
   private static final ModelMapper mapper = new ModelMapper();
 
@@ -21,10 +22,6 @@ public class CarModel {
 
   public Car toEntity() {
     return mapper.map(this, Car.class);
-  }
-
-  public static CarModel toModel(Car car) {
-    return mapper.map(car, CarModel.class);
   }
 
   public void updateEntity(Car car) {

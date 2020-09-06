@@ -30,19 +30,11 @@ public class CompanyModel {
   }
 
   public Company updateEntity(Company source) {
-    Company company =
-            mapper.map(this, Company.class);
+    Company company = mapper.map(this, Company.class);
     company.setId(source.getId());
     company.setUuid(source.getUuid());
     return company;
   }
-  @Data
-  @RequiredArgsConstructor
-  public static class CompanyTokenResponse {
-    private final String companyToken;
 
-    public static CompanyTokenResponse of(String token) {
-      return new CompanyTokenResponse(token);
-    }
-  }
+
 }

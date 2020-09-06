@@ -31,13 +31,13 @@ export class EncryptionDescryptionService implements OnInit {
 
 private getKey()
 {
-  if (localStorage.getItem('token') == null)
+  if (localStorage.getItem('auth_token') == null)
   {
     this.strKey = 'HALTech^%$#@!Trn';
   }
   else
   {
-    const temp = localStorage.getItem('token') + localStorage.getItem('username');
+    const temp = localStorage.getItem('auth_token') + localStorage.getItem('username');
     this.strKey = temp.slice(temp.length - 32, temp.length);
   }
 

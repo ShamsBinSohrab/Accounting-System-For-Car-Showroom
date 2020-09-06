@@ -1,5 +1,9 @@
 package com.apiservice.model.sell;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.apiservice.controller.sell.CarSellRecordController;
 import com.apiservice.entity.tenant.sell.CarSellRecord;
 import com.apiservice.enums.sell.SellType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,21 +13,17 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class CarSellRecordModel {
+public class CarSellRecordModel extends RepresentationModel<CarSellRecordModel> {
 
     private static final ModelMapper mapper = new ModelMapper();
-
-    static {
-        mapper.createTypeMap(CarSellRecordModel.class, CarSellRecord.class)
-                .addMappings(m -> m.skip(CarSellRecord::setCar));
-    }
 
     private Long id;
 
     @JsonProperty("chassisNo")
-    private String carChassisNo;
+    private String purchaseRecordCarChassisNo;
 
     @Enumerated(EnumType.STRING)
     private SellType sellType;
@@ -43,17 +43,22 @@ public class CarSellRecordModel {
     private String sellRecordPurchaseLetterNo;
 
     public static CarSellRecordModel toModel(CarSellRecord carSellRecord) {
-        return mapper.map(carSellRecord, CarSellRecordModel.class);
+        return mapper.map(carSellRecord, CarSellRecordModel.class).addLinks();
     }
 
     public CarSellRecord toEntity() {
         return mapper.map(this, CarSellRecord.class);
     }
     public CarSellRecord updateEntity(CarSellRecord source) {
-        CarSellRecord sellRecord =
-                mapper.map(this, CarSellRecord.class);
+        CarSellRecord sellRecord = mapper.map(this, CarSellRecord.class);
         sellRecord.setId(source.getId());
         sellRecord.getSellRecord().setId(source.getSellRecord().getId());
+        sellRecord.setPurchaseRecord(sellRecord.getPurchaseRecord());
         return sellRecord;
+    }
+
+    private CarSellRecordModel addLinks() {
+        add(linkTo(methodOn(CarSellRecordController.class).sellRecord(id)).withSelfRel());
+        return this;
     }
 }

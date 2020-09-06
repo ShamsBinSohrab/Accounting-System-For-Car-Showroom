@@ -9,9 +9,7 @@ import { P404Component } from './car_showroom_accounting_system/views/error/404.
 import { P500Component } from './car_showroom_accounting_system/views/error/500.component';
 import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
-import { AccountStatementComponent } from './car_showroom_accounting_system/views/account-statement/account-statement.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
-import { CarListComponent } from './car_showroom_accounting_system/views/car/car-list/car-list.component';
 
 const routes: Routes = [
   {
@@ -74,28 +72,6 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
-      },
-      {
-        path: 'account-statement',
-        component: AccountStatementComponent,
-        data:
-        {
-          title: 'Account Statement'
-        }
-      },
-      {
-        path: 'transfer',
-        loadChildren: () => import('./car_showroom_accounting_system/views/transfer/transfer.module').then(e => e.TransferModule),
-      },
-      {
-        path: 'customer-position',
-        // tslint:disable-next-line:max-line-length
-        loadChildren: () => import('./car_showroom_accounting_system/views/customer-position/customerposition.module').then(e => e.CustomerpositionModule),
-      },
-      {
-        path: 'bill-payment',
-        // tslint:disable-next-line:max-line-length
-        loadChildren: () => import('./car_showroom_accounting_system/views/bill-payment/bill-payment.module').then(e => e.BillPaymentModule),
       },
       {
         path: 'contact',
