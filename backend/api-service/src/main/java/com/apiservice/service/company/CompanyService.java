@@ -3,6 +3,8 @@ package com.apiservice.service.company;
 import com.apiservice.authentication.JwtTokenUtil;
 import com.apiservice.entity.master.company.Company;
 import com.apiservice.model.company.CompanyCreationException;
+import com.apiservice.model.company.CompanyFilter;
+import com.apiservice.model.company.CompanyQueryBuilder;
 import com.apiservice.repository.company.CompanyRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import java.net.URI;
@@ -11,9 +13,14 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import com.apiservice.utils.pagination.PaginationService;
+import com.apiservice.utils.pagination.QueryBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -31,6 +38,7 @@ public class CompanyService {
   private final JwtTokenUtil jwtTokenUtil;
   private final RestTemplate restTemplate;
   private final ThreadPoolTaskExecutor taskExecutor;
+  private final PaginationService<Company> paginationService;
 
   @Value("${migration.internal.api.url}")
   private String migrationInternalApiUrl;
@@ -83,4 +91,11 @@ public class CompanyService {
 
   @Transactional
   public void save(Company company) { companyRepository.save(company); }
+
+  @Transactional(readOnly = true)
+  public Page<Company> getAllWithPaginationAndFilter(
+          CompanyFilter filter, Pageable pageable) {
+    final QueryBuilder<Company> queryBuilder = new CompanyQueryBuilder(filter);
+    return paginationService.paginate(companyRepository, queryBuilder, pageable);
+  }
 }

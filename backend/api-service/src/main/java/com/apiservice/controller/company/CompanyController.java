@@ -1,6 +1,7 @@
 package com.apiservice.controller.company;
 
 import com.apiservice.entity.master.company.Company;
+import com.apiservice.model.company.CompanyFilter;
 import com.apiservice.model.company.CompanyModel;
 import com.apiservice.model.company.CompanyTokenResponse;
 import com.apiservice.service.company.CompanyService;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,8 +48,8 @@ public class CompanyController {
   }
 
   @GetMapping("/companies")
-  public List<CompanyModel> list() {
-    return companyService.getAllCompanies().stream()
+  public List<CompanyModel> list(CompanyFilter filter, Pageable pageable) {
+    return companyService.getAllWithPaginationAndFilter(filter,pageable).stream()
             .map(CompanyModel::from)
             .collect(Collectors.toUnmodifiableList());
   }
