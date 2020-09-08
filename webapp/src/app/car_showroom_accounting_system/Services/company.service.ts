@@ -15,6 +15,20 @@ export class CompanyService {
     // const reqHeader = new HttpHeaders({'No-Company-Token': 'True'});, {headers: reqHeader}
     return this.http.post<any>(Common.baseUrl + '/companies', data);
   }
+  public updateCompany(id: any, data: any)
+  {
+    // const reqHeader = new HttpHeaders({'No-Company-Token': 'True'});, {headers: reqHeader}
+    return this.http.put<any>(Common.baseUrl + '/companies/' + id, data);
+  }
+
+  getCompanyList(parameter: string) {
+    return this.http.get<any>(Common.baseUrl + '/companies?' + parameter);
+  }
+
+  getCompanybyId(id: string) {
+    return this.http.get<any>(Common.baseUrl + '/companies/' + id);
+  }
+
   public getCompanyToken(data: any)
   {
     // const reqHeader = new HttpHeaders({'No-Company-Token': 'True'});, {headers: reqHeader}

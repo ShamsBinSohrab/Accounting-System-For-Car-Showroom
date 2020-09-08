@@ -12,6 +12,7 @@ import { DefaultLayoutComponent } from 'src/app/car_showroom_accounting_system/c
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent implements OnInit {
+  companyList: any;
   constructor(
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
@@ -22,6 +23,23 @@ export class CompanyListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.getCompanyList();
+  }
+
+  getCompanyList()
+  {
+    const parameter = 'page=0';
+    this.companyService.getCompanyList(parameter)
+                       .subscribe(
+                          data => {
+                            console.log(data);
+                            this.companyList = data;
+                          },
+                          error => {
+                            this.toastrService.error(error.error, 'Error!');
+                            console.log(error.error);
+                          }
+                         );
   }
 
   getToken(id: any)
@@ -31,7 +49,7 @@ export class CompanyListComponent implements OnInit {
                         data => {
                           this.toastrService.success('Company Assigned', 'Success!');
                           this.defaultComponent.ngOnInit();
-                          console.log(data);
+                          this.route.navigate(['/car/list']);
                         },
                         error => {
                           this.toastrService.error(error.error, 'Error!');
@@ -43,6 +61,11 @@ export class CompanyListComponent implements OnInit {
   createCompany()
   {
     this.route.navigate(['/company/create']);
+  }
+
+  updateCompany(companyId: any)
+  {
+    this.route.navigate(['/company/update/', { companyId }]);
   }
 
 }

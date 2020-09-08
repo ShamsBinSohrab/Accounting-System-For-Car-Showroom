@@ -20,68 +20,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Dara Dara Dara Automobile</td>
-              <td>Active</td>
+            <tr *ngFor="let company of companyList">
+              <td>{{company.companyName|titlecase}}</td>
+              <td>{{company.active ? 'Active' : 'Inactive'}}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(1)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dara Dara Dara Automobile</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(3)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Moni Automobile</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(4)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Noyon Carz</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(5)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td>N Carz</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(6)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td>No Carz</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(7)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Noyon</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(8)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
-              </td>
-            </tr>
-            <tr>
-              <td (click)="getToken(9)">Noyon</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2">Update</button>
+                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(company.id)">Go to Company</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCompany(company.id)">Update</button>
               </td>
             </tr>
           </tbody>

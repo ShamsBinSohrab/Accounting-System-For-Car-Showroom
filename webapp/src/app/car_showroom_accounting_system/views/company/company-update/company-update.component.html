@@ -1,0 +1,36 @@
+
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header bg-success">
+              <i class="fa fa-edit"></i>Update Company
+            </div>
+            <form  [formGroup]="CompanyForm" (ngSubmit)="onSubmit()">
+              <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="companyName">Company Name</label>
+                    <div class="col-md-8">
+                      <input type="text" id="companyName" name="companyName" class="form-control" placeholder="Enter Company Name(Required)" formControlName="companyName">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="active">Active Status</label>
+                    <div class="col-md-8">
+                      <select name="active" id="active" class="form-control" formControlName="active">
+                        <option value=true>Active</option>
+                        <option value=false>Inactive</option>
+                      </select>
+                    </div>
+                  </div>
+              </div>
+              <div class="card-footer text-right">
+                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i>&nbsp;Update Comapany</button>
+                <button type="button" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+              </div>
+            </form>
+          </div>
+    </div>
+    <div class="col-2"></div>
+</div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AddCompanyComponent } from './add-company/add-company.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CompanyListComponent } from './company-list/company-list.component';
+import { CompanyUpdateComponent } from './company-update/company-update.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'create',
         component: AddCompanyComponent
+      },
+      {
+        path: 'update',
+        component: CompanyUpdateComponent
       }
     ]
   }
