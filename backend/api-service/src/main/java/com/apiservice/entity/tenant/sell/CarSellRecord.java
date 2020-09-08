@@ -1,6 +1,7 @@
 package com.apiservice.entity.tenant.sell;
 
 import com.apiservice.entity.tenant.car.Car;
+import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,11 +15,9 @@ public class CarSellRecord {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JoinColumn(name = "car_id", unique = true)
-    @OneToOne(
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Car car;
+    @JoinColumn(name = "car_purchase_record_id", unique = true)
+    @OneToOne(fetch = FetchType.EAGER)
+    private CarPurchaseRecord purchaseRecord;
 
     @JoinColumn(name = "sell_record_id", unique = true)
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

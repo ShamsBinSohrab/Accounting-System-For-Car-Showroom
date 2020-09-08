@@ -2,36 +2,57 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from 'src/app/car_showroom_accounting_system/Services/company.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-add-company',
-  templateUrl: './add-company.component.html',
-  styleUrls: ['./add-company.component.scss']
+  selector: 'app-company-update',
+  templateUrl: './company-update.component.html',
+  styleUrls: ['./company-update.component.css']
 })
-export class AddCompanyComponent implements OnInit {
+export class CompanyUpdateComponent implements OnInit {
 
   CompanyForm: FormGroup;
+  id: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
     private companyService: CompanyService,
     private route: Router,
-    private location: Location
+    private location: Location,
+    private activeRoute: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
-    this.loadFrom();
+    this.loadForm();
+    this.id = this.activeRoute.snapshot.paramMap.get('companyId');
+    this.loadFormData();
   }
 
-  loadFrom()
+  loadForm()
   {
     this.CompanyForm = this.formBuilder.group({
       companyName: ['', [Validators.required, Validators.pattern('^[+]?[0-9a-zA-Z .-]*$'), Validators.maxLength(100)]],
       active: [true],
     });
+  }
+
+  loadFormData()
+  {
+    this.companyService.getCompanybyId(this.id)
+                          .subscribe(
+                            data => {
+                              this.CompanyForm.patchValue({
+                                companyName: data.companyName,
+                                active: data.active,
+                              });
+                            },
+                            error => {
+                              this.toastrService.error(error.error, 'Error!');
+                              console.log(error.error);
+                            }
+                          );
   }
 
   onSubmit()
@@ -41,13 +62,12 @@ export class AddCompanyComponent implements OnInit {
       this.toastrService.warning('Please Fill All Field!', 'Warning!');
       return;
     }
-    console.log(this.CompanyForm.value);
-    this.companyService.addCompany(this.CompanyForm.value)
+    this.companyService.updateCompany(this.id, this.CompanyForm.value)
                           .subscribe(
                             data => {
-                              this.toastrService.success('Successfully Added Company', 'Success!');
+                              this.toastrService.success('Successfully Update Company', 'Success!');
                               this.ngOnInit();
-                              this.route.navigate(['/company/list']);
+                              this.location.back();
                             },
                             error => {
                               this.toastrService.error(error.error, 'Error!');
@@ -60,5 +80,4 @@ export class AddCompanyComponent implements OnInit {
   {
     this.location.back();
   }
-
 }

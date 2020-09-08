@@ -60,7 +60,7 @@ export class AddCarComponent implements OnInit {
   {
     if (this.CarForm.invalid)
     {
-      this.toastrService.warning('Please Fill All Field!', 'Warning!');
+      this.toastrService.error('Please Fill All Field!', 'Error!');
       return;
     }
     this.carService.addCar(this.CarForm.value)

@@ -3,6 +3,7 @@ package com.apiservice.controller.car;
 import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.model.car.CarFilter;
 import com.apiservice.model.car.CarModel;
+import com.apiservice.model.car.CarModelAssembler;
 import com.apiservice.service.car.CarService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,24 +29,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarController {
 
   private final CarService carService;
+  private final CarModelAssembler modelAssembler;
 
   @GetMapping("/cars")
   public List<CarModel> cars(CarFilter filter, Pageable pageable) {
     return carService.getAllWithPaginationAndFilter(filter, pageable).stream()
-        .map(CarModel::toModel)
+        .map(modelAssembler::toModel)
         .collect(Collectors.toUnmodifiableList());
   }
 
   @GetMapping("/cars/{id}")
   public CarModel car(@PathVariable long id) {
-    return CarModel.toModel(carService.getCarById(id));
+    return modelAssembler.toModel(carService.getCarById(id));
   }
 
   @PostMapping("/cars")
   @ResponseStatus(HttpStatus.CREATED)
   public CarModel create(@RequestBody @Valid CarModel model) {
     Car car = model.toEntity();
-    return CarModel.toModel(carService.save(car));
+    return modelAssembler.toModel(carService.save(car));
   }
 
   @PutMapping("/cars/{id}")
@@ -53,7 +55,7 @@ public class CarController {
       @RequestBody @Valid CarModel model, @PathVariable long id) {
     Car car = carService.getCarById(id);
     model.updateEntity(car);
-    return CarModel.toModel(carService.save(car));
+    return modelAssembler.toModel(carService.save(car));
   }
 
   @DeleteMapping("/cars/{id}")

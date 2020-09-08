@@ -5,7 +5,7 @@
     <div class="col-8">
         <div class="card">
             <div class="card-header bg-success">
-              <i class="fa fa-plus"></i>Add Company
+              <i class="fa fa-edit"></i>Update Company
             </div>
             <form  [formGroup]="CompanyForm" (ngSubmit)="onSubmit()">
               <div class="card-body">
@@ -19,15 +19,14 @@
                     <label class="col-md-4 col-form-label" for="active">Active Status</label>
                     <div class="col-md-8">
                       <select name="active" id="active" class="form-control" formControlName="active">
-                        <option value="true">Active</option>
-                        <option value="false">Inactive</option>
+                        <option value=true>Active</option>
+                        <option value=false>Inactive</option>
                       </select>
                     </div>
                   </div>
               </div>
               <div class="card-footer text-right">
-                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Comapany</button>
-                <button type="reset" class="btn btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
+                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i>&nbsp;Update Comapany</button>
                 <button type="button" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
               </div>
             </form>

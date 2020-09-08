@@ -12,10 +12,21 @@ export class AuthInterceptor implements HttpInterceptor
         if (req.headers.get('No-Auth') === 'True') {
             return next.handle(req.clone());
         }
-        if (localStorage.getItem('token') != null) {
+        if (localStorage.getItem('auth_token') != null) {
+            // let clonedreq = null;
+            // if (req.headers.get('No-Company-Token') === 'True') {
             const clonedreq = req.clone({
-                headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+                headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('auth_token'))
+                .set('x-company-accessor-token', localStorage.getItem('company_token'))
             });
+            // }
+            // else
+            // {
+            //   clonedreq = req.clone({
+            //     headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('auth_token'))
+            //     .set('x-company-accessor-token', localStorage.getItem('company_token'))
+            //   });
+            // }
             return next.handle(clonedreq)
                 .do(
                 succ => { },

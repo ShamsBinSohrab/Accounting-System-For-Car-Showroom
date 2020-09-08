@@ -1,3 +1,49 @@
-<p>
-  company-list works!
-</p>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header bg-success d-flex justify-content-between">
+        <div>
+          <i class="fa fa-align-justify"></i> Company List
+        </div>
+        <div>
+          <button class="btn btn-sm btn-success" (click)="createCompany()"><i class="fa fa-plus"></i> Create Company</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped table-sm text-center">
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let company of companyList">
+              <td>{{company.companyName|titlecase}}</td>
+              <td>{{company.active ? 'Active' : 'Inactive'}}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(company.id)">Go to Company</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCompany(company.id)">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav>
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!--/.col-->
+</div>
