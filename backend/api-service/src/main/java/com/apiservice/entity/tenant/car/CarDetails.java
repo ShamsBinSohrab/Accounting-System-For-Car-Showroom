@@ -1,21 +1,21 @@
 package com.apiservice.entity.tenant.car;
 
-import com.apiservice.enums.car.CarMake;
-import com.apiservice.enums.car.CarType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
+import com.apiservice.enums.car.*;
+
+import javax.persistence.*;
+
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import lombok.Data;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "car_details")
+@TypeDefs({@TypeDef(name = "string-array", typeClass = StringArrayType.class)})
 public class CarDetails {
 
   @Id
@@ -39,4 +39,25 @@ public class CarDetails {
 
   @Column(name = "color", nullable = false)
   private String color;
+
+  @Column(name = "options", nullable = false)
+  @Type(type = "string-array")
+  private String[] options;
+
+  @Column(name = "engine_no", nullable = false)
+  private String engineNo;
+
+  @Column(name = "mileage", nullable = false)
+  private int mileage;
+
+  @Column(name = "cc", nullable = false)
+  private int cc;
+
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "transmission", nullable = false)
+  private CarTransmission transmission;
+
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "fuel_type", nullable = false)
+  private CarFuelType fuelType;
 }

@@ -78,6 +78,34 @@ databaseChangeLog:
                   type: varchar(10)
                   constraints:
                     nullable: false
+              - column:
+                  name: options
+                  type: text[]
+              - column:
+                  name: engine_no
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mileage
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cc
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transmission
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fuel_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: car
             baseColumnNames: car_details_id
