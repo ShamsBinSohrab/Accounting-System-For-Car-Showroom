@@ -4,7 +4,7 @@
     <div class="col-2"></div>
     <div class="col-8">
         <div class="card">
-            <div class="card-header bg-success">
+            <div class="card-header bg-indigo">
               <i class="fa fa-plus"></i>Add Car
             </div>
             <form  [formGroup]="CarForm" (ngSubmit)="onSubmit()">
@@ -15,7 +15,16 @@
                       <input type="text" id="chassisNo" name="chassisNo" class="form-control" placeholder="Enter Chassis No(Required)" formControlName="chassisNo">
                     </div>
                   </div>
-                  <div formGroupName="details">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="draft">Mark as draft</label>
+                    <div class="col-md-8">
+                      <label class="switch switch-label switch-pill switch-success">
+                        <input type="checkbox" class="switch-input" id="draft" name="draft"  formControlName="draft">
+                        <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div formGroupName="details" *ngIf="!this.CarForm.get('draft').value">
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label" for="make">Make</label>
                       <div class="col-md-8">
@@ -59,9 +68,9 @@
                   </div>
               </div>
               <div class="card-footer text-right">
-                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
-                <button type="reset" class="btn btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
-                <button type="button" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
+                <button type="submit" class="btn btn-sm btn-success ml-2"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
               </div>
             </form>
           </div>

@@ -18,7 +18,12 @@ export class CarListComponent implements OnInit {
                 private carService: CarService,
                 private router: Router,
                 private toastrService: ToastrService
-  ) { }
+  ) {
+    if (localStorage.getItem('company_token') === '')
+    {
+      this.router.navigate(['/company/list']);
+    }
+  }
 
   ngOnInit(): void {
     this.data = new Array();
@@ -28,14 +33,14 @@ export class CarListComponent implements OnInit {
             this.data = data;
           },
           error => {
-            this.toastrService.error(error.error);
+            this.toastrService.error(error.error, 'Error!');
           }
         );
   }
 
-  deleteCar(carId: any)
+  deleteCar(link: string)
   {
-    this.carService.deleteCar(carId)
+    this.carService.deleteCar(link)
     .subscribe(
       data => {
         this.toastrService.success('Delete Successful', 'Success');
@@ -47,13 +52,33 @@ export class CarListComponent implements OnInit {
     );
   }
 
-  carDetails(carId: any)
+  carDetails(link: string)
   {
-    this.router.navigate(['/car/details', { carId }]);
+    localStorage.setItem('link', link);
+    // this.router.navigate(['/car/details', { carId }]);
+    this.router.navigate(['/car/details']);
   }
-  updateCar(carId: any)
+  updateCar(link: string)
   {
-    this.router.navigate(['/car/update', { carId }]);
+    localStorage.setItem('link', link);
+    this.router.navigate(['/car/update']);
+    // this.router.navigate(['/car/update', { carId }]);
+  }
+  addCar()
+  {
+    this.router.navigate(['/car/create']);
+  }
+  carAction(link: any, status: any)
+  {
+    localStorage.setItem('link', link);
+    if (status === 'purchaseRecord')
+    {
+      this.router.navigate(['/purchase/create']);
+    }
+    else
+    {
+      this.router.navigate(['/sell/create']);
+    }
   }
 
 }

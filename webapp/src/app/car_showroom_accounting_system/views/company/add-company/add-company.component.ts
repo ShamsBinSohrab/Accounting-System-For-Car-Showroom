@@ -61,4 +61,9 @@ export class AddCompanyComponent implements OnInit {
     this.location.back();
   }
 
+  addCompany()
+  {
+    this.route.navigate(['/company/create']);
+  }
+
 }

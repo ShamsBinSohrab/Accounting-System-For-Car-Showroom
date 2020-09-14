@@ -18,6 +18,7 @@ import {
 
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
@@ -60,8 +61,6 @@ const APP_CONTAINERS = [
     ChangePasswordComponent,
     DashboardComponent,
     ContactComponent,
-
-
   ],
   imports: [
     AppAsideModule,
@@ -81,6 +80,7 @@ const APP_CONTAINERS = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
