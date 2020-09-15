@@ -84,13 +84,9 @@ databaseChangeLog:
               - column:
                   name: engine_no
                   type: varchar(50)
-                  constraints:
-                    nullable: false
               - column:
                   name: mileage
                   type: int
-                  constraints:
-                    nullable: false
               - column:
                   name: cc
                   type: int

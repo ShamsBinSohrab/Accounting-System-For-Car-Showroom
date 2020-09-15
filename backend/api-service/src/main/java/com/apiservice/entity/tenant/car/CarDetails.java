@@ -10,8 +10,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "car_details")
@@ -44,10 +42,10 @@ public class CarDetails {
   @Type(type = "string-array")
   private String[] options;
 
-  @Column(name = "engine_no", nullable = false)
+  @Column(name = "engine_no")
   private String engineNo;
 
-  @Column(name = "mileage", nullable = false)
+  @Column(name = "mileage")
   private int mileage;
 
   @Column(name = "cc", nullable = false)
@@ -55,9 +53,9 @@ public class CarDetails {
 
   @Enumerated(value = EnumType.STRING)
   @Column(name = "transmission", nullable = false)
-  private CarTransmission transmission;
+  private Transmission transmission;
 
   @Enumerated(value = EnumType.STRING)
   @Column(name = "fuel_type", nullable = false)
-  private CarFuelType fuelType;
+  private FuelType fuelType;
 }

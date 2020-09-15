@@ -28,8 +28,8 @@ public class CarDetailsModel {
   private int cc;
 
   @Enumerated(value = EnumType.STRING)
-  private CarTransmission transmission;
+  private Transmission transmission;
 
   @Enumerated(value = EnumType.STRING)
-  private CarFuelType fuelType;
+  private FuelType fuelType;
 }

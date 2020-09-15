@@ -1,6 +1,6 @@
 package com.apiservice.enums.car;
 
-public enum CarTransmission {
+public enum Transmission {
   AUTOMATIC,
   MANUAL
 }

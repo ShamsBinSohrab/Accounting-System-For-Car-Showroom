@@ -20,7 +20,7 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
   }
 
   private Specification<Car> queryForDraft() {
-    return query("draft", equal, filter.isDraft());
+    return query("draft", equal, filter.getDraft());
   }
 
   private Specification<Car> queryForMake() {
@@ -41,7 +41,7 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
     return joinedQuery("details", "color", like, filter.getColor());
   }
 
-  private Specification<Car> queryForEngineNo() { return joinedQuery("details", "engineNo", equal, filter.getEngineNo()); }
+  private Specification<Car> queryForEngineNo() { return joinedQuery("details", "engineNo", like, filter.getEngineNo()); }
 
   private Specification<Car> queryForMileage() { return joinedQuery("details", "mileage", equal, filter.getMileage()); }
 
