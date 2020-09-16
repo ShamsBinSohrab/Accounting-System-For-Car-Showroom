@@ -47,7 +47,6 @@ export class CompanyListComponent implements OnInit {
     this.companyService.getCompanyToken(id)
                       .subscribe(
                         data => {
-                          this.toastrService.success('Company Assigned', 'Success!');
                           this.defaultComponent.ngOnInit();
                           this.route.navigate(['/car/list']);
                         },

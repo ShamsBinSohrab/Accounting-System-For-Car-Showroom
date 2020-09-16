@@ -4,8 +4,13 @@
     <div class="col-2"></div>
     <div class="col-8">
         <div class="card">
-            <div class="card-header bg-success">
-              <i class="fa fa-plus"></i>Add Company
+            <div class="card-header bg-indigo d-flex justify-content-between">
+              <div>
+                <i class="fa fa-plus"></i>Add Company
+              </div>
+              <div>
+               <button class="btn btn-sm btn-success" (click)="addCompany()"><i class="fa fa-plus"></i> Create Company</button>
+              </div>
             </div>
             <form  [formGroup]="CompanyForm" (ngSubmit)="onSubmit()">
               <div class="card-body">
@@ -27,8 +32,8 @@
               </div>
               <div class="card-footer text-right">
                 <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Comapany</button>
-                <button type="reset" class="btn btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
-                <button type="button" class="btn btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
+                <button type="button" class="btn btn-sm btn-secondary ml-2" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
               </div>
             </form>
           </div>

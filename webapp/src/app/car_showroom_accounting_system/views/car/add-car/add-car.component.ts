@@ -32,7 +32,7 @@ export class AddCarComponent implements OnInit {
   {
     this.CarForm = this.formBuilder.group({
       chassisNo: ['', [Validators.required, Validators.pattern('^[+]?[0-9a-zA-Z .-]*$'), Validators.maxLength(20)]],
-      // Draft: [false],
+      draft: [false],
       details:  this.formBuilder.group({
         make: ['', Validators.required],
         name: ['', Validators.required],
@@ -58,10 +58,20 @@ export class AddCarComponent implements OnInit {
 
   onSubmit()
   {
-    if (this.CarForm.invalid)
+    if (this.CarForm.get('chassisNo').hasError('required'))
+    {
+      this.toastrService.error('Chassis No Required!', 'Error!');
+      return;
+    }
+    if (this.CarForm.invalid && !this.CarForm.get('draft').value)
     {
       this.toastrService.error('Please Fill All Field!', 'Error!');
       return;
+    }
+    if (this.CarForm.get('draft').value)
+    {
+      this.CarForm.removeControl('details');
+      console.log(this.CarForm.get('draft').value);
     }
     this.carService.addCar(this.CarForm.value)
                           .subscribe(
@@ -72,7 +82,7 @@ export class AddCarComponent implements OnInit {
                             },
                             error => {
                               this.toastrService.error(error.error, 'Error!');
-                              console.log(error.error);
+                              console.log(error);
                             }
                           );
   }
