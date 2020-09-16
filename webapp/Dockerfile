@@ -1,9 +1,10 @@
-FROM node:12.18-alpine3.9 as build
-RUN mkdir -p /webapp
+FROM node:12.12 as build
 WORKDIR /webapp
-COPY package*.json /webapp
-RUN npm install -g @angular/cli @angular-devkit/build-angular && npm install
-COPY . /webapp
-ARG server_port=4200
-EXPOSE $server_port
-CMD ["npm", "start"]
+COPY package.json ./webapp/
+RUN cd webapp && npm install
+COPY . .
+RUN npm run build
+
+FROM nginx:1.17.1-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /webapp/dist/ascs-webapp /usr/share/nginx/html

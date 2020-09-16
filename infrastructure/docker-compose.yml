@@ -65,16 +65,16 @@ services:
       - MIGRATION_INTERNAL_API_URL=http://migration-service:8082/internal/createTenant
     networks:
       - public
-  webapp:
-    image: webapp
+  frontend-webapp:
+    image: frontend-webapp
     deploy:
       restart_policy:
         condition: any
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=ascs_public"
-        - "traefik.frontend.rule=Host:app.localhost;PathPrefixStrip:/webapp/"
-        - "traefik.port=4200"
+        - "traefik.app.frontend.rule=Host:app.localhost"
+        - "traefik.port=80"
         - "traefik.protocol=http"
     networks:
       - public

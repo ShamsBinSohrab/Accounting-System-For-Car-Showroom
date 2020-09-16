@@ -6,7 +6,7 @@ docker build -t "migration-service" -f ./backend/migration-service/Dockerfile ./
 docker build -t "api-service" \
   --build-arg context_path="/" \
   -f ./backend/api-service/Dockerfile ./backend/
-docker build -t "webapp" -f ./webapp/Dockerfile ./webapp/
+docker build -t "frontend-webapp" -f ./webapp/Dockerfile ./webapp/
 
 echo "Deploying local docker swarm stack, updating images"
 docker stack deploy -c infrastructure/docker-compose.yml ascs
