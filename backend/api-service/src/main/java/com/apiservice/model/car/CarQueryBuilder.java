@@ -20,7 +20,7 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
   }
 
   private Specification<Car> queryForDraft() {
-    return query("draft", equal, filter.isDraft());
+    return query("draft", equal, filter.getDraft());
   }
 
   private Specification<Car> queryForMake() {
@@ -43,6 +43,26 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
     return joinedQuery("details", "color", like, filter.getColor());
   }
 
+  private Specification<Car> queryForEngineNo() {
+    return joinedQuery("details", "engineNo", like, filter.getEngineNo());
+  }
+
+  private Specification<Car> queryForMileage() {
+    return joinedQuery("details", "mileage", equal, filter.getMileage());
+  }
+
+  private Specification<Car> queryForCc() {
+    return joinedQuery("details", "cc", equal, filter.getCc());
+  }
+
+  private Specification<Car> queryForTransmission() {
+    return joinedQuery("details", "transmission", equal, filter.getTransmission());
+  }
+
+  private Specification<Car> queryForFuelType() {
+    return joinedQuery("details", "fuelType", equal, filter.getFuelType());
+  }
+
   @Override
   public Specification<Car> buildQuery() {
     return queryForChassisNo()
@@ -51,6 +71,11 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
         .and(queryForName())
         .and(queryForType())
         .and(queryForModelYear())
-        .and(queryForColor());
+        .and(queryForColor())
+        .and(queryForEngineNo())
+        .and(queryForMileage())
+        .and(queryForCc())
+        .and(queryForTransmission())
+        .and(queryForFuelType());
   }
 }

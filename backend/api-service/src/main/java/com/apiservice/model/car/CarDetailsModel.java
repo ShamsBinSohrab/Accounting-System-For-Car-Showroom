@@ -1,10 +1,14 @@
 package com.apiservice.model.car;
 
 import com.apiservice.enums.car.CarMake;
+import com.apiservice.enums.car.CarOption;
 import com.apiservice.enums.car.CarType;
+import com.apiservice.enums.car.FuelType;
+import com.apiservice.enums.car.Transmission;
+import java.util.Collections;
+import java.util.Set;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Digits;
 import lombok.Data;
 
 @Data
@@ -18,4 +22,16 @@ public class CarDetailsModel {
   private CarType type;
 
   private String modelYear;
+
+  private Set<CarOption> options = Collections.emptySet();
+
+  private String engineNo;
+  private int mileage;
+  private int cc;
+
+  @Enumerated(value = EnumType.STRING)
+  private Transmission transmission;
+
+  @Enumerated(value = EnumType.STRING)
+  private FuelType fuelType;
 }
