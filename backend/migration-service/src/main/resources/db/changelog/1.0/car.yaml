@@ -78,6 +78,21 @@ databaseChangeLog:
                   type: varchar(10)
                   constraints:
                     nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: car
+            baseColumnNames: car_details_id
+            referencedTableName: car_details
+            referencedColumnNames: id
+            validate: true
+            constraintName: FK_car_details_id__car_details_id
+  - changeSet:
+      id: 3
+      author: shanto
+      comment: Added columns to car_details
+      changes:
+        - addColumn:
+            tableName: car_details
+            columns:
               - column:
                   name: options
                   type: text[]
@@ -102,10 +117,3 @@ databaseChangeLog:
                   type: varchar(50)
                   constraints:
                     nullable: false
-        - addForeignKeyConstraint:
-            baseTableName: car
-            baseColumnNames: car_details_id
-            referencedTableName: car_details
-            referencedColumnNames: id
-            validate: true
-            constraintName: FK_car_details_id__car_details_id
