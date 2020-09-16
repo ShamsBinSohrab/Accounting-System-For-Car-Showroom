@@ -2,11 +2,11 @@
 
 echo "Building docker images..."
 
-docker build -t "migration-service" -f ./backend/migration-service/Dockerfile ./backend/
-docker build -t "api-service" \
+docker build --no-cache -t "migration-service" -f ./backend/migration-service/Dockerfile ./backend/
+docker build --no-cache -t "api-service" \
   --build-arg context_path="/" \
   -f ./backend/api-service/Dockerfile ./backend/
-docker build -t "frontend-webapp" -f ./webapp/Dockerfile ./webapp/
+docker build --no-cache -t "frontend-webapp" -f ./webapp/Dockerfile ./webapp/
 
 echo "Deploying local docker swarm stack, updating images"
 docker stack deploy -c infrastructure/docker-compose.yml ascs
