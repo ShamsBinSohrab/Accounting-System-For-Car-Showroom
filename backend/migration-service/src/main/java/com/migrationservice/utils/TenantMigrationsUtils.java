@@ -48,7 +48,8 @@ public class TenantMigrationsUtils {
                 final PreparedStatement schemaExists =
                     masterDataSource.getConnection()
                         .prepareStatement(
-                            "SELECT schema_name FROM information_schema.schemata WHERE schema_name = ?");
+                            "SELECT schema_name FROM information_schema.schemata "
+                                + "WHERE schema_name = ?");
                 schemaExists.setString(1, company.getUuid().toString());
                 if (schemaExists.executeQuery().next()) {
                   schemaExists.close();
@@ -75,7 +76,8 @@ public class TenantMigrationsUtils {
     HikariDataSource dataSource = new HikariDataSource(config);
     Database database = DatabaseFactory.getInstance()
         .findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
-    Liquibase liquibase = new Liquibase("db/changelog/db.changelog-tenant.yaml", new ClassLoaderResourceAccessor(),
+    Liquibase liquibase = new Liquibase("db/changelog/db.changelog-tenant.yaml",
+        new ClassLoaderResourceAccessor(),
         database);
     liquibase.update("production");
     database.close();

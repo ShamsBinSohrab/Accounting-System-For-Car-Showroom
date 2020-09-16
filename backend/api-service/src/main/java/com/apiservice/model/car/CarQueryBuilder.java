@@ -35,21 +35,33 @@ public class CarQueryBuilder implements QueryBuilder<Car> {
     return joinedQuery("details", "type", equal, filter.getType());
   }
 
-  private Specification<Car> queryForModelYear() { return joinedQuery("details", "modelYear", equal, filter.getModelYear()); }
+  private Specification<Car> queryForModelYear() {
+    return joinedQuery("details", "modelYear", equal, filter.getModelYear());
+  }
 
   private Specification<Car> queryForColor() {
     return joinedQuery("details", "color", like, filter.getColor());
   }
 
-  private Specification<Car> queryForEngineNo() { return joinedQuery("details", "engineNo", like, filter.getEngineNo()); }
+  private Specification<Car> queryForEngineNo() {
+    return joinedQuery("details", "engineNo", like, filter.getEngineNo());
+  }
 
-  private Specification<Car> queryForMileage() { return joinedQuery("details", "mileage", equal, filter.getMileage()); }
+  private Specification<Car> queryForMileage() {
+    return joinedQuery("details", "mileage", equal, filter.getMileage());
+  }
 
-  private Specification<Car> queryForCc() { return joinedQuery("details", "cc", equal, filter.getCc()); }
+  private Specification<Car> queryForCc() {
+    return joinedQuery("details", "cc", equal, filter.getCc());
+  }
 
-  private Specification<Car> queryForTransmission() { return joinedQuery("details", "transmission", equal, filter.getTransmission()); }
+  private Specification<Car> queryForTransmission() {
+    return joinedQuery("details", "transmission", equal, filter.getTransmission());
+  }
 
-  private Specification<Car> queryForFuelType() { return joinedQuery("details", "fuelType", equal, filter.getFuelType()); }
+  private Specification<Car> queryForFuelType() {
+    return joinedQuery("details", "fuelType", equal, filter.getFuelType());
+  }
 
   @Override
   public Specification<Car> buildQuery() {

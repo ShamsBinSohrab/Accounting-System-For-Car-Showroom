@@ -65,13 +65,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
-  protected ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+  protected ResponseEntity<Object> handleDataIntegrityViolationException(
+      DataIntegrityViolationException ex, WebRequest request) {
     return handleExceptionInternal(
         ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
   }
 
   @ExceptionHandler(AccessDeniedException.class)
-  protected ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+  protected ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex,
+      WebRequest request) {
     return handleExceptionInternal(
         ex, ex.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
   }

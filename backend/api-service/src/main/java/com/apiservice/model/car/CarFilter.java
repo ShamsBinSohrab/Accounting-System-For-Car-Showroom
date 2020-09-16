@@ -1,9 +1,9 @@
 package com.apiservice.model.car;
 
-import com.apiservice.enums.car.FuelType;
 import com.apiservice.enums.car.CarMake;
-import com.apiservice.enums.car.Transmission;
 import com.apiservice.enums.car.CarType;
+import com.apiservice.enums.car.FuelType;
+import com.apiservice.enums.car.Transmission;
 import lombok.Data;
 
 @Data

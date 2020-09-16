@@ -1,13 +1,15 @@
 package com.apiservice.model.car;
 
-import com.apiservice.enums.car.*;
-
+import com.apiservice.enums.car.CarMake;
+import com.apiservice.enums.car.CarOption;
+import com.apiservice.enums.car.CarType;
+import com.apiservice.enums.car.FuelType;
+import com.apiservice.enums.car.Transmission;
+import java.util.Collections;
+import java.util.Set;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import lombok.Data;
-
-import java.util.Collections;
-import java.util.Set;
 
 @Data
 public class CarDetailsModel {
