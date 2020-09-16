@@ -13,7 +13,7 @@
       border-top: 0;
       @include border-radius(0);
       &.active {
-        color: theme-color("primary");
+        color: theme-color("indigo-deep");
         border-right-color: $border-color;
         border-left-color: $border-color;
       }

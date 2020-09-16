@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
 import { ToastrService } from 'ngx-toastr';
+import { PurchaseService } from 'src/app/car_showroom_accounting_system/Services/purchase.service';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-car-details',
-  templateUrl: './car-details.component.html',
-  styleUrls: ['./car-details.component.scss']
+  selector: 'app-purchase-details',
+  templateUrl: './purchase-details.component.html',
+  styleUrls: ['./purchase-details.component.scss']
 })
-export class CarDetailsComponent implements OnInit {
-  id: any;
+export class PurchaseDetailsComponent implements OnInit {
+
   data: any;
 
   constructor(
-    private activeRoute: ActivatedRoute,
-    private carService: CarService,
+    private purchaseService: PurchaseService,
     private router: Router,
     private toastrService: ToastrService,
     private location: Location
@@ -28,7 +27,7 @@ export class CarDetailsComponent implements OnInit {
 
   getDetails()
   {
-    this.carService.getCarById()
+    this.purchaseService.getPurchaseById()
                   .subscribe(
                     data => {
                       this.data = data;
@@ -44,9 +43,10 @@ export class CarDetailsComponent implements OnInit {
     this.location.back();
   }
 
-  updateCar()
+  updatePurchase(link: any)
   {
-    this.router.navigate(['/car/update']);
+    localStorage.setItem('link', link);
+    this.router.navigate(['/purchase/update']);
   }
 
 }

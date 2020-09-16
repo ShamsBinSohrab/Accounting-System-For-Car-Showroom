@@ -12,7 +12,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   public sidebarMinimized = false;
   public navItems: any;
-
+  homelink = '';
 
   constructor(
               private loginSercice: LoginService,

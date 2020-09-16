@@ -1,0 +1,93 @@
+
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header bg-indigo">
+              <i class="fa fa-plus"></i>Add Purchase Record
+            </div>
+            <form  [formGroup]="PurchaseForm" (ngSubmit)="onSubmit()">
+              <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="purchaseType">Purchase Type</label>
+                    <div class="col-md-8">
+                      <input type="text" id="purchaseType" name="purchaseType" class="form-control" placeholder="Enter Purchase Type" formControlName="purchaseType">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="purchaseDate">Purchase Date</label>
+                    <div class="col-md-8">
+                      <input type="text"
+                      placeholder="Enter Purchase Date"
+                      class="form-control"
+                      bsDatepicker formControlName="purchaseDate">
+                      <!-- <input type="datetime-local" id="purchaseDate" name="purchaseDate" class="form-control" placeholder="Enter Purchase Date" formControlName="purchaseDate"> -->
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="name">Base Price</label>
+                    <div class="col-md-8">
+                      <input type="text" id="basePrice" name="basePrice" class="form-control" placeholder="Enter Base Price(Required)" formControlName="basePrice">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="lcCharge">LC Charge</label>
+                    <div class="col-md-8">
+                      <input type="text" id="lcCharge" name="lcCharge" class="form-control" placeholder="Enter LC Charge(Required)" formControlName="lcCharge">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="shippingCharge">Shipping Charge</label>
+                    <div class="col-md-8">
+                      <input type="text" id="shippingCharge" name="shippingCharge" class="form-control" placeholder="Enter LC Charge(Required)" formControlName="shippingCharge">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="tax">Tax</label>
+                    <div class="col-md-8">
+                      <input type="text" id="tax" name="tax" class="form-control" placeholder="Enter Tax" formControlName="tax">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="advancedIncomeTax">Advanced Income Tax</label>
+                    <div class="col-md-8">
+                      <input type="text" id="advancedIncomeTax" name="advancedIncomeTax" class="form-control" placeholder="Enter Advanced Income Tax" formControlName="advancedIncomeTax">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="cnfCharge">CNF Charge</label>
+                    <div class="col-md-8">
+                      <input type="text" id="cnfCharge" name="cnfCharge" class="form-control" placeholder="Enter CNF Charge" formControlName="cnfCharge">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="transportationCharge">Transportation Charge</label>
+                    <div class="col-md-8">
+                      <input type="text" id="transportationCharge" name="transportationCharge" class="form-control" placeholder="Enter Transportation Charge" formControlName="transportationCharge">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="garageCharge">Garage Charge</label>
+                    <div class="col-md-8">
+                      <input type="text" id="garageCharge" name="garageCharge" class="form-control" placeholder="Enter Garage Charge" formControlName="garageCharge">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="miscellaneousCharge">Miscellaneous Charge</label>
+                    <div class="col-md-8">
+                      <input type="text" id="miscellaneousCharge" name="miscellaneousCharge" class="form-control" placeholder="Enter Miscellaneous Charge" formControlName="miscellaneousCharge">
+                    </div>
+                  </div>
+              </div>
+              <div class="card-footer text-right">
+                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
+                <button type="submit" class="btn btn-sm btn-success ml-2"><i class="fa fa-plus-circle"></i>&nbsp;Add Purchase</button>
+              </div>
+            </form>
+          </div>
+    </div>
+    <div class="col-2"></div>
+</div>

@@ -4,28 +4,33 @@
     <div class="card">
       <div class="card-header bg-indigo d-flex justify-content-between">
         <div>
-          <i class="fa fa-align-justify"></i> Company List
+          <i class="fa fa-align-justify"></i> Purchase Record List
         </div>
         <div>
-          <button class="btn btn-sm btn-success" (click)="createCompany()"><i class="fa fa-plus"></i> Create Company</button>
+          <!-- <button class="btn btn-sm btn-success" (click)="createPurchase()"><i class="fa fa-plus"></i> Create Purchase</button> -->
         </div>
       </div>
       <div class="card-body">
         <table class="table table-bordered table-striped table-sm text-center">
           <thead>
             <tr>
-              <th>Company Name</th>
-              <th>Status</th>
+              <th>Purchase Type</th>
+              <th>Purchase Date</th>
+              <th>Chassis No</th>
+              <th>Base Price</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let company of companyList">
-              <td>{{company.companyName|titlecase}}</td>
-              <td>{{company.active ? 'Active' : 'Inactive'}}</td>
+            <tr *ngFor="let purchase of purchaseList">
+              <td>{{purchase.purchaseType|titlecase}}</td>
+              <td>{{purchase.purchaseDate|date:'short'}}</td>
+              <td>{{purchase.chassisNo}}</td>
+              <td>{{purchase.basePrice}}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(company.id)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCompany(company.id)">Update</button>
+                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="purchaseDetails(purchase.links[0].href)">Details</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updatePurchase(purchase.links[0].href)">Update</button>
+                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deletePurchase(purchase.links[0].href)">Delete</button>
               </td>
             </tr>
           </tbody>
