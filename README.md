@@ -3,7 +3,7 @@
 > #### Docker setup for local environment
 - From project root `.../Accounting-System-For-Car-Showroom` type this command only once `docker swarm init`.
 - Now build docker images by running the shell script, command `./infrastructure/build-local.sh`
-- Goto and local host file and add these two lines: 
+- Goto your local host file and add these two lines: 
 ```
 127.0.0.1   api.localhost
 127.0.0.1   app.localhost
