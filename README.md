@@ -9,8 +9,8 @@ A management system for an automobile showroom that can perform basic accounting
 - Build docker images by running the script, command `./infrastructure/build-local.sh`
 - Goto your local host file and add these two lines: 
 ```
-127.0.0.1   api.localhost
-127.0.0.1   app.localhost
+127.0.0.1           api.localhost
+127.0.0.1           app.localhost
 ```
 - Check all the deployed service, command `docker service ls`
 - Access **webapp** from `app.localhost` and **api** from `api.localhost` 
