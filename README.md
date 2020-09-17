@@ -1,6 +1,6 @@
 # Accounting System for Car Showroom
 
-#### Docker setup for local environment
+> #### Docker setup for local environment
 ---
 - From project root `.../Accounting-System-For-Car-Showroom` type this command only once `docker swarm init`.
 - Now build docker images by running the shell script, command `./infrastructure/build-local.sh`
