@@ -96,6 +96,9 @@ databaseChangeLog:
               - column:
                   name: options
                   type: text[]
+                  defaultValueComputed: "'{}'::text[]"
+                  constraints:
+                    nullable: false
               - column:
                   name: engine_no
                   type: varchar(50)
