@@ -85,3 +85,41 @@ databaseChangeLog:
             referencedColumnNames: id
             validate: true
             constraintName: FK_car_details_id__car_details_id
+  - changeSet:
+      id: 3
+      author: shanto
+      comment: Added columns to car_details
+      changes:
+        - addColumn:
+            tableName: car_details
+            columns:
+              - column:
+                  name: options
+                  type: text[]
+                  defaultValueComputed: "'{}'::text[]"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: engine_no
+                  type: varchar(50)
+              - column:
+                  name: mileage
+                  type: int
+              - column:
+                  name: cc
+                  type: int
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transmission
+                  type: varchar(50)
+                  defaultValue: AUTOMATIC
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fuel_type
+                  type: varchar(50)
+                  defaultValue: OCTANE_PETROL
+                  constraints:
+                    nullable: false

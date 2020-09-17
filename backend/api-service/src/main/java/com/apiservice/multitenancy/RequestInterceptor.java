@@ -57,7 +57,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         }
       } else {
         if (operator.isSuperAdmin()) {
-          TenantContext.setCurrentTenant(constants.DEFAULT_COMPANY_IDENTIFIER);
+          TenantContext.setCurrentTenant(constants.defaultCompanyIdentifier);
         } else {
           response
               .getWriter()

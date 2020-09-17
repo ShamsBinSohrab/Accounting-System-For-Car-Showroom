@@ -13,7 +13,8 @@ public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver
 
   @Override
   public String resolveCurrentTenantIdentifier() {
-    return TenantContext.isTenantSet() ? TenantContext.getCurrentTenant() : constants.DEFAULT_COMPANY_IDENTIFIER;
+    return TenantContext.isTenantSet() ? TenantContext.getCurrentTenant()
+        : constants.defaultCompanyIdentifier;
   }
 
   @Override

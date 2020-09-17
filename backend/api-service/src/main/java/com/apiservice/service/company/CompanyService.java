@@ -7,15 +7,14 @@ import com.apiservice.model.company.CompanyFilter;
 import com.apiservice.model.company.CompanyQueryBuilder;
 import com.apiservice.repository.company.CompanyRepository;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
+import com.apiservice.utils.pagination.PaginationService;
+import com.apiservice.utils.pagination.QueryBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import com.apiservice.utils.pagination.PaginationService;
-import com.apiservice.utils.pagination.QueryBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,17 +83,24 @@ public class CompanyService {
   }
 
   @Transactional(readOnly = true)
-  public List<Company> getAllCompanies() { return companyRepository.findAll(); }
+  public List<Company> getAllCompanies() {
+    return companyRepository.findAll();
+  }
 
   @Transactional(readOnly = true)
-  public Company getCompanyById(long id) { return companyRepository.findById(id).orElseThrow(() -> EntityNotFoundException.of(Company.class, id)); }
+  public Company getCompanyById(long id) {
+    return companyRepository.findById(id)
+        .orElseThrow(() -> EntityNotFoundException.of(Company.class, id));
+  }
 
   @Transactional
-  public void save(Company company) { companyRepository.save(company); }
+  public void save(Company company) {
+    companyRepository.save(company);
+  }
 
   @Transactional(readOnly = true)
   public Page<Company> getAllWithPaginationAndFilter(
-          CompanyFilter filter, Pageable pageable) {
+      CompanyFilter filter, Pageable pageable) {
     final QueryBuilder<Company> queryBuilder = new CompanyQueryBuilder(filter);
     return paginationService.paginate(companyRepository, queryBuilder, pageable);
   }

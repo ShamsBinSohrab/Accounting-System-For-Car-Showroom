@@ -49,9 +49,9 @@ public class CompanyController {
 
   @GetMapping("/companies")
   public List<CompanyModel> list(CompanyFilter filter, Pageable pageable) {
-    return companyService.getAllWithPaginationAndFilter(filter,pageable).stream()
-            .map(CompanyModel::from)
-            .collect(Collectors.toUnmodifiableList());
+    return companyService.getAllWithPaginationAndFilter(filter, pageable).stream()
+        .map(CompanyModel::from)
+        .collect(Collectors.toUnmodifiableList());
   }
 
   @GetMapping("/companies/{id}")
@@ -61,7 +61,7 @@ public class CompanyController {
   }
 
   @PutMapping("/companies/{id}")
-  public CompanyModel update(@PathVariable long id,@RequestBody @Valid CompanyModel model) {
+  public CompanyModel update(@PathVariable long id, @RequestBody @Valid CompanyModel model) {
     final Company company = companyService.getCompanyById(id);
     final Company updatedCompany = model.updateEntity(company);
     companyService.save(updatedCompany);
