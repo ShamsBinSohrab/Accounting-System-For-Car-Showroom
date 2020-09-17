@@ -1,4 +1,4 @@
-# ASCS
+# Accounting System for Car Showroom
 
 #### Docker setup for local environment
 ---
