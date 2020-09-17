@@ -1,5 +1,5 @@
 # Accounting System for Car Showroom
-A showroom management system for an automobile showroom that can perform basic accounting and inventory management with dynamic search options for clients. Using this system, users can easily manage vehicles, sell, or add them, store their records, and update or delete them.
+A management system for an automobile showroom that can perform basic accounting and inventory management. Using this system, users can easily manage vehicles, sell, or add them, store their records, and update or delete them.
 > #### Docker setup for local environment
 - From project root `.../Accounting-System-For-Car-Showroom` type this command only once `docker swarm init`.
 - Now build docker images by running the shell script, command `./infrastructure/build-local.sh`
