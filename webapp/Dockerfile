@@ -1,7 +1,7 @@
 FROM node:12.12 as build
 WORKDIR /webapp
-COPY package.json ./webapp/
-RUN cd webapp && npm install
+COPY package*.json ./webapp/
+RUN cd webapp && npm i -g @angular/cli@9.1.12 && npm ci
 COPY . .
 RUN npm run build-docker
 

@@ -38,7 +38,7 @@ services:
     networks:
       - public
   migration-service:
-    image: migration-service
+    image: migration-service:${IMAGE_TAG}
     environment:
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -47,7 +47,7 @@ services:
     networks:
       - public
   api-service:
-    image: api-service
+    image: api-service:${IMAGE_TAG}
     deploy:
       restart_policy:
         condition: any
@@ -65,8 +65,8 @@ services:
       - MIGRATION_INTERNAL_API_URL=http://migration-service:8082/internal/createTenant
     networks:
       - public
-  frontend-webapp:
-    image: frontend-webapp
+  webapp:
+    image: webapp:${IMAGE_TAG}
     deploy:
       restart_policy:
         condition: any
