@@ -54,7 +54,7 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=ascs_public"
-        - "traefik.frontend.rule=Host:api.localhost;PathPrefixStrip:/api-service/"
+        - "traefik.frontend.rule=Host:api.localhost"
         - "traefik.port=8888"
         - "traefik.protocol=http"
     environment:
