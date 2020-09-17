@@ -105,15 +105,18 @@ databaseChangeLog:
               - column:
                   name: cc
                   type: int
+                  defaultValue: 0
                   constraints:
                     nullable: false
               - column:
                   name: transmission
                   type: varchar(50)
+                  defaultValue: AUTOMATIC
                   constraints:
                     nullable: false
               - column:
                   name: fuel_type
                   type: varchar(50)
+                  defaultValue: OCTANE_PETROL
                   constraints:
                     nullable: false
