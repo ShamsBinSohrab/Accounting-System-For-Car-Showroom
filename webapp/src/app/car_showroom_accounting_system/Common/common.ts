@@ -1,5 +1,6 @@
+import {environment} from '../../../environments/environment';
+
 export class Common {
-    // public static baseUrl="https://localhost:44354";
-    public static baseUrl = 'http://localhost:8080/v1';
-    public static url = 'http://localhost:8080';
-  }
+    public static baseUrl = environment.baseUrl;
+    public static url = environment.url;
+}
