@@ -10,11 +10,12 @@ import { P500Component } from './car_showroom_accounting_system/views/error/500.
 import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
+import { Common } from './car_showroom_accounting_system/Common/common';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'car/list',
     pathMatch: 'full',
   },
   {
@@ -49,9 +50,9 @@ const routes: Routes = [
     path: '',
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard],
-    data: {
-      title: 'Home'
-    },
+    // data: {
+    //   title: 'Home'
+    // },
     children: [
       {
         path: 'home',
@@ -64,6 +65,10 @@ const routes: Routes = [
       {
         path: 'company',
         loadChildren: () => import('./car_showroom_accounting_system/views/company/company.module').then(m => m.CompanyModule)
+      },
+      {
+        path: 'purchase',
+        loadChildren: () => import('./car_showroom_accounting_system/views/purchase/purchase.module').then(m => m.PurchaseModule)
       },
       {
         path: 'change-password',
@@ -127,4 +132,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+ }

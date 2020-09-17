@@ -1,0 +1,84 @@
+version: "3.6"
+services:
+  traefik-proxy:
+    image: traefik:1.7.11
+    deploy:
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=ascs_public"
+        - "traefik.frontend.rule=Host:traefik.localhost;"
+        - "traefik.port=8080"
+        - "traefik.protocol=http"
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+    networks:
+      - public
+    command: --logLevel=DEBUG --defaultentrypoints="http" --docker --docker.exposedbydefault=false --docker.swarmmode --docker.watch --entrypoints="Name:http Address::80" --api --ping
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+  postgres-db:
+    image: postgres:11.7
+    environment:
+      - POSTGRES_DB=showroom_accounting_system
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    deploy:
+      restart_policy:
+        condition: any
+    ports:
+      - 5432:5432
+    networks:
+      - public
+  migration-service:
+    image: migration-service:${IMAGE_TAG}
+    environment:
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/showroom_accounting_system
+      - SERVER_PORT=8082
+    networks:
+      - public
+  api-service:
+    image: api-service:${IMAGE_TAG}
+    deploy:
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=ascs_public"
+        - "traefik.frontend.rule=Host:api.localhost"
+        - "traefik.port=8888"
+        - "traefik.protocol=http"
+    environment:
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/showroom_accounting_system
+      - SERVER_PORT=8888
+      - MIGRATION_INTERNAL_API_URL=http://migration-service:8082/internal/createTenant
+    networks:
+      - public
+  webapp:
+    image: webapp:${IMAGE_TAG}
+    deploy:
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=ascs_public"
+        - "traefik.app.frontend.rule=Host:app.localhost"
+        - "traefik.port=80"
+        - "traefik.protocol=http"
+    networks:
+      - public
+networks:
+  public:
+volumes:
+  postgresdata:

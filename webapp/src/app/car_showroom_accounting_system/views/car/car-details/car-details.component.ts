@@ -22,13 +22,13 @@ export class CarDetailsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.id = this.activeRoute.snapshot.paramMap.get('carId');
-    this.getDetails(this.id);
+    // this.id = this.activeRoute.snapshot.paramMap.get('carId');
+    this.getDetails();
   }
 
-  getDetails(carId: any)
+  getDetails()
   {
-    this.carService.getCarById(carId)
+    this.carService.getCarById()
                   .subscribe(
                     data => {
                       this.data = data;
@@ -46,8 +46,7 @@ export class CarDetailsComponent implements OnInit {
 
   updateCar()
   {
-    const carId = this.id;
-    this.router.navigate(['/car/update', { carId }]);
+    this.router.navigate(['/car/update']);
   }
 
 }

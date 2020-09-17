@@ -28,11 +28,11 @@ export class CarUpdateComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.id = this.activeRoute.snapshot.paramMap.get('carId');
+    // this.id = this.activeRoute.snapshot.paramMap.get('carId');
     this.loadForm();
     this.getMake();
     this.getType();
-    this.getDetails(this.id);
+    this.getDetails();
   }
 
   loadForm()
@@ -51,13 +51,11 @@ export class CarUpdateComponent implements OnInit {
     });
   }
 
-  getDetails(carId: any)
+  getDetails()
   {
-    this.carService.getCarById(carId)
+    this.carService.getCarById()
                   .subscribe(
                     data => {
-                      console.log(data);
-
                       this.updateCar.patchValue({
                         chassisNo: data.chassisNo,
                         details:
@@ -98,7 +96,7 @@ export class CarUpdateComponent implements OnInit {
       this.toastrService.warning('Please Fill All Field!', 'Warning!');
       return;
     }
-    this.carService.updateCar(this.id, this.updateCar.value)
+    this.carService.updateCar(this.updateCar.value)
                   .subscribe(
                     data => {
                       this.toastrService.success('Update Successful', 'Success');

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.HibernateException;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -36,8 +35,9 @@ public class MultiTenantConnectionProvider implements
   }
 
   @Override
-  public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
-    connection.setSchema(constants.DEFAULT_COMPANY_IDENTIFIER);
+  public void releaseConnection(String tenantIdentifier, Connection connection)
+      throws SQLException {
+    connection.setSchema(constants.defaultCompanyIdentifier);
     releaseAnyConnection(connection);
   }
 
@@ -48,12 +48,12 @@ public class MultiTenantConnectionProvider implements
 
   @Override
   @SuppressWarnings("rawtypes")
-  public boolean isUnwrappableAs(Class aClass) {
+  public boolean isUnwrappableAs(Class clazz) {
     return false;
   }
 
   @Override
-  public <T> T unwrap(Class<T> aClass) {
+  public <T> T unwrap(Class<T> clazz) {
     return null;
   }
 }

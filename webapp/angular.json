@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Demo-Skeleton",
+            "outputPath": "dist/ascs-webapp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,6 +30,8 @@
               "./node_modules/simple-line-icons/css/simple-line-icons.css",
               "./node_modules/alertifyjs/build/css/alertify.min.css",
               "./node_modules/ngx-toastr/toastr.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/scss/style.scss"
             ],
             "stylePreprocessorOptions": {
@@ -68,6 +70,14 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
+                }
+              ]
+            },
+            "docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.ts"
                 }
               ]
             }

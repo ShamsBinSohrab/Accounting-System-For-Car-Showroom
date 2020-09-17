@@ -1,0 +1,22 @@
+package com.apiservice.enums.car;
+
+public enum CarOption {
+  WOODEN_PANEL,
+  CRUISE_CONTROL,
+  HIGH_FLOOR,
+  RAIN_SHED,
+  DVD_PLAYER,
+  BACK_CAMERA,
+  FOUR_CAMERAS,
+  SUNROOF,
+  WINKER_MIRROR,
+  AC,
+  REAR_AC,
+  THIRD_ROW_SEATS,
+  AIR_BAG,
+  HIGH_ROOF,
+  LOW_ROOF,
+  WOODEN_STEERING,
+  LOW_FLOOR,
+  ROOF_RAIL
+}

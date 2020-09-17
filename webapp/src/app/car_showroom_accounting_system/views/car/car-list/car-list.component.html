@@ -2,8 +2,13 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
-      <div class="card-header bg-indigo">
-        <i class="fa fa-align-justify"></i> Car List
+      <div class="card-header bg-indigo d-flex justify-content-between">
+        <div>
+          <i class="fa fa-align-justify"></i> Car List
+        </div>
+        <div>
+          <button class="btn btn-sm btn-success" (click)="addCar()"><i class="fa fa-plus"></i> Create Car</button>
+        </div>
       </div>
       <div class="card-body">
         <table class="table table-bordered table-striped table-sm text-center">
@@ -26,10 +31,11 @@
               <td>{{car.details.modelYear}}</td>
               <td>{{car.details.color}}</td>
               <td>{{car.chassisNo}}</td>
-              <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="carDetails(car.id)">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCar(car.id)">Update</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteCar(car.id)">Delete</button>
+              <td class="text-left">
+                <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="carDetails(car.links[0].href)">Details</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCar(car.links[0].href)">Update</button>
+                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteCar(car.links[0].href)">Delete</button>
+                <button type="button" class="btn btn-sm btn-primary ml-2 mr-2" (click)="carAction(car.links[1].href, car.links[1].rel)"><i class="fa fa-plus"></i> {{car.links[1].rel==="purchaseRecord" ? "Purchase Record" : "Sell Record"}}</button>
               </td>
             </tr>
           </tbody>
