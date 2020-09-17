@@ -4,7 +4,7 @@ A management system for an automobile showroom that can perform basic accounting
 
 ### Docker setup for local environment
 
-- From project root `.../Accounting-System-For-Car-Showroom` type this command only once `docker swarm init`.
+- From project root `.../Accounting-System-For-Car-Showroom/` execute this only once, command `docker swarm init`.
 - Now build docker images by running the shell script, command `./infrastructure/build-local.sh`
 - Goto your local host file and add these two lines: 
 ```
