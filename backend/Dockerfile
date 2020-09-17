@@ -1,4 +1,4 @@
-FROM maven:3.6-openjdk-14
+FROM maven:3.6-openjdk-14-slim
 
 MAINTAINER aniknishan@gmail.com
 
