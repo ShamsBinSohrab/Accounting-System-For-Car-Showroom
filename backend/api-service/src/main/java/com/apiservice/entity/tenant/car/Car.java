@@ -1,5 +1,7 @@
 package com.apiservice.entity.tenant.car;
 
+import com.apiservice.entity.Auditable;
+import java.time.ZonedDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,11 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
 
 @Data
 @Entity
 @Table(name = "car")
-public class Car {
+public class Car extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

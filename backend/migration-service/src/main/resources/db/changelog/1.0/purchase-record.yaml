@@ -120,3 +120,38 @@ databaseChangeLog:
             columnNames: purchase_record_id
             constraintName: UQ_car_purchase_record__purchase_record_id
             validate: true
+  - changeSet:
+      id: 5
+      author: shams
+      comment: Added columns created_by, created_date, last_modified_by and last_modified_date to purchase_record
+      changes:
+        - addColumn:
+            tableName: car_purchase_record
+            columns:
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: 1
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: timestamptz
+              - column:
+                  name: last_modified_by
+                  type: bigint
+              - column:
+                  name: last_modified_date
+                  type: timestamptz
+  - changeSet:
+      id: 6
+      author: shams
+      changes:
+        - sql:
+            comment: Adding foreign key constraint to created_by column
+            sql: ALTER TABLE car_purchase_record ADD CONSTRAINT "FK_operator_id__car_purchase_record_created_by" FOREIGN KEY (created_by) REFERENCES public.operator (id);
+            rollback: ALTER TABLE car_purchase_record DROP CONSTRAINT "FK_operator_id__car_purchase_record_created_by";
+        - sql:
+            comment: Adding foreign key constraint to last_modified_by column
+            sql: ALTER TABLE car_purchase_record ADD CONSTRAINT "FK_operator_id__car_purchase_record_last_modified_by" FOREIGN KEY (last_modified_by) REFERENCES public.operator (id);
+            rollback: ALTER TABLE car_purchase_record DROP CONSTRAINT "FK_operator_id__car_purchase_record_last_modified_by";
