@@ -1,6 +1,6 @@
 package com.apiservice.entity.tenant.purchase;
 
-import com.apiservice.entity.Auditable;
+import com.apiservice.entity.tenant.Auditable;
 import com.apiservice.entity.tenant.car.Car;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

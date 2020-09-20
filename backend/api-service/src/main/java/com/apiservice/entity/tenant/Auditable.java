@@ -1,4 +1,4 @@
-package com.apiservice.entity;
+package com.apiservice.entity.tenant;
 
 import com.apiservice.entity.master.operator.Operator;
 import java.time.LocalDateTime;
@@ -22,11 +22,11 @@ public class Auditable {
 
   @CreatedBy
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "created_by")
+  @JoinColumn(name = "created_by", updatable = false, nullable = false)
   private Operator createdBy;
 
   @CreatedDate
-  @Column(name = "created_date")
+  @Column(name = "created_date", updatable = false, nullable = false)
   private LocalDateTime createdDate;
 
   @LastModifiedBy

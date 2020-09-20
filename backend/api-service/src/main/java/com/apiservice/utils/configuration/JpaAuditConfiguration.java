@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@EnableJpaAuditing(auditorAwareRef = "auditor")
+@EnableJpaAuditing(auditorAwareRef = "auditor", modifyOnCreate = false)
 public class JpaAuditConfiguration {
 
   private final OperatorRepository operatorRepository;
