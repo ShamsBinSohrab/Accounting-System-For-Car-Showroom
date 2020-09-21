@@ -40,6 +40,7 @@ import { EncryptionDescryptionService } from './car_showroom_accounting_system/S
 import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
+import { TagInputModule } from 'ngx-chips';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -86,6 +87,7 @@ const APP_CONTAINERS = [
       positionClass: 'toast-top-right',
       preventDuplicates: false
     }),
+    TagInputModule
   ],
   providers: [
     LoginService,

@@ -12,7 +12,11 @@
                   <div class="form-group row">
                     <label class="col-md-4 col-form-label" for="purchaseType">Purchase Type</label>
                     <div class="col-md-8">
-                      <input type="text" id="purchaseType" name="purchaseType" class="form-control" placeholder="Enter Purchase Type" formControlName="purchaseType">
+                      <select name="purchaseType" id="purchaseType" class="form-control" formControlName="purchaseType">
+                        <option value="">Select Type</option>
+                        <option  value="IMPORTED">Imported</option>
+                        <option  value="FORWARD_PURCHASE">Forward Purchase</option>
+                      </select>
                     </div>
                   </div>
 

@@ -34,6 +34,7 @@ export class PurchaseUpdateComponent implements OnInit {
                   .subscribe(
                     data => {
                       console.log(data);
+                      this.data = data;
                       this.PurchaseForm.patchValue({
                           chassisNo: data.chassisNo,
                           purchaseType: data.purchaseType,
@@ -113,6 +114,7 @@ back()
 {
   this.location.back();
 }
+
 
 
 }

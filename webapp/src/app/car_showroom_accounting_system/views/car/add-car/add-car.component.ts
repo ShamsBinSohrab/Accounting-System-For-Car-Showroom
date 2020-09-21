@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,12 @@ export class AddCarComponent implements OnInit {
   CarForm: FormGroup;
   makeList: string[];
   typeList: string[];
+  optionsForDropDown: { value: string; display: string; }[];
+  // options: string[];
+  firstStep = true;
+  secondStep = false;
+  selectedtag: string[];
+  option: string[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
@@ -26,6 +32,7 @@ export class AddCarComponent implements OnInit {
     this.loadFrom();
     this.getMake();
     this.getType();
+    this.getOptions();
   }
 
   loadFrom()
@@ -39,8 +46,27 @@ export class AddCarComponent implements OnInit {
         type: ['', Validators.required],
         modelYear: ['', Validators.required],
         color: ['', Validators.required],
+        engineNo: ['', Validators.required],
+        mileage: ['', Validators.required],
+        cc: ['', Validators.required],
+        transmission: [''],
+        fuelType: [''],
+        option: [[]],
+        options: [this.option]
       })
     });
+  }
+
+  firstStepComplete()
+  {
+    this.firstStep = false;
+    this.secondStep = true;
+  }
+
+  firstStepBack()
+  {
+    this.firstStep = true;
+    this.secondStep = false;
   }
 
   getMake()
@@ -54,6 +80,20 @@ export class AddCarComponent implements OnInit {
     this.typeList = [
       'CONVERTIBLE', 'COUPE', 'HATCHBACK', 'JEEP', 'MINIVAN', 'PICKUP_TRUCK', 'SEDAN', 'SPORTS_CAR', 'STATION_WAGON', 'SUV'
     ];
+  }
+  getOptions()
+  {
+    // tslint:disable-next-line:max-line-length
+    this.optionsForDropDown = [{value: 'WOODEN_PANEL', display: 'Wooden Panel'}, {value: 'CRUISE_CONTROL', display: 'Cruise Control'}, {value: 'HIGH_FLOOR', display: 'High Floor'}, {value: 'RAIN_SHED', display: 'Rain Shed'}, {value: 'DVD_PLAYER', display: 'DVD Player'}, {value: 'BACK_CAMERA', display: 'Back Camera'}, {value: 'FOUR_CAMERAS', display: 'Four Cameras'}, {value: 'SUNROOF', display: 'Sun Roof'}, {value: 'WINKER_MIRROR', display: 'Winker Mirror'}, {value: 'AC', display: 'AC'}, {value: 'REAR_AC', display: 'Rear AC'}, {value: 'THIRD_ROW_SEATS', display: 'Third Row Seat'}, {value: 'AIR_BAG', display: 'Air Bag'}, {value: 'HIGH_ROOF', display: 'High Roof'}, {value: 'LOW_ROOF', display: 'Low Roof'}, {value: 'WOODEN_STEERING', display: 'Wooden Steering'}, {value: 'LOW_FLOOR', display: 'Low Floor'}, {value: 'ROOF_RAIL', display: 'Roof Rail'}];
+
+    // tslint:disable-next-line:max-line-length
+    // this.options = ['WOODEN_PANEL', 'CRUISE_CONTROL', 'HIGH_FLOOR', 'RAIN_SHED', 'DVD_PLAYER', 'BACK_CAMERA',  'FOUR_CAMERAS', 'SUNROOF', 'WINKER_MIRROR', 'AC', 'REAR_AC', 'THIRD_ROW_SEATS', 'AIR_BAG', 'HIGH_ROOF', 'LOW_ROOF', 'WOODEN_STEERING', 'LOW_FLOOR', 'ROOF_RAIL'];
+  }
+
+  onAdd($event)
+  {
+    this.option.push($event.value);
+    // console.log(this.CarForm.value);
   }
 
   onSubmit()
@@ -71,8 +111,11 @@ export class AddCarComponent implements OnInit {
     if (this.CarForm.get('draft').value)
     {
       this.CarForm.removeControl('details');
-      console.log(this.CarForm.get('draft').value);
     }
+    // this.CarForm.patchValue({
+    //   options: this.selectedtag
+    // });
+    console.log(this.CarForm.value);
     this.carService.addCar(this.CarForm.value)
                           .subscribe(
                             data => {
