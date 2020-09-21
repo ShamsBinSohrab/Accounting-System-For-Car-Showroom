@@ -1,22 +1,18 @@
 package com.apiservice.utils.configuration;
 
-import com.apiservice.entity.master.operator.Operator;
-import com.apiservice.repository.operator.OperatorRepository;
+import com.apiservice.authentication.OperatorDetails;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
-public class AuditAwareImpl implements AuditorAware<Operator> {
-
-  private final OperatorRepository operatorRepository;
+public class AuditAwareImpl implements AuditorAware<Long> {
 
   @Override
-  public Optional<Operator> getCurrentAuditor() {
-    return operatorRepository
-        .findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+  public Optional<Long> getCurrentAuditor() {
+    final Authentication auth;
+    return (auth = SecurityContextHolder.getContext().getAuthentication()) == null
+        ? Optional.empty()
+        : Optional.of(((OperatorDetails) auth.getPrincipal()).getId());
   }
 }

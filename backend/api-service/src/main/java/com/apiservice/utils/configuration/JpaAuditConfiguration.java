@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Slf4j
@@ -19,10 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableJpaAuditing(auditorAwareRef = "auditor", modifyOnCreate = false)
 public class JpaAuditConfiguration {
 
-  private final ApplicationContext applicationContext;
-
   @Bean
-  public AuditorAware<Operator> auditor() {
-    return applicationContext.getBean(AuditAwareImpl.class);
+  public AuditorAware<Long> auditor() {
+    return new AuditAwareImpl();
   }
 }
