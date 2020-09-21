@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PreUpdate;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,4 +32,9 @@ public class Auditable {
   @LastModifiedDate
   @Column(name = "last_modified_date")
   private LocalDateTime lastModifiedDate;
+
+  @PreUpdate
+  private void preUpdate() {
+    System.out.println("HERE");
+  }
 }
