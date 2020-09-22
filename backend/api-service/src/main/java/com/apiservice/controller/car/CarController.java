@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,7 @@ public class CarController {
 
   private final CarService carService;
   private final CarModelAssembler modelAssembler;
+  private final ApplicationContext applicationContext;
 
   @GetMapping("/cars")
   public List<CarModel> cars(CarFilter filter, Pageable pageable) {
