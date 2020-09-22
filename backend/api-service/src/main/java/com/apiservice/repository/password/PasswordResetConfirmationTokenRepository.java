@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface PasswordResetConfirmationTokenRepository
     extends JpaRepository<PasswordResetConfirmationToken, Long> {
 
-  Optional<PasswordResetConfirmationToken> findByToken(UUID token);
+  Optional<PasswordResetConfirmationToken> findByTokenAndConfirmedIsFalse(UUID token);
 }

@@ -35,6 +35,9 @@ public class PasswordResetConfirmationToken {
   @Column(name = "expired_at")
   private LocalDateTime expiredAt;
 
+  @Column(name = "confirmed")
+  private boolean confirmed;
+
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "operator", nullable = false, updatable = false)
   private Operator operator;

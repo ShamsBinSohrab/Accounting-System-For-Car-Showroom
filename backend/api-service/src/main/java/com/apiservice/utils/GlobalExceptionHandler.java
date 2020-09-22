@@ -4,6 +4,7 @@ import com.apiservice.authentication.AuthenticationException;
 import com.apiservice.model.company.CompanyCreationException;
 import com.apiservice.model.operator.PasswordChangeValidationException;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
+import com.apiservice.utils.exceptions.PasswordResetConfirmationTokenException;
 import java.util.stream.Collectors;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -76,6 +77,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       WebRequest request) {
     return handleExceptionInternal(
         ex, ex.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+  }
+
+  @ExceptionHandler(PasswordResetConfirmationTokenException.class)
+  protected ResponseEntity<Object> handlePasswordResetConfirmationTokenException(
+      PasswordResetConfirmationTokenException ex,
+      WebRequest request) {
+    return handleExceptionInternal(
+        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
   }
 
   @ExceptionHandler(Exception.class)

@@ -5,7 +5,6 @@ import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.service.company.CompanyService;
 import com.apiservice.service.operator.OperatorService;
-import com.apiservice.utils.Constants;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +26,6 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
   private final JwtTokenUtil jwtTokenUtil;
   private final OperatorService operatorService;
   private final CompanyService companyService;
-  private final Constants constants;
 
   @Override
   public boolean preHandle(
@@ -59,7 +57,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         }
       } else {
         if (operator.isSuperAdmin()) {
-          TenantContext.setCurrentTenant(constants.defaultCompanyIdentifier);
+          TenantContext.setCurrentTenant("public");
         } else {
           response
               .getWriter()

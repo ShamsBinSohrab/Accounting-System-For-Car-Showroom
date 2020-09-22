@@ -95,3 +95,4 @@ databaseChangeLog:
                   defaultValue: team15.common@gmail.com
                   constraints:
                     nullable: false
+                    unique: true

@@ -1,6 +1,5 @@
 package com.apiservice.multitenancy;
 
-import com.apiservice.utils.Constants;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -15,7 +14,6 @@ public class MultiTenantConnectionProvider implements
     org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider {
 
   private final DataSource dataSource;
-  private final Constants constants;
 
   @Override
   public Connection getAnyConnection() throws SQLException {
@@ -37,7 +35,7 @@ public class MultiTenantConnectionProvider implements
   @Override
   public void releaseConnection(String tenantIdentifier, Connection connection)
       throws SQLException {
-    connection.setSchema(constants.defaultCompanyIdentifier);
+    connection.setSchema("public");
     releaseAnyConnection(connection);
   }
 
