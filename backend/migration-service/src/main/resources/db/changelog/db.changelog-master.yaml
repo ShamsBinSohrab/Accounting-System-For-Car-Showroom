@@ -6,4 +6,4 @@ databaseChangeLog:
   - include:
       - file: db/changelog/1.0/company.yaml
   - include:
-      - file: db/changelog/1.0/password-reset-confirmation-token.yaml
+      - file: db/changelog/1.0/password-reset-confirmation-request.yaml

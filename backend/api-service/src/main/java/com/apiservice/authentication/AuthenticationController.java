@@ -3,7 +3,7 @@ package com.apiservice.authentication;
 import com.apiservice.authentication.password.PasswordResetMailSender;
 import com.apiservice.authentication.password.PasswordResetTokenValidator;
 import com.apiservice.entity.master.operator.Operator;
-import com.apiservice.entity.master.password.PasswordResetConfirmationToken;
+import com.apiservice.entity.master.password.PasswordResetConfirmationRequest;
 import com.apiservice.model.auth.AuthRequest;
 import com.apiservice.model.auth.AuthResponse;
 import com.apiservice.model.auth.ForgetPasswordModel;
@@ -61,7 +61,7 @@ public class AuthenticationController {
   public ResponseEntity<Void> confirmResetPassword(
       @RequestHeader("x-password-reset-token") UUID token,
       @RequestBody @Valid ResetPasswordModel model) {
-    final PasswordResetConfirmationToken confirmationToken = validator.validate(token);
+    final PasswordResetConfirmationRequest confirmationToken = validator.validate(token);
     passwordChangeValidator.validatePasswordReset(model);
     confirmationToken.getOperator().setPassword(model.getNewPassword());
     operatorService.changePassword(confirmationToken.getOperator());

@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "password_reset_confirmation_token", schema = "public")
-public class PasswordResetConfirmationToken {
+@Table(name = "password_reset_confirmation_request", schema = "public")
+public class PasswordResetConfirmationRequest {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,13 +42,13 @@ public class PasswordResetConfirmationToken {
   @JoinColumn(name = "operator", nullable = false, updatable = false)
   private Operator operator;
 
-  public static PasswordResetConfirmationToken generateNewToken(Operator operator) {
-    final PasswordResetConfirmationToken passwordResetConfirmationToken =
-        new PasswordResetConfirmationToken();
-    passwordResetConfirmationToken.operator = operator;
-    passwordResetConfirmationToken.createdAt = LocalDateTime.now();
-    passwordResetConfirmationToken.expiredAt = LocalDateTime.now().plusMinutes(5);
-    passwordResetConfirmationToken.token = UUID.randomUUID();
-    return passwordResetConfirmationToken;
+  public static PasswordResetConfirmationRequest createRequest(Operator operator) {
+    final PasswordResetConfirmationRequest passwordResetConfirmationRequest =
+        new PasswordResetConfirmationRequest();
+    passwordResetConfirmationRequest.operator = operator;
+    passwordResetConfirmationRequest.createdAt = LocalDateTime.now();
+    passwordResetConfirmationRequest.expiredAt = LocalDateTime.now().plusMinutes(5);
+    passwordResetConfirmationRequest.token = UUID.randomUUID();
+    return passwordResetConfirmationRequest;
   }
 }
