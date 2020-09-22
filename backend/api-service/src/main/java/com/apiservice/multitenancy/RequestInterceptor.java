@@ -34,6 +34,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
       HttpServletRequest request, HttpServletResponse response, Object handler) {
 
     if (request.getServletPath().equalsIgnoreCase("/authenticate")
+        || request.getServletPath().equalsIgnoreCase("/forgotPassword")
         || request.getMethod().equalsIgnoreCase("OPTIONS")) {
       return true;
     }

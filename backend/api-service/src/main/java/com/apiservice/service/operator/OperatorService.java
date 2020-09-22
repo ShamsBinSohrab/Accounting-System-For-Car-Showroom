@@ -76,6 +76,11 @@ public class OperatorService {
     save(operator);
   }
 
+  @Transactional
+  public Operator getByEmail(String email) {
+    return operatorRepository.findByEmail(email).orElseThrow();
+  }
+
   private void encodePassword(Operator operator) {
     final String encodedPassword = passwordEncoder.encode(operator.getPassword());
     operator.setPassword(encodedPassword);
