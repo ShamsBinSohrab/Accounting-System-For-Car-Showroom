@@ -22,16 +22,9 @@ public class ExpenseRecordModel extends RepresentationModel<ExpenseRecordModel> 
     private static final ModelMapper mapper = new ModelMapper();
 
     private Long id;
-
     private ZonedDateTime expenseDate;
-
-    @JsonProperty("recipient")
     private String recipient;
-
-    @JsonProperty("amount")
     private BigDecimal amount;
-
-    @JsonProperty("notes")
     private String notes;
 
     @Enumerated(EnumType.STRING)
