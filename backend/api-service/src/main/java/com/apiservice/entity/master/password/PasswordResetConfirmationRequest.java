@@ -1,7 +1,7 @@
 package com.apiservice.entity.master.password;
 
 import com.apiservice.entity.master.operator.Operator;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "password_reset_confirmation_request", schema = "public")
 public class PasswordResetConfirmationRequest {
 
@@ -30,10 +27,10 @@ public class PasswordResetConfirmationRequest {
   private UUID token;
 
   @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  private ZonedDateTime createdAt;
 
   @Column(name = "expired_at")
-  private LocalDateTime expiredAt;
+  private ZonedDateTime expiredAt;
 
   @Column(name = "confirmed")
   private boolean confirmed;
@@ -46,8 +43,8 @@ public class PasswordResetConfirmationRequest {
     final PasswordResetConfirmationRequest passwordResetConfirmationRequest =
         new PasswordResetConfirmationRequest();
     passwordResetConfirmationRequest.operator = operator;
-    passwordResetConfirmationRequest.createdAt = LocalDateTime.now();
-    passwordResetConfirmationRequest.expiredAt = LocalDateTime.now().plusMinutes(5);
+    passwordResetConfirmationRequest.createdAt = ZonedDateTime.now();
+    passwordResetConfirmationRequest.expiredAt = ZonedDateTime.now().plusMinutes(5);
     passwordResetConfirmationRequest.token = UUID.randomUUID();
     return passwordResetConfirmationRequest;
   }
