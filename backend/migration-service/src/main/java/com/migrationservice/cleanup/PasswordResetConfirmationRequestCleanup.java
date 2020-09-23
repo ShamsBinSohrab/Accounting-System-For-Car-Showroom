@@ -25,7 +25,7 @@ public class PasswordResetConfirmationRequestCleanup {
     final List<PasswordResetConfirmationRequest> list =
         confirmationRequestRepository.findAllByExpiredAtBefore(sevenDaysAgo);
 
-    log.info("Deleting {} password reset confirmation requests", list.size());
+    log.info("Deleting {} password reset confirmation request(s)", list.size());
 
     confirmationRequestRepository.deleteAll(list);
   }
