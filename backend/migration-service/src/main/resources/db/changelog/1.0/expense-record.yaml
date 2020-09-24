@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: shanto
+      comment: Adding new table expense_record
+      changes:
+        - createTable:
+            tableName: expense_record
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_expense_record
+              - column:
+                  name: expense_date
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recipient
+                  type: varchar(50)
+                  constraints:
+                    nulllable: false
+              - column:
+                  name: amount
+                  type: numeric(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: notes
+                  type: varchar(200)
+              - column:
+                  name: expense_type
+                  type: varchar(16)

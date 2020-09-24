@@ -10,6 +10,7 @@ import com.apiservice.utils.CreateUpdateAuditor;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import com.apiservice.utils.pagination.PaginationService;
 import com.apiservice.utils.pagination.QueryBuilder;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,11 @@ public class CarService {
   public Page<Car> getAllWithPaginationAndFilter(CarFilter filter, Pageable pageable) {
     final QueryBuilder<Car> queryBuilder = new CarQueryBuilder(filter);
     return paginationService.paginate(carRepository, queryBuilder, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Car> getAll() {
+    return carRepository.findAll();
   }
 
   @Transactional(readOnly = true)
