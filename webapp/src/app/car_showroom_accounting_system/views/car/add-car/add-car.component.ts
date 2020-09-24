@@ -14,12 +14,14 @@ export class AddCarComponent implements OnInit {
   CarForm: FormGroup;
   makeList: string[];
   typeList: string[];
+  transmissionList: string[];
   optionsForDropDown: { value: string; display: string; }[];
   // options: string[];
-  firstStep = true;
-  secondStep = false;
+  public firstStep = true;
+  public secondStep = false;
   selectedtag: string[];
   option: string[] = [];
+  fuelType: string[];
   constructor(
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
@@ -33,6 +35,8 @@ export class AddCarComponent implements OnInit {
     this.getMake();
     this.getType();
     this.getOptions();
+    this.getTransmission();
+    this.getFuelType();
   }
 
   loadFrom()
@@ -61,12 +65,14 @@ export class AddCarComponent implements OnInit {
   {
     this.firstStep = false;
     this.secondStep = true;
+    this.CarForm.get('chassisNo').disable();
   }
 
   firstStepBack()
   {
     this.firstStep = true;
     this.secondStep = false;
+    this.CarForm.get('chassisNo').enable();
   }
 
   getMake()
@@ -79,6 +85,18 @@ export class AddCarComponent implements OnInit {
   {
     this.typeList = [
       'CONVERTIBLE', 'COUPE', 'HATCHBACK', 'JEEP', 'MINIVAN', 'PICKUP_TRUCK', 'SEDAN', 'SPORTS_CAR', 'STATION_WAGON', 'SUV'
+    ];
+  }
+  getTransmission()
+  {
+    this.transmissionList = [
+      'AUTOMETIC', 'MANUAL'
+    ];
+  }
+  getFuelType()
+  {
+    this.fuelType = [
+      'OCTANE/PETROL(Octane/Petrol)', 'DIESEL', 'HYBRID', 'OTHERS'
     ];
   }
   getOptions()

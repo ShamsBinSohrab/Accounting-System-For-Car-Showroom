@@ -14,12 +14,13 @@ export class DefaultLayoutComponent implements OnInit {
   public navItems: any;
   homelink = '';
   username: any;
+  userrole: string;
   constructor(
               private loginSercice: LoginService,
               private router: Router
               ) {
-                  console.log(localStorage.getItem('username'));
                   this.username = localStorage.getItem('username');
+                  this.userrole = localStorage.getItem('user_role');
                }
 
   ngOnInit(): void {
@@ -44,6 +45,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   logout() {
     this.loginSercice.logout();
-}
+  }
+  company() {
+    this.router.navigate(['/company/list']);
+  }
 
 }

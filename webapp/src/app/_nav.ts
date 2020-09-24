@@ -294,11 +294,11 @@ export const saCompanyNavItems: INavData[] = [
     url: '/car/list',
     icon: 'icon-speedometer'
   },
-  {
-    name: 'Company',
-    url: '/company/list',
-    icon: 'icon-speedometer',
-  },
+  // {
+  //   name: 'Company',
+  //   url: '/company/list',
+  //   icon: 'icon-speedometer',
+  // },
   {
     name: 'Purchase',
     url: '/purchase/list',
@@ -334,9 +334,9 @@ export const saCompanyNavItems: INavData[] = [
 ];
 
 export const saNavItems: INavData[] = [
-  {
-    name: 'Company',
-    url: '/company/list',
-    icon: 'icon-speedometer'
-  }
+  // {
+  //   name: 'Company',
+  //   url: '/company/list',
+  //   icon: 'icon-speedometer'
+  // }
 ];

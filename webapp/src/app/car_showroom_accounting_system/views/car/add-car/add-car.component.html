@@ -71,7 +71,7 @@
                       <div class="form-group row">
                         <label class="col-md-4 col-form-label" for="engineNo">Engine No</label>
                         <div class="col-md-8">
-                          <input type="text" id="engineNo" name="engineNo" class="form-control" placeholder="Engine Name(Required)" formControlName="engineNo">
+                          <input type="text" id="engineNo" name="engineNo" class="form-control" placeholder="Engine No(Required)" formControlName="engineNo">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -91,7 +91,10 @@
                       <div class="form-group row">
                         <label class="col-md-4 col-form-label" for="transmission">Transmission</label>
                         <div class="col-md-8">
-                          <input type="text" id="transmission" name="transmission" class="form-control" placeholder="Enter Transmission(Required)" formControlName="transmission">
+                          <select name="transmission" id="transmission" class="form-control" formControlName="transmission">
+                            <option value="">Select Transmission</option>
+                            <option *ngFor="let transmission of transmissionList" value="{{transmission}}">{{transmission|titlecase}}</option>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -104,7 +107,7 @@
                         <label class="col-md-4 col-form-label" for="options">Options</label>
                         <div class="col-md-8">
                           <tag-input (onAdd)="onAdd($event)" formControlName="option"
-                          [onlyFromAutocomplete]="true">
+                          [onlyFromAutocomplete]="true" placeholder="Enter Options">
                             <tag-input-dropdown
                               [autocompleteItems]="optionsForDropDown"
                               [showDropdownIfEmpty]="true"
@@ -121,8 +124,8 @@
                 <button type="button" class="btn btn-sm btn-secondary" (click)="back()" *ngIf="firstStep"><i class="fa fa-arrow-left"></i> Back</button>
                 <button type="button" class="btn btn-sm btn-secondary" (click)="firstStepBack()" *ngIf="secondStep"><i class="fa fa-arrow-left"></i> Back</button>
                 <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
-                <button type="button" class="btn btn-sm btn-success ml-2" (click)="firstStepComplete()" *ngIf="firstStep"><i class="fa fa-arrow-right"></i>&nbsp;Next</button>
-                <button type="submit" class="btn btn-sm btn-success ml-2" *ngIf="secondStep"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
+                <button type="button" class="btn btn-sm btn-success ml-2" (click)="firstStepComplete()" *ngIf="firstStep && !this.CarForm.get('draft').value"><i class="fa fa-arrow-right"></i>&nbsp;Next</button>
+                <button type="submit" class="btn btn-sm btn-success ml-2" *ngIf="secondStep || this.CarForm.get('draft').value"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
               </div>
             </form>
           </div>

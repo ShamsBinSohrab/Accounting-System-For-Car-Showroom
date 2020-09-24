@@ -27,6 +27,11 @@ export class CarListComponent implements OnInit {
 
   ngOnInit(): void {
     this.data = new Array();
+    this.getCar();
+  }
+
+  getCar()
+  {
     this.carService.getCar()
         .subscribe(
           data => {
