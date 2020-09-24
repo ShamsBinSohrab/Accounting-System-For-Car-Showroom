@@ -35,3 +35,38 @@ databaseChangeLog:
               - column:
                   name: expense_type
                   type: varchar(16)
+  - changeSet:
+      id: 2
+      author: shams
+      comment: Added columns created_by, created_date, last_modified_by and last_modified_date to expense_record
+      changes:
+        - addColumn:
+            tableName: expense_record
+            columns:
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: 1
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: timestamptz
+              - column:
+                  name: last_modified_by
+                  type: bigint
+              - column:
+                  name: last_modified_date
+                  type: timestamptz
+        - changeSet:
+            id: 5
+            author: shams
+            changes:
+              - sql:
+                  comment: Adding foreign key constraint to created_by column
+                  sql: ALTER TABLE expense_record ADD CONSTRAINT "FK_operator_id__expense_record_created_by" FOREIGN KEY (created_by) REFERENCES public.operator (id);
+                  rollback: ALTER TABLE expense_record DROP CONSTRAINT "FK_operator_id__expense_record_created_by";
+              - sql:
+                  comment: Adding foreign key constraint to last_modified_by column
+                  sql: ALTER TABLE expense_record ADD CONSTRAINT "FK_operator_id__expense_record_last_modified_by" FOREIGN KEY (last_modified_by) REFERENCES public.operator (id);
+                  rollback: ALTER TABLE expense_record DROP CONSTRAINT "FK_operator_id__expense_record_last_modified_by";
