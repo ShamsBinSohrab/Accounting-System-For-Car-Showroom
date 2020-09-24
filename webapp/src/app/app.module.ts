@@ -37,7 +37,6 @@ import { LoginComponent } from './car_showroom_accounting_system/views/Login/log
 import { SignupComponent } from './car_showroom_accounting_system/views/signup/signup.component';
 import { LoginService } from './car_showroom_accounting_system/Services/login.service';
 import { EncryptionDescryptionService } from './car_showroom_accounting_system/Services/encryption-descryption.service';
-import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 import { TagInputModule } from 'ngx-chips';
@@ -59,7 +58,6 @@ const APP_CONTAINERS = [
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    ChangePasswordComponent,
     DashboardComponent,
     ContactComponent,
   ],

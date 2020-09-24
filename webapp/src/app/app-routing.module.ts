@@ -7,7 +7,6 @@ import { AuthGuard } from './car_showroom_accounting_system/Helpers/auth.guard';
 import { DefaultLayoutComponent } from './car_showroom_accounting_system/containers';
 import { P404Component } from './car_showroom_accounting_system/views/error/404.component';
 import { P500Component } from './car_showroom_accounting_system/views/error/500.component';
-import { ChangePasswordComponent } from './car_showroom_accounting_system/views/change-password/change-password.component';
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 import { Common } from './car_showroom_accounting_system/Common/common';
@@ -71,8 +70,8 @@ const routes: Routes = [
         loadChildren: () => import('./car_showroom_accounting_system/views/purchase/purchase.module').then(m => m.PurchaseModule)
       },
       {
-        path: 'change-password',
-        component: ChangePasswordComponent
+        path: 'operator',
+        loadChildren: () => import('./car_showroom_accounting_system/views/operator/operator.module').then(m => m.OperatorModule)
       },
       {
         path: 'dashboard',
