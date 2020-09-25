@@ -15,6 +15,7 @@ export class CarService {
   }
   public updateCar(data: any)
   {
+    console.log(data);
     return this.http.put<any>(localStorage.getItem('link'), data);
   }
   public getCar()
@@ -32,6 +33,7 @@ export class CarService {
 
   public getCarMakeList()
   {
+    // tslint:disable-next-line:max-line-length
     // const make: Array<string> = ['TOYOTA', 'NISSAN', 'HONDA', 'BMW', 'AUDI', 'LAND_ROVER', 'MERCEDES', 'VOLVO', 'FORD', 'JAGUAR', 'MITSUBISHI', 'SUBARU', 'TESLA', 'VOLKSWAGEN'];
 
     const make = '';

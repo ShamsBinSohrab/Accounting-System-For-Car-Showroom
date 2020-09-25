@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ChangePasswordService } from 'src/app/car_showroom_accounting_system/Services/change-password.service';
+import { ToastrService } from 'ngx-toastr';
 import { EncryptionDescryptionService } from 'src/app/car_showroom_accounting_system/Services/encryption-descryption.service';
-import { AlertifyService } from '../../Common/alertify.service';
-import {ToastrService} from 'ngx-toastr';
-import { LoginService } from '../../Services/login.service';
+import { LoginService } from 'src/app/car_showroom_accounting_system/Services/login.service';
+import { OperatorService } from 'src/app/car_showroom_accounting_system/Services/operator.service';
+
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css']
+  styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit {
 
@@ -20,11 +20,11 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private changePasswordService: ChangePasswordService,
+    private operatorService: OperatorService,
     private encObj: EncryptionDescryptionService,
     private router: Router,
     private toastr: ToastrService,
-    private loginService: LoginService
+    private loginService: LoginService,
     ) {}
 
   ngOnInit(): void {
@@ -76,10 +76,10 @@ onSubmit()
       return;
     }
 
-    this.changePasswordService.changePassword(this.ChangePassword.value)
+    this.operatorService.changePassword(this.ChangePassword.value)
                               .subscribe(
                                 success => {
-                                  this.toastr.success('Password Reset Successful.', 'Success!');
+                                  this.toastr.success('Password Changed Successful.', 'Success!');
                                   this.loginService.logout();
                                 },
                                 error => {

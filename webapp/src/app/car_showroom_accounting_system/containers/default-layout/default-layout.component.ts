@@ -13,11 +13,15 @@ export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems: any;
   homelink = '';
-
+  username: any;
+  userrole: string;
   constructor(
               private loginSercice: LoginService,
               private router: Router
-              ) { }
+              ) {
+                  this.username = localStorage.getItem('username');
+                  this.userrole = localStorage.getItem('user_role');
+               }
 
   ngOnInit(): void {
     if (localStorage.getItem('company_token') !== '' && localStorage.getItem('user_role') === 'SUPER_ADMIN')
@@ -41,7 +45,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   logout() {
     this.loginSercice.logout();
-    this.router.navigate(['/login']);
-}
+  }
+  company() {
+    this.router.navigate(['/company/list']);
+  }
 
 }

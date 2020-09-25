@@ -24,8 +24,8 @@
               <td>{{company.companyName|titlecase}}</td>
               <td>{{company.active ? 'Active' : 'Inactive'}}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(company.id)">Go to Company</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCompany(company.id)">Update</button>
+                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="getToken(company.id)"><i class="fa fa-dot-circle-o"></i> Go to Company</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCompany(company.id)"><i class="fa fa-edit"></i> Update</button>
               </td>
             </tr>
           </tbody>

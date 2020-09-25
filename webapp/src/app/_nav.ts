@@ -12,25 +12,18 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Car',
-    url: '/car',
-    icon: 'icon-speedometer',
-    children: [
-      {
-        name: 'Car List',
-        url: '/car/list',
-        icon: 'icon-list'
-      },
-      {
-        name: 'Add Car',
-        url: '/car/create',
-        icon: 'icon-plus'
-      }
-    ]
+    url: '/car/list',
+    icon: 'icon-speedometer'
   },
   {
-    name: 'Change Password',
-    url: '/change-password',
-    icon: 'icon-key'
+    name: 'Purchase',
+    url: '/purchase/list',
+    icon: 'icon-speedometer',
+  },
+  {
+    name: 'Operator',
+    url: '/operator/list',
+    icon: 'icon-speedometer',
   },
   {
     name: 'Terms & Condition',
@@ -301,14 +294,19 @@ export const saCompanyNavItems: INavData[] = [
     url: '/car/list',
     icon: 'icon-speedometer'
   },
-  {
-    name: 'Company',
-    url: '/company/list',
-    icon: 'icon-speedometer',
-  },
+  // {
+  //   name: 'Company',
+  //   url: '/company/list',
+  //   icon: 'icon-speedometer',
+  // },
   {
     name: 'Purchase',
     url: '/purchase/list',
+    icon: 'icon-speedometer',
+  },
+  {
+    name: 'Operator',
+    url: '/operator/list',
     icon: 'icon-speedometer',
   },
   {
@@ -336,9 +334,9 @@ export const saCompanyNavItems: INavData[] = [
 ];
 
 export const saNavItems: INavData[] = [
-  {
-    name: 'Company',
-    url: '/company/list',
-    icon: 'icon-speedometer'
-  }
+  // {
+  //   name: 'Company',
+  //   url: '/company/list',
+  //   icon: 'icon-speedometer'
+  // }
 ];

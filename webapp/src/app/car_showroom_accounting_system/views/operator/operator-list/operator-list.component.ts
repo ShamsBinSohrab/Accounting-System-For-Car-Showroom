@@ -1,51 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { LoginService } from 'src/app/car_showroom_accounting_system/Services/login.service';
-import { EncryptionDescryptionService } from 'src/app/car_showroom_accounting_system/Services/encryption-descryption.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
+import { OperatorService } from 'src/app/car_showroom_accounting_system/Services/operator.service';
 
 @Component({
-  selector: 'app-car-list',
-  templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.css']
+  selector: 'app-operator-list',
+  templateUrl: './operator-list.component.html',
+  styleUrls: ['./operator-list.component.scss']
 })
-export class CarListComponent implements OnInit {
+export class OperatorListComponent implements OnInit {
+
   data: Array<any>;
   constructor(
                 private formBuilder: FormBuilder,
-                private carService: CarService,
+                private operatorService: OperatorService,
                 private router: Router,
                 private toastrService: ToastrService
-  ) {
-    if (localStorage.getItem('company_token') === '')
-    {
-      this.router.navigate(['/company/list']);
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     this.data = new Array();
-    this.getCar();
+    this.getOperatorList();
   }
 
-  getCar()
+  getOperatorList()
   {
-    this.carService.getCar()
+    this.operatorService.getOperatorList()
         .subscribe(
           data => {
             this.data = data;
+            console.log(this.data);
           },
           error => {
             this.toastrService.error(error.error, 'Error!');
           }
         );
   }
-
-  deleteCar(link: string)
+  deleteOperator(link: string)
   {
-    this.carService.deleteCar(link)
+    this.operatorService.deleteOperator(link)
     .subscribe(
       data => {
         this.toastrService.success('Delete Successful', 'Success');
@@ -57,33 +51,32 @@ export class CarListComponent implements OnInit {
     );
   }
 
-  carDetails(link: string)
+  operatorDetails(link: string)
   {
     localStorage.setItem('link', link);
     // this.router.navigate(['/car/details', { carId }]);
-    this.router.navigate(['/car/details']);
+    this.router.navigate(['/operator/details']);
   }
-  updateCar(link: string)
+  updateOperator(link: string)
   {
     localStorage.setItem('link', link);
-    this.router.navigate(['/car/update']);
+    this.router.navigate(['/operator/update']);
     // this.router.navigate(['/car/update', { carId }]);
   }
-  addCar()
+  addOperator()
   {
-    this.router.navigate(['/car/create']);
+    this.router.navigate(['/operator/create']);
   }
-  carAction(link: any, status: any)
+  operatorAction(link: any, status: any)
   {
     localStorage.setItem('link', link);
-    if (status === 'purchaseRecord')
+    if (status === 'changePassword')
     {
-      this.router.navigate(['/purchase/create']);
+      this.router.navigate(['/operator/change-password']);
     }
     else
     {
-      this.router.navigate(['/sell/create']);
+      this.router.navigate(['/operator/reset-password']);
     }
   }
-
 }

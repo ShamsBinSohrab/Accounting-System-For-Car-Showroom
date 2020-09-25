@@ -15,7 +15,7 @@
                       <input type="text" id="chassisNo" name="chassisNo" class="form-control" placeholder="Enter Chassis No(Required)" formControlName="chassisNo">
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div class="form-group row" *ngIf="firstStep">
                     <label class="col-md-4 col-form-label" for="draft">Mark as draft</label>
                     <div class="col-md-8">
                       <label class="switch switch-label switch-pill switch-success">
@@ -25,52 +25,107 @@
                     </div>
                   </div>
                   <div formGroupName="details" *ngIf="!this.CarForm.get('draft').value">
-                    <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="make">Make</label>
-                      <div class="col-md-8">
-                        <select name="make" id="make" class="form-control" formControlName="make">
-                          <option value="">Select Make</option>
-                          <option *ngFor="let make of makeList" value="{{make}}">{{make|titlecase}}</option>
-                        </select>
+                    <div *ngIf="firstStep">
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="make">Make</label>
+                        <div class="col-md-8">
+                          <select name="make" id="make" class="form-control" formControlName="make">
+                            <option value="">Select Make</option>
+                            <option *ngFor="let make of makeList" value="{{make}}">{{make|titlecase}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="name">Name</label>
+                        <div class="col-md-8">
+                          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name(Required)" formControlName="name">
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="type">Type</label>
+                        <div class="col-md-8">
+                          <select name="type" id="type" class="form-control" formControlName="type">
+                            <option value="">Select Type</option>
+                            <option *ngFor="let type of typeList" value="{{type}}">{{type|titlecase}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="modelYear">Model Year</label>
+                        <div class="col-md-8">
+                          <input type="text" id="modelYear" name="modelYear" class="form-control" placeholder="Enter Model Year(Required)" formControlName="modelYear">
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="color">Color</label>
+                        <div class="col-md-8">
+                          <input type="text" id="color" name="color" class="form-control" placeholder="Enter Color(Required)" formControlName="color">
+                        </div>
                       </div>
                     </div>
-
-                    <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="name">Name</label>
-                      <div class="col-md-8">
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name(Required)" formControlName="name">
+                    <div *ngIf="secondStep">
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="engineNo">Engine No</label>
+                        <div class="col-md-8">
+                          <input type="text" id="engineNo" name="engineNo" class="form-control" placeholder="Engine No(Required)" formControlName="engineNo">
+                        </div>
                       </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="type">Type</label>
-                      <div class="col-md-8">
-                        <select name="type" id="type" class="form-control" formControlName="type">
-                          <option value="">Select Type</option>
-                          <option *ngFor="let type of typeList" value="{{type}}">{{type|titlecase}}</option>
-                        </select>
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="mileage">Mileage</label>
+                        <div class="col-md-8">
+                          <input type="text" id="mileage" name="mileage" class="form-control" placeholder="Mileage(Required)" formControlName="mileage">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="modelYear">Model Year</label>
-                      <div class="col-md-8">
-                        <input type="text" id="modelYear" name="modelYear" class="form-control" placeholder="Enter Model Year(Required)" formControlName="modelYear">
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="cc">CC</label>
+                        <div class="col-md-8">
+                          <input type="text" id="cc" name="cc" class="form-control" placeholder="Enter CC(Required)" formControlName="cc">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="color">Color</label>
-                      <div class="col-md-8">
-                        <input type="text" id="color" name="color" class="form-control" placeholder="Enter Color(Required)" formControlName="color">
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="transmission">Transmission</label>
+                        <div class="col-md-8">
+                          <select name="transmission" id="transmission" class="form-control" formControlName="transmission">
+                            <option value="">Select Transmission</option>
+                            <option *ngFor="let transmission of transmissionList" value="{{transmission}}">{{transmission|titlecase}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="fuelType">Fuel Type</label>
+                        <div class="col-md-8">
+                          <input type="text" id="fuelType" name="fuelType" class="form-control" placeholder="Enter Fuel Type(Required)" formControlName="fuelType">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="options">Options</label>
+                        <div class="col-md-8">
+                          <tag-input (onAdd)="onAdd($event)" formControlName="option"
+                          [onlyFromAutocomplete]="true" placeholder="Enter Options">
+                            <tag-input-dropdown
+                              [autocompleteItems]="optionsForDropDown"
+                              [showDropdownIfEmpty]="true"
+                              [dynamicUpdate]="true"
+                            >
+                            </tag-input-dropdown>
+                      </tag-input>
+                        </div>
                       </div>
                     </div>
                   </div>
               </div>
               <div class="card-footer text-right">
-                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="back()" *ngIf="firstStep"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="firstStepBack()" *ngIf="secondStep"><i class="fa fa-arrow-left"></i> Back</button>
                 <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
-                <button type="submit" class="btn btn-sm btn-success ml-2"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
+                <button type="button" class="btn btn-sm btn-success ml-2" (click)="firstStepComplete()" *ngIf="firstStep && !this.CarForm.get('draft').value"><i class="fa fa-arrow-right"></i>&nbsp;Next</button>
+                <button type="submit" class="btn btn-sm btn-success ml-2" *ngIf="secondStep || this.CarForm.get('draft').value"><i class="fa fa-plus-circle"></i>&nbsp;Add Car</button>
               </div>
             </form>
           </div>

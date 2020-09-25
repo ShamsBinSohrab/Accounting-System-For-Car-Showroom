@@ -19,7 +19,11 @@
                 <div class="form-group row">
                   <label class="col-md-4 col-form-label" for="purchaseType">Purchase Type</label>
                   <div class="col-md-8">
-                    <input type="text" id="purchaseType" name="purchaseType" class="form-control" placeholder="Enter Purchase Type" formControlName="purchaseType">
+                    <select name="purchaseType" id="purchaseType" class="form-control" formControlName="purchaseType">
+                      <option value="">Select Type</option>
+                      <option  value="IMPORTED">Imported</option>
+                      <option  value="FORWARD_PURCHASE">Forward Purchase</option>
+                    </select>
                   </div>
                 </div>
 
@@ -29,7 +33,7 @@
                       <input type="text"
                       placeholder="Enter Purchase Date"
                       class="form-control"
-                      bsDatepicker formControlName="purchaseDate">
+                      bsDatepicker formControlName="purchaseDate" value="{{data.purchaseDate|date:'shortDate'}}">
                       <!-- <input type="datetime-local" id="purchaseDate" name="purchaseDate" class="form-control" placeholder="Enter Purchase Date" formControlName="purchaseDate"> -->
                     </div>
                   </div>
@@ -89,8 +93,7 @@
                   </div>
               </div>
               <div class="card-footer text-right">
-                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
-                <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i>Back</button>
                 <button type="submit" class="btn btn-sm btn-success ml-2"><i class="fa fa-edit"></i>&nbsp;Update Purchase</button>
               </div>
             </form>

@@ -1,0 +1,57 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header bg-indigo d-flex justify-content-between">
+        <div>
+          <i class="fa fa-align-justify"></i> Operator List
+        </div>
+        <div>
+          <button class="btn btn-sm btn-success" (click)="addOperator()"><i class="fa fa-plus"></i> Create Operator</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped table-sm text-center">
+          <thead>
+            <tr>
+              <th>SL.</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let operator of data; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{operator.username}}</td>
+              <td>{{operator.role}}</td>
+              <td>
+                <!-- <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="operatorDetails(operator.links[0].href)"><i class="fa fa-info-circle"></i> Details</button> -->
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateOperator(operator.links[0].href)"><i class="fa fa-edit"></i> Update</button>
+                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteOperator(operator.links[0].href)"><i class="fa fa-trash"></i> Delete</button>
+                <span *ngIf="operator.links.length>1">
+                  <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="operatorAction(operator.links[1].href,operator.links[1].rel)" *ngIf="operator.links[1].rel==='resetPassword'"><i class="fa fa-star"></i> Reset Password</button>
+                  <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="operatorAction(operator.links[1].href, operator.links[1].rel)" *ngIf="operator.links[1].rel==='changePassword'"><i class="fa fa-star"></i> Change Password</button>
+              </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav>
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!--/.col-->
+</div>
