@@ -111,7 +111,6 @@ export class AddCarComponent implements OnInit {
   onAdd($event)
   {
     this.option.push($event.value);
-    // console.log(this.CarForm.value);
   }
 
   onSubmit()
@@ -133,7 +132,6 @@ export class AddCarComponent implements OnInit {
     // this.CarForm.patchValue({
     //   options: this.selectedtag
     // });
-    console.log(this.CarForm.value);
     this.carService.addCar(this.CarForm.value)
                           .subscribe(
                             data => {

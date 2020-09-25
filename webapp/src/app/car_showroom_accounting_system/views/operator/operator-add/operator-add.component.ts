@@ -50,7 +50,6 @@ export class OperatorAddComponent implements OnInit {
       this.toastrService.warning('Please Fill All Field!', 'Warning!');
       return;
     }
-    console.log(this.OperatorForm.value);
     this.operatorService.addOperator(this.OperatorForm.value)
                           .subscribe(
                             data => {
