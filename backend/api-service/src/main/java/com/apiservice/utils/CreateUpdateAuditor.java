@@ -4,6 +4,7 @@ import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.entity.tenant.Auditable;
 import com.apiservice.repository.operator.OperatorRepository;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,10 +22,10 @@ public class CreateUpdateAuditor {
             .orElseThrow();
     if (auditable.isCreating()) {
       auditable.setCreatedBy(operator);
-      auditable.setCreatedDate(LocalDateTime.now());
+      auditable.setCreatedDate(ZonedDateTime.now());
     } else {
       auditable.setLastModifiedBy(operator);
-      auditable.setLastModifiedDate(LocalDateTime.now());
+      auditable.setLastModifiedDate(ZonedDateTime.now());
     }
   }
 }

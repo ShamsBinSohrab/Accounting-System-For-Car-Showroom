@@ -4,6 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.apiservice.controller.purchase.CarPurchaseRecordController;
+import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.enums.purchase.PurchaseType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -67,6 +68,8 @@ public class CarPurchaseRecordModel extends RepresentationModel<CarPurchaseRecor
     purchaseRecord.setId(source.getId());
     purchaseRecord.getPurchaseRecord().setId(source.getPurchaseRecord().getId());
     purchaseRecord.setCar(source.getCar());
+    purchaseRecord.setCreatedBy(source.getCreatedBy());
+    purchaseRecord.setCreatedDate(source.getCreatedDate());
     return purchaseRecord;
   }
 

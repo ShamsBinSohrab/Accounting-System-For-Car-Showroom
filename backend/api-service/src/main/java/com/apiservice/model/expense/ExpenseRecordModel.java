@@ -38,10 +38,10 @@ public class ExpenseRecordModel extends RepresentationModel<ExpenseRecordModel> 
         return mapper.map(this, ExpenseRecord.class);
     }
 
-    public ExpenseRecord updateEntity(ExpenseRecord source) {
-        ExpenseRecord expenseRecord = mapper.map(this, ExpenseRecord.class);
-        expenseRecord.setId(source.getId());
-        return expenseRecord;
+    public void updateEntity(ExpenseRecord expenseRecord) {
+        final long id = expenseRecord.getId();
+        mapper.map(this, expenseRecord);
+        expenseRecord.setId(id);
     }
 
     private ExpenseRecordModel addLinks() {
