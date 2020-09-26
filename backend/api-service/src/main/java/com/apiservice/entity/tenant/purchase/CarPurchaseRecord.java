@@ -1,5 +1,6 @@
 package com.apiservice.entity.tenant.purchase;
 
+import com.apiservice.entity.tenant.Auditable;
 import com.apiservice.entity.tenant.car.Car;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "car_purchase_record")
-public class CarPurchaseRecord {
+public class CarPurchaseRecord extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

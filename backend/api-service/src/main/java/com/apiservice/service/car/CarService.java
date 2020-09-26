@@ -6,6 +6,7 @@ import com.apiservice.model.car.CarQueryBuilder;
 import com.apiservice.repository.car.CarRepository;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.repository.sell.CarSellRecordRepository;
+import com.apiservice.utils.CreateUpdateAuditor;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import com.apiservice.utils.pagination.PaginationService;
 import com.apiservice.utils.pagination.QueryBuilder;
@@ -24,6 +25,7 @@ public class CarService {
   private final CarPurchaseRecordRepository purchaseRecordRepository;
   private final CarSellRecordRepository sellRecordRepository;
   private final PaginationService<Car> paginationService;
+  private final CreateUpdateAuditor auditor;
 
   @Transactional(readOnly = true)
   public Page<Car> getAllWithPaginationAndFilter(CarFilter filter, Pageable pageable) {
@@ -43,6 +45,7 @@ public class CarService {
 
   @Transactional
   public Car save(Car car) {
+    auditor.auditCreateUpdate(car);
     return carRepository.save(car);
   }
 

@@ -1,6 +1,8 @@
 package com.apiservice.model.car;
 
+import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.entity.tenant.car.Car;
+import java.time.ZonedDateTime;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
@@ -9,11 +11,6 @@ import org.springframework.hateoas.RepresentationModel;
 public class CarModel extends RepresentationModel<CarModel> {
 
   private static final ModelMapper mapper = new ModelMapper();
-
-  static {
-    mapper.createTypeMap(CarModel.class, Car.class, "UpdateEntity")
-        .addMappings(mapper -> mapper.skip(Car::setId));
-  }
 
   private long id;
   private String chassisNo;
@@ -25,7 +22,9 @@ public class CarModel extends RepresentationModel<CarModel> {
   }
 
   public void updateEntity(Car car) {
-    mapper.map(this, car, "UpdateEntity");
+    final long id = car.getId();
+    mapper.map(this, car);
+    car.setId(id);
   }
 
   public static Car newDraftCar(String chassisNo) {
