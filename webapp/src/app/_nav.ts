@@ -312,6 +312,11 @@ export const saCompanyNavItems: INavData[] = [
     icon: 'icon-speedometer',
   },
   {
+    name: 'Expense',
+    url: '/expense/list',
+    icon: 'icon-speedometer',
+  },
+  {
     name: 'Terms & Condition',
     url: '/terms',
     icon: 'icon-drop',

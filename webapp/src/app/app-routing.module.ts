@@ -71,6 +71,10 @@ const routes: Routes = [
         loadChildren: () => import('./car_showroom_accounting_system/views/purchase/purchase.module').then(m => m.PurchaseModule)
       },
       {
+        path: 'expense',
+        loadChildren: () => import('./car_showroom_accounting_system/views/expense/expense.module').then(m => m.ExpenseModule)
+      },
+      {
         path: 'change-password',
         component: ChangePasswordComponent
       },
