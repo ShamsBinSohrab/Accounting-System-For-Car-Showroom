@@ -14,28 +14,34 @@
         <table class="table table-bordered table-striped table-sm text-center">
           <thead>
             <tr>
+              <th>SL.</th>
+              <th>Chassis No</th>
               <th>Make</th>
               <th>Name</th>
               <th>Type</th>
               <th>Model Year</th>
               <th>Color</th>
-              <th>Chassis No</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let car of data">
-              <td>{{car.details.make}}</td>
-              <td>{{car.details.name}}</td>
-              <td>{{car.details.type}}</td>
-              <td>{{car.details.modelYear}}</td>
-              <td>{{car.details.color}}</td>
-              <td>{{car.chassisNo}}</td>
+            <tr *ngFor="let car of data;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{car.chassisNo !== null ? car.chassisNo : 'N/A'}}</td>
+              <td>{{car.details !== null ? car.details.make :  'N/A'}}</td>
+              <td>{{car.details !== null ? car.details.name : 'N/A'}}</td>
+              <td>{{car.details !== null ? car.details.type : 'N/A'}}</td>
+              <td>{{car.details !== null ? car.details.modelYear : 'N/A'}}</td>
+              <td>{{car.details !== null ? car.details.color : 'N/A'}}</td>
               <td class="text-left">
-                <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="carDetails(car.links[0].href)">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCar(car.links[0].href)">Update</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteCar(car.links[0].href)">Delete</button>
-                <button type="button" class="btn btn-sm btn-primary ml-2 mr-2" (click)="carAction(car.links[1].href, car.links[1].rel)"><i class="fa fa-plus"></i> {{car.links[1].rel==="purchaseRecord" ? "Purchase Record" : "Sell Record"}}</button>
+                <span *ngIf="car.links.length>0">
+                  <button *ngIf="car.links[0].href" type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="carDetails(car.links[0].href)" ><i class="fa fa-info-circle"></i> Details</button>
+                  <button *ngIf="car.links[0].href" type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateCar(car.links[0].href)"><i class="fa fa-edit"></i> Update</button>
+                  <button *ngIf="car.links[0].href" type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteCar(car.links[0].href)"><i class="fa fa-trash"></i> Delete</button>
+                </span>
+                <span *ngIf="car.links.length>1">
+                  <button *ngIf="car.links[1].href" type="button" class="btn btn-sm btn-primary ml-2 mr-2" (click)="carAction(car.links[1].href, car.links[1].rel)"><i class="fa fa-plus"></i> {{car.links[1].rel==="purchaseRecord" ? "Purchase" : "Sell"}}</button>
+                </span>
               </td>
             </tr>
           </tbody>

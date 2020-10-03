@@ -6,13 +6,15 @@ import { AddCarComponent } from './add-car/add-car.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { CarUpdateComponent } from './car-update/car-update.component';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   imports: [
     CommonModule,
     CarRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TagInputModule
   ],
   declarations: [
     CarListComponent,

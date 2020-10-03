@@ -12,25 +12,18 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Car',
-    url: '/car',
-    icon: 'icon-speedometer',
-    children: [
-      {
-        name: 'Car List',
-        url: '/car/list',
-        icon: 'icon-list'
-      },
-      {
-        name: 'Add Car',
-        url: '/car/create',
-        icon: 'icon-plus'
-      }
-    ]
+    url: '/car/list',
+    icon: 'fa fa-car'
   },
   {
-    name: 'Change Password',
-    url: '/change-password',
-    icon: 'icon-key'
+    name: 'Purchase',
+    url: '/purchase/list',
+    icon: 'fa fa-shopping-cart',
+  },
+  {
+    name: 'Operator',
+    url: '/operator/list',
+    icon: 'fa fa-users',
   },
   {
     name: 'Terms & Condition',
@@ -299,17 +292,22 @@ export const saCompanyNavItems: INavData[] = [
   {
     name: 'Car',
     url: '/car/list',
-    icon: 'icon-speedometer'
+    icon: 'fa fa-car'
   },
-  {
-    name: 'Company',
-    url: '/company/list',
-    icon: 'icon-speedometer',
-  },
+  // {
+  //   name: 'Company',
+  //   url: '/company/list',
+  //   icon: 'icon-speedometer',
+  // },
   {
     name: 'Purchase',
     url: '/purchase/list',
-    icon: 'icon-speedometer',
+    icon: 'fa fa-shopping-cart',
+  },
+  {
+    name: 'Operator',
+    url: '/operator/list',
+    icon: 'fa fa-users'
   },
   {
     name: 'Expense',
@@ -341,9 +339,9 @@ export const saCompanyNavItems: INavData[] = [
 ];
 
 export const saNavItems: INavData[] = [
-  {
-    name: 'Company',
-    url: '/company/list',
-    icon: 'icon-speedometer'
-  }
+  // {
+  //   name: 'Company',
+  //   url: '/company/list',
+  //   icon: 'icon-speedometer'
+  // }
 ];

@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 export class CarDetailsComponent implements OnInit {
   id: any;
   data: any;
+  options: any = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -32,6 +33,11 @@ export class CarDetailsComponent implements OnInit {
                   .subscribe(
                     data => {
                       this.data = data;
+                      for (const index of data.details.options) {
+                        this.options += index.replace('_', ' ');
+                        this.options += ', ';
+                      }
+                      this.options = this.options.substring(0, this.options.lastIndexOf(','));
                     },
                     error => {
                       this.toastrService.error(error.error);

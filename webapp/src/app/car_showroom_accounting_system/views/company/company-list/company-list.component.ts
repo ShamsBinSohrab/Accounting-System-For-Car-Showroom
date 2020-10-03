@@ -32,12 +32,10 @@ export class CompanyListComponent implements OnInit {
     this.companyService.getCompanyList(parameter)
                        .subscribe(
                           data => {
-                            console.log(data);
                             this.companyList = data;
                           },
                           error => {
                             this.toastrService.error(error.error, 'Error!');
-                            console.log(error.error);
                           }
                          );
   }
