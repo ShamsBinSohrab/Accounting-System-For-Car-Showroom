@@ -17,6 +17,10 @@ export class CarUpdateComponent implements OnInit {
   updateCar: FormGroup;
   makeList: string[];
   typeList: string[];
+  optionsForDropDown: { value: string; display: string; }[];
+  firstStep = true;
+  secondStep = false;
+  option: string[] = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -29,9 +33,10 @@ export class CarUpdateComponent implements OnInit {
 
   ngOnInit() {
     // this.id = this.activeRoute.snapshot.paramMap.get('carId');
-    this.loadForm();
     this.getMake();
     this.getType();
+    this.getOptions();
+    this.loadForm();
     this.getDetails();
   }
 
@@ -46,6 +51,13 @@ export class CarUpdateComponent implements OnInit {
           type: ['', [Validators.required]],
           modelYear: ['', [Validators.required]],
           color: ['', [Validators.required]],
+          engineNo: ['', Validators.required],
+          mileage: ['', Validators.required],
+          cc: ['', Validators.required],
+          transmission: [''],
+          fuelType: [''],
+          // option: [[]],
+          options: []
         }
       ),
     });
@@ -56,6 +68,7 @@ export class CarUpdateComponent implements OnInit {
     this.carService.getCarById()
                   .subscribe(
                     data => {
+                      // this.option = data.details.options;
                       this.updateCar.patchValue({
                         chassisNo: data.chassisNo,
                         details:
@@ -65,16 +78,56 @@ export class CarUpdateComponent implements OnInit {
                             type: data.details.type,
                             modelYear: data.details.modelYear,
                             color: data.details.color,
+                            engineNo: data.details.engineNo,
+                            mileage: data.details.mileage,
+                            cc: data.details.cc,
+                            transmission: data.details.transmission,
+                            fuelType: data.details.fuelType,
+                            // option: data.details.options,
+                            options: data.details.options
                           }
                       });
                     },
                     error => {
-                      console.log(error.error);
                       this.toastrService.error(error.error);
                     }
                     );
   }
 
+
+  firstStepComplete()
+  {
+    this.firstStep = false;
+    this.secondStep = true;
+  }
+
+  firstStepBack()
+  {
+    this.firstStep = true;
+    this.secondStep = false;
+  }
+
+  getOptions()
+  {
+    // tslint:disable-next-line:max-line-length
+    this.optionsForDropDown = [{value: 'WOODEN_PANEL', display: 'Wooden Panel'}, {value: 'CRUISE_CONTROL', display: 'Cruise Control'}, {value: 'HIGH_FLOOR', display: 'High Floor'}, {value: 'RAIN_SHED', display: 'Rain Shed'}, {value: 'DVD_PLAYER', display: 'DVD Player'}, {value: 'BACK_CAMERA', display: 'Back Camera'}, {value: 'FOUR_CAMERAS', display: 'Four Cameras'}, {value: 'SUNROOF', display: 'Sun Roof'}, {value: 'WINKER_MIRROR', display: 'Winker Mirror'}, {value: 'AC', display: 'AC'}, {value: 'REAR_AC', display: 'Rear AC'}, {value: 'THIRD_ROW_SEATS', display: 'Third Row Seat'}, {value: 'AIR_BAG', display: 'Air Bag'}, {value: 'HIGH_ROOF', display: 'High Roof'}, {value: 'LOW_ROOF', display: 'Low Roof'}, {value: 'WOODEN_STEERING', display: 'Wooden Steering'}, {value: 'LOW_FLOOR', display: 'Low Floor'}, {value: 'ROOF_RAIL', display: 'Roof Rail'}];
+  }
+
+  // onAdd($event)
+  // {
+  //   this.option.push($event.value);
+  // }
+
+  // onRemove($event)
+  // {
+  //   for (let index = 0; index < this.option.length; index++) {
+  //     if (this.option[index] === $event.value)
+  //     {
+  //       this.option[index] = null;
+  //     }
+  //   }
+  //   // this.option.reduce($event.value);
+  // }
 
   getMake()
   {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { navItems, saNavItems, saCompanyNavItems } from 'src/app/_nav';
 import { LoginService } from 'src/app/car_showroom_accounting_system/Services/login.service';
 import { Router } from '@angular/router';
+import { Spinkit } from 'ng-http-loader';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +14,24 @@ export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems: any;
   homelink = '';
-
+  username: any;
+  userrole: string;
+  companyToken: string;
+  minimized: boolean;
+  public spinkit = Spinkit;
   constructor(
               private loginSercice: LoginService,
               private router: Router
-              ) { }
+              ) {
+                  this.username = localStorage.getItem('username');
+                  this.userrole = localStorage.getItem('user_role');
+                  this.companyToken = localStorage.getItem('company_token');
+                  // if (!this.companyToken)
+                  // {
+                  //   this.minimized = true;
+                  //   // this.sidebarMinimized = true;
+                  // }
+               }
 
   ngOnInit(): void {
     if (localStorage.getItem('company_token') !== '' && localStorage.getItem('user_role') === 'SUPER_ADMIN')
@@ -41,7 +55,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   logout() {
     this.loginSercice.logout();
-    this.router.navigate(['/login']);
-}
+  }
+  company() {
+    this.router.navigate(['/company/list']);
+  }
 
 }

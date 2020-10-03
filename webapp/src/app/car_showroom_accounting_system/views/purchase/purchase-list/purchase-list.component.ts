@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { CompanyService } from 'src/app/car_showroom_accounting_system/Services/company.service';
 import { Router } from '@angular/router';
-import { DefaultLayoutComponent } from 'src/app/car_showroom_accounting_system/containers';
-import {Location} from '@angular/common';
 import { PurchaseService } from 'src/app/car_showroom_accounting_system/Services/purchase.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-purchase-list',
   templateUrl: './purchase-list.component.html',
@@ -18,9 +14,7 @@ export class PurchaseListComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
     private purchaseService: PurchaseService,
-    private route: Router,
-    private location: Location
-    ) { }
+    private route: Router    ) { }
 
   ngOnInit() {
     this.getPurchaseList();
@@ -32,7 +26,6 @@ export class PurchaseListComponent implements OnInit {
     this.purchaseService.getPurchaseList(parameter)
                        .subscribe(
                           data => {
-                            console.log(data);
                             this.purchaseList = data;
                           },
                           error => {
@@ -44,16 +37,33 @@ export class PurchaseListComponent implements OnInit {
 
   deletePurchase(link: string)
   {
-    this.purchaseService.deletePurchase(link)
-    .subscribe(
-      data => {
-        this.toastrService.success('Purchase Record Delete Successful.', 'Success');
-        this.ngOnInit();
-      },
-      error => {
-        this.toastrService.error(error.error);
-      }
-    );
+    Swal.fire({
+    title: 'Are you sure?',
+    text: 'You won\'t be able to revert this!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#B3BBC2',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.purchaseService.deletePurchase(link)
+          .subscribe(
+            () => {
+              // Swal.fire(
+              //   'Deleted!',
+              //   'Purchase Record Delete Successful.',
+              //   'success'
+              // );
+              this.toastrService.success('Purchase Record Delete Successful.', 'Success');
+              this.ngOnInit();
+            },
+            error => {
+              this.toastrService.error(error.error);
+            }
+          );
+    }
+  });
   }
 
   purchaseDetails(link: string)

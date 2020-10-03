@@ -32,6 +32,7 @@ export class CarService {
 
   public getCarMakeList()
   {
+    // tslint:disable-next-line:max-line-length
     // const make: Array<string> = ['TOYOTA', 'NISSAN', 'HONDA', 'BMW', 'AUDI', 'LAND_ROVER', 'MERCEDES', 'VOLVO', 'FORD', 'JAGUAR', 'MITSUBISHI', 'SUBARU', 'TESLA', 'VOLKSWAGEN'];
 
     const make = '';
