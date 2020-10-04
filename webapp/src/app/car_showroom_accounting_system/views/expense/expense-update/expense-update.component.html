@@ -1,3 +1,59 @@
-<p>
-  expense-update works!
-</p>
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header bg-indigo">
+              <i class="fa fa-edit"></i>Update Expense Record
+            </div>
+            <form  [formGroup]="ExpenseForm" (ngSubmit)="onSubmit()">
+              <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="expenseType">Expense Type</label>
+                    <div class="col-md-8">
+                      <select name="expenseType" id="expenseType" class="form-control" formControlName="expenseType">
+                        <option value="">Select Expense</option>
+                        <option *ngFor="let expense of expenseType" value="{{expense}}">{{expense|titlecase}}</option>
+                      </select>
+                      <!-- <input type="text" id="expenseType" name="expenseType" class="form-control" placeholder="Enter Expense Type(Required)" formControlName="expenseType"> -->
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="expenseDate">Expense Date</label>
+                    <div class="col-md-8">
+                      <input type="text"
+                      placeholder="Enter Expense Date(Required)"
+                      class="form-control"
+                      bsDatepicker formControlName="expenseDate" value="{{expenseDate|date:'shortDate'}}">
+                      <!-- <input type="datetime-local" id="purchaseDate" name="purchaseDate" class="form-control" placeholder="Enter Purchase Date" formControlName="purchaseDate"> -->
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="recipient">Recipient</label>
+                    <div class="col-md-8">
+                      <input type="text" id="recipient" name="recipient" class="form-control" placeholder="Enter Recipient(Required)" formControlName="recipient">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="amount">Amount</label>
+                    <div class="col-md-8">
+                      <input type="text" id="amount" name="amount" class="form-control" placeholder="Enter Amount(Required)" formControlName="amount">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="notes">Notes</label>
+                    <div class="col-md-8">
+                      <input type="text" id="notes" name="notes" class="form-control" placeholder="Enter Note" formControlName="notes">
+                    </div>
+                  </div>
+              </div>
+              <div class="card-footer text-right">
+                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="submit" class="btn btn-sm btn-warning ml-2"><i class="fa fa-edit"></i>&nbsp;Update Expense</button>
+              </div>
+            </form>
+          </div>
+    </div>
+    <div class="col-2"></div>
+</div>

@@ -16,7 +16,7 @@ export class ExpenseService {
 
   addExpense(data: any)
   {
-    return this.http.post<any>(localStorage.getItem('link'), data);
+    return this.http.post<any>(Common.baseUrl + '/expenseRecords', data);
   }
   deleteExpense(link: any)
   {

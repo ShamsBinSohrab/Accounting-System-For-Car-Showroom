@@ -30,9 +30,9 @@
               <td>{{expense.amount}}</td>
               <td>{{expense.notes}}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="expenseDetails(expense.links[0].href)">Details</button>
-                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateExpense(expense.links[0].href)">Update</button>
-                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteExpense(expense.links[0].href)">Delete</button>
+                <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="expenseDetails(expense.links[0].href)"><i class="fa fa-info-circle"></i> Details</button>
+                <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateExpense(expense.links[0].href)"><i class="fa fa-edit"></i> Update</button>
+                <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteExpense(expense.links[0].href)"><i class="fa fa-trash"></i> Delete</button>
               </td>
             </tr>
           </tbody>
