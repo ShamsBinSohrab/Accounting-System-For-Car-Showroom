@@ -4,6 +4,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.apiservice.controller.sell.CarSellRecordController;
+import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
+import com.apiservice.entity.tenant.purchase.PurchaseRecord;
 import com.apiservice.entity.tenant.sell.CarSellRecord;
 import com.apiservice.enums.sell.SellType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -54,7 +56,9 @@ public class CarSellRecordModel extends RepresentationModel<CarSellRecordModel> 
     CarSellRecord sellRecord = mapper.map(this, CarSellRecord.class);
     sellRecord.setId(source.getId());
     sellRecord.getSellRecord().setId(source.getSellRecord().getId());
-    sellRecord.setPurchaseRecord(sellRecord.getPurchaseRecord());
+    sellRecord.setPurchaseRecord(source.getPurchaseRecord());
+    sellRecord.setCreatedBy(source.getCreatedBy());
+    sellRecord.setCreatedDate(source.getCreatedDate());
     return sellRecord;
   }
 

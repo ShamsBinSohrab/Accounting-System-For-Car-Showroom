@@ -15,7 +15,6 @@ export class OperatorService {
   }
   public updateOperator(data: any)
   {
-    console.log(data);
     return this.http.put<any>(localStorage.getItem('link'), data);
   }
   public getOperatorList()

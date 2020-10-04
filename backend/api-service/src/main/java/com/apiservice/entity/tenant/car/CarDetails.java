@@ -54,10 +54,10 @@ public class CarDetails {
   private String engineNo;
 
   @Column(name = "mileage")
-  private int mileage;
+  private Integer mileage;
 
   @Column(name = "cc", nullable = false)
-  private int cc;
+  private Integer cc;
 
   @Enumerated(value = EnumType.STRING)
   @Column(name = "transmission", nullable = false)

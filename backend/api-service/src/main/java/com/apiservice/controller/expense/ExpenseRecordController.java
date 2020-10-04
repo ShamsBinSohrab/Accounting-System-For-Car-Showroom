@@ -45,8 +45,8 @@ public class ExpenseRecordController {
     @PutMapping("/expenseRecords/{id}")
     public ExpenseRecordModel update(
             @PathVariable("id") long id, @RequestBody @Valid ExpenseRecordModel expenseRecordModel) {
-        final ExpenseRecord expenseRecordToUpdate = expenseRecordService.getById(id);
-        final ExpenseRecord expenseRecord = expenseRecordModel.updateEntity(expenseRecordToUpdate);
+        final ExpenseRecord expenseRecord = expenseRecordService.getById(id);
+        expenseRecordModel.updateEntity(expenseRecord);
         expenseRecordService.save(expenseRecord);
         return ExpenseRecordModel.toModel(expenseRecord);
     }

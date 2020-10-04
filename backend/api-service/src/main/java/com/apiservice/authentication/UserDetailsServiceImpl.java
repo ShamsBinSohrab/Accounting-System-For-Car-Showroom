@@ -2,10 +2,8 @@ package com.apiservice.authentication;
 
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.service.operator.OperatorService;
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,7 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     final Operator operator = operatorService.getByUsername(username);
-    return new User(operator.getUsername(), operator.getPassword(),
-        Collections.singletonList(operator.getRole()));
+    return new User(operator.getUsername(), operator.getPassword(), List.of(operator.getRole()));
   }
 }

@@ -1,5 +1,6 @@
 package com.apiservice.entity.tenant.expense;
 
+import com.apiservice.entity.tenant.Auditable;
 import com.apiservice.enums.expense.ExpenseType;
 import lombok.Data;
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.time.ZonedDateTime;
 @Data
 @Entity
 @Table(name = "expense_record")
-public class ExpenseRecord {
+public class ExpenseRecord extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

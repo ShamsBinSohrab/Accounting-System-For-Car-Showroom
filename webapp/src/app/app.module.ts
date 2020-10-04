@@ -40,6 +40,8 @@ import { EncryptionDescryptionService } from './car_showroom_accounting_system/S
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 import { TagInputModule } from 'ngx-chips';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -85,7 +87,9 @@ const APP_CONTAINERS = [
       positionClass: 'toast-top-right',
       preventDuplicates: false
     }),
-    TagInputModule
+    TagInputModule,
+    SweetAlert2Module.forRoot(),
+    NgHttpLoaderModule.forRoot()
   ],
   providers: [
     LoginService,

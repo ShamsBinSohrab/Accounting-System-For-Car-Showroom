@@ -33,7 +33,6 @@ export class CarDetailsComponent implements OnInit {
                   .subscribe(
                     data => {
                       this.data = data;
-                      // console.log(this.data);
                       for (const index of data.details.options) {
                         this.options += index.replace('_', ' ');
                         this.options += ', ';

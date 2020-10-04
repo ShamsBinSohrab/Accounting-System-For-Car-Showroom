@@ -33,7 +33,6 @@ export class PurchaseUpdateComponent implements OnInit {
     this.purchaseService.getPurchaseById()
                   .subscribe(
                     data => {
-                      console.log(data);
                       this.data = data;
                       this.PurchaseForm.patchValue({
                           chassisNo: data.chassisNo,

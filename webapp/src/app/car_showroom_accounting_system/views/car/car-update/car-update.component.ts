@@ -69,7 +69,6 @@ export class CarUpdateComponent implements OnInit {
                   .subscribe(
                     data => {
                       // this.option = data.details.options;
-                      // console.log(this.option);
                       this.updateCar.patchValue({
                         chassisNo: data.chassisNo,
                         details:
@@ -90,7 +89,6 @@ export class CarUpdateComponent implements OnInit {
                       });
                     },
                     error => {
-                      console.log(error.error);
                       this.toastrService.error(error.error);
                     }
                     );
@@ -118,7 +116,6 @@ export class CarUpdateComponent implements OnInit {
   // onAdd($event)
   // {
   //   this.option.push($event.value);
-  //   console.log(this.updateCar.value);
   // }
 
   // onRemove($event)
@@ -130,7 +127,6 @@ export class CarUpdateComponent implements OnInit {
   //     }
   //   }
   //   // this.option.reduce($event.value);
-  //   // console.log(this.CarForm.value);
   // }
 
   getMake()

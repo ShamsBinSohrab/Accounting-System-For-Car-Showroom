@@ -4,6 +4,7 @@ import com.apiservice.entity.tenant.expense.ExpenseRecord;
 import com.apiservice.model.expense.ExpenseRecordFilter;
 import com.apiservice.model.expense.ExpenseRecordQueryBuilder;
 import com.apiservice.repository.expense.ExpenseRecordRepository;
+import com.apiservice.utils.CreateUpdateAuditor;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import com.apiservice.utils.pagination.PaginationService;
 import com.apiservice.utils.pagination.QueryBuilder;
@@ -19,6 +20,7 @@ public class ExpenseRecordService {
 
     private final ExpenseRecordRepository expenseRecordRepository;
     private final PaginationService<ExpenseRecord> paginationService;
+    private final CreateUpdateAuditor auditor;
 
     @Transactional(readOnly = true)
     public Page<ExpenseRecord> getAllWithPaginationAndFilter(
@@ -36,6 +38,7 @@ public class ExpenseRecordService {
 
     @Transactional
     public void save(ExpenseRecord expenseRecord) {
+        auditor.auditCreateUpdate(expenseRecord);
         expenseRecordRepository.save(expenseRecord);
     }
 

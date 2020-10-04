@@ -5,6 +5,7 @@ import com.apiservice.entity.tenant.purchase.PurchaseRecord;
 import com.apiservice.model.purchase.PurchaseRecordFilter;
 import com.apiservice.model.purchase.PurchaseRecordQueryBuilder;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
+import com.apiservice.utils.CreateUpdateAuditor;
 import com.apiservice.utils.exceptions.EntityNotFoundException;
 import com.apiservice.utils.pagination.PaginationService;
 import com.apiservice.utils.pagination.QueryBuilder;
@@ -20,6 +21,7 @@ public class CarPurchaseRecordService {
 
   private final CarPurchaseRecordRepository carPurchaseRecordRepository;
   private final PaginationService<CarPurchaseRecord> paginationService;
+  private final CreateUpdateAuditor auditor;
 
   @Transactional(readOnly = true)
   public Page<CarPurchaseRecord> getAllWithPaginationAndFilter(
@@ -37,6 +39,7 @@ public class CarPurchaseRecordService {
 
   @Transactional
   public void save(CarPurchaseRecord carPurchaseRecord) {
+    auditor.auditCreateUpdate(carPurchaseRecord);
     carPurchaseRecordRepository.save(carPurchaseRecord);
   }
 

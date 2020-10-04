@@ -13,17 +13,17 @@ export const navItems: INavData[] = [
   {
     name: 'Car',
     url: '/car/list',
-    icon: 'icon-speedometer'
+    icon: 'fa fa-car'
   },
   {
     name: 'Purchase',
     url: '/purchase/list',
-    icon: 'icon-speedometer',
+    icon: 'fa fa-shopping-cart',
   },
   {
     name: 'Operator',
     url: '/operator/list',
-    icon: 'icon-speedometer',
+    icon: 'fa fa-users',
   },
   {
     name: 'Terms & Condition',
@@ -292,7 +292,7 @@ export const saCompanyNavItems: INavData[] = [
   {
     name: 'Car',
     url: '/car/list',
-    icon: 'icon-speedometer'
+    icon: 'fa fa-car'
   },
   // {
   //   name: 'Company',
@@ -302,12 +302,12 @@ export const saCompanyNavItems: INavData[] = [
   {
     name: 'Purchase',
     url: '/purchase/list',
-    icon: 'icon-speedometer',
+    icon: 'fa fa-shopping-cart',
   },
   {
     name: 'Operator',
     url: '/operator/list',
-    icon: 'icon-speedometer',
+    icon: 'fa fa-users'
   },
   {
     name: 'Terms & Condition',

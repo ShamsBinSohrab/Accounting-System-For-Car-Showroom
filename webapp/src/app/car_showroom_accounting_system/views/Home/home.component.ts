@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
         .subscribe(
                   data => {
                     // localStorage.setItem('auth_token',data.authtoken);
-                    console.log(data);
                     },
                   error => {
                       console.log(error.error.message);

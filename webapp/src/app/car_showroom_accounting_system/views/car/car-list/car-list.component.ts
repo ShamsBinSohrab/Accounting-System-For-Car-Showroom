@@ -5,7 +5,7 @@ import { EncryptionDescryptionService } from 'src/app/car_showroom_accounting_sy
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarService } from 'src/app/car_showroom_accounting_system/Services/car.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
@@ -45,16 +45,34 @@ export class CarListComponent implements OnInit {
 
   deleteCar(link: string)
   {
-    this.carService.deleteCar(link)
-    .subscribe(
-      data => {
-        this.toastrService.success('Delete Successful', 'Success');
-        this.ngOnInit();
-      },
-      error => {
-        this.toastrService.error(error.error);
-      }
-    );
+    Swal.fire({
+    title: 'Are you sure?',
+    text: 'You won\'t be able to revert this!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#B3BBC2',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.carService.deleteCar(link)
+      .subscribe(
+        data => {
+          // Swal.fire(
+          //   'Deleted!',
+          //   'Purchase Record Delete Successful.',
+          //   'success'
+          // );
+          this.toastrService.success('Delete Successful', 'Success');
+          this.ngOnInit();
+        },
+        error => {
+          this.toastrService.error(error.error);
+        }
+      );
+    }
+  });
+
   }
 
   carDetails(link: string)

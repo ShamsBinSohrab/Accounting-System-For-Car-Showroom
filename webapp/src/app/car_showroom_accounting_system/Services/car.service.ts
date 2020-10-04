@@ -15,7 +15,6 @@ export class CarService {
   }
   public updateCar(data: any)
   {
-    console.log(data);
     return this.http.put<any>(localStorage.getItem('link'), data);
   }
   public getCar()

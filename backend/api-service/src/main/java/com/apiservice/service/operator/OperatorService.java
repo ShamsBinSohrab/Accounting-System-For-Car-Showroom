@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -63,8 +64,7 @@ public class OperatorService {
   @Transactional
   public void createNewOperator(Operator operator) {
     final UUID companyUuid = getCurrentCompanyUuid();
-    final Company company =
-        companyRepository.findByUuid(companyUuid).orElseThrow();
+    final Company company = companyRepository.findByUuid(companyUuid).orElseThrow();
     operator.setCompany(company);
     encodePassword(operator);
     save(operator);
@@ -83,7 +83,7 @@ public class OperatorService {
 
   private UUID getCurrentCompanyUuid() {
     return Optional.ofNullable(TenantContext.getCurrentTenant())
-        .map(UUID::fromString).orElseThrow();
+        .map(UUID::fromString)
+        .orElseThrow();
   }
-
 }
