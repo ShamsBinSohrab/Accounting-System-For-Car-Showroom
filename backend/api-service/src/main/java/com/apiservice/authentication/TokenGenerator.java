@@ -1,7 +1,7 @@
 package com.apiservice.authentication;
 
 import com.apiservice.entity.master.operator.Operator;
-import com.apiservice.model.jwt.AuthResponse;
+import com.apiservice.model.auth.AuthResponse;
 import com.apiservice.service.operator.OperatorService;
 import java.util.Optional;
 import java.util.concurrent.Callable;

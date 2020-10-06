@@ -1,4 +1,4 @@
-package com.apiservice.model.jwt;
+package com.apiservice.model.auth;
 
 import lombok.Data;
 
