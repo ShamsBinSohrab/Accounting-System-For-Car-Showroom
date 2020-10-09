@@ -1,11 +1,10 @@
 package com.apiservice.authentication;
 
 import com.apiservice.entity.master.company.Company;
-import com.apiservice.entity.master.operator.Operator;
+import com.apiservice.entity.master.password.PasswordResetConfirmationRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +59,12 @@ public class JwtTokenUtil {
   public String generateCompanyToken(Company company) {
     final Map<String, Object> claims = new HashMap<>();
     return doGenerateToken(claims, company.getUuid().toString());
+  }
+
+  public String generatePasswordResetConfirmationToken(
+      PasswordResetConfirmationRequest confirmationToken) {
+    final Map<String, Object> claims = new HashMap<>();
+    return doGenerateToken(claims, confirmationToken.getToken().toString());
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {

@@ -33,6 +33,8 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     if (request.getServletPath().equalsIgnoreCase("/authenticate")
+        || request.getServletPath().equalsIgnoreCase("/forgotPassword")
+        || request.getServletPath().equalsIgnoreCase("/confirmResetPassword")
         || request.getMethod().equalsIgnoreCase("OPTIONS")) {
       chain.doFilter(request, response);
       return;
