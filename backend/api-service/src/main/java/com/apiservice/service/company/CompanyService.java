@@ -94,8 +94,8 @@ public class CompanyService {
   }
 
   @Transactional
-  public void save(Company company) {
-    companyRepository.save(company);
+  public Company save(Company company) {
+    return companyRepository.save(company);
   }
 
   @Transactional(readOnly = true)

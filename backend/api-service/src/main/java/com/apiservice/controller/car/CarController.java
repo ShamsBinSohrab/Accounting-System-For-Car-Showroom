@@ -45,7 +45,7 @@ public class CarController {
   @PostMapping("/cars")
   @ResponseStatus(HttpStatus.CREATED)
   public CarModel create(@RequestBody @Valid CarModel model) {
-    Car car = model.toEntity();
+    final Car car = model.toEntity();
     return modelAssembler.toModel(carService.save(car));
   }
 

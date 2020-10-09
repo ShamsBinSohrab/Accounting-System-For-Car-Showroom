@@ -9,10 +9,8 @@ import com.apiservice.controller.sell.CarSellRecordController;
 import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.repository.purchase.CarPurchaseRecordRepository;
 import com.apiservice.repository.sell.CarSellRecordRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
@@ -22,47 +20,47 @@ public class CarModelAssembler implements RepresentationModelAssembler<Car, CarM
 
   private final CarPurchaseRecordRepository purchaseRecordRepository;
   private final CarSellRecordRepository sellRecordRepository;
-  private final ModelMapper modelMapper;
+  private final ModelMapper mapper;
 
   @Override
   public CarModel toModel(Car car) {
-    final CarModel model = modelMapper.map(car, CarModel.class);
-    addLinkToDetails(model, car);
-    addLinkToUpdate(model, car);
-    addLinkToDelete(model, car);
+    final CarModel model = mapper.map(car, CarModel.class);
+    addLinkToDetails(model);
+    addLinkToUpdate(model);
+    addLinkToDelete(model);
     purchaseRecordRepository
         .findByCarId(car.getId())
         .ifPresentOrElse(
             pr -> {
               if (!sellRecordRepository.existsByPurchaseRecordId(pr.getId())) {
-                addLinkToSellRecord(model, car);
+                addLinkToSellRecord(model);
               }
             },
-            () -> addLinkToPurchaseRecord(model, car));
+            () -> addLinkToPurchaseRecord(model));
     return model;
   }
 
-  private void addLinkToDetails(CarModel model, Car car) {
-    model.add(linkTo(methodOn(CarController.class).car(car.getId())).withRel("details"));
+  private void addLinkToDetails(CarModel model) {
+    model.add(linkTo(methodOn(CarController.class).car(model.getId())).withRel("details"));
   }
 
-  private void addLinkToUpdate(CarModel model, Car car) {
-    model.add(linkTo(methodOn(CarController.class).update(model, car.getId())).withRel("update"));
+  private void addLinkToUpdate(CarModel model) {
+    model.add(linkTo(methodOn(CarController.class).update(model, model.getId())).withRel("update"));
   }
 
-  private void addLinkToDelete(CarModel model, Car car) {
-    model.add(linkTo(methodOn(CarController.class).delete(car.getId())).withRel("delete"));
+  private void addLinkToDelete(CarModel model) {
+    model.add(linkTo(methodOn(CarController.class).delete(model.getId())).withRel("delete"));
   }
 
-  private void addLinkToSellRecord(CarModel model, Car car) {
+  private void addLinkToSellRecord(CarModel model) {
     model.add(
-        linkTo(methodOn(CarSellRecordController.class).create(car.getId(), null))
+        linkTo(methodOn(CarSellRecordController.class).create(model.getId(), null))
             .withRel("sellRecord"));
   }
 
-  private void addLinkToPurchaseRecord(CarModel model, Car car) {
+  private void addLinkToPurchaseRecord(CarModel model) {
     model.add(
-        linkTo(methodOn(CarPurchaseRecordController.class).create(car.getId(), null))
+        linkTo(methodOn(CarPurchaseRecordController.class).create(model.getId(), null))
             .withRel("purchaseRecord"));
   }
 }

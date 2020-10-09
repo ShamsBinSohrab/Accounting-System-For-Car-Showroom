@@ -5,9 +5,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class CompanyModel {
+public class CompanyModel extends RepresentationModel<CompanyModel> {
 
   private static final ModelMapper mapper = new ModelMapper();
 
