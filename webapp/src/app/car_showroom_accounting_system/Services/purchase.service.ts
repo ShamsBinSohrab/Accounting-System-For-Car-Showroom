@@ -6,6 +6,9 @@ import { Common } from '../Common/common';
   providedIn: 'root'
 })
 export class PurchaseService {
+getSellList(parameter: string) {
+  throw new Error('Method not implemented.');
+}
 
 constructor(private http: HttpClient) { }
 

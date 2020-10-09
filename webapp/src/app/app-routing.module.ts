@@ -70,6 +70,10 @@ const routes: Routes = [
         loadChildren: () => import('./car_showroom_accounting_system/views/purchase/purchase.module').then(m => m.PurchaseModule)
       },
       {
+        path: 'sell',
+        loadChildren: () => import('./car_showroom_accounting_system/views/sell/sell.module').then(m => m.SellModule)
+      },
+      {
         path: 'operator',
         loadChildren: () => import('./car_showroom_accounting_system/views/operator/operator.module').then(m => m.OperatorModule)
       },
