@@ -37,9 +37,9 @@ public class ExpenseRecordService {
     }
 
     @Transactional
-    public void save(ExpenseRecord expenseRecord) {
+    public ExpenseRecord save(ExpenseRecord expenseRecord) {
         auditor.auditCreateUpdate(expenseRecord);
-        expenseRecordRepository.save(expenseRecord);
+        return expenseRecordRepository.save(expenseRecord);
     }
 
     @Transactional

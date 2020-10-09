@@ -1,20 +1,14 @@
 package com.apiservice.model.expense;
 
-import com.apiservice.controller.expense.ExpenseRecordController;
 import com.apiservice.entity.tenant.expense.ExpenseRecord;
 import com.apiservice.enums.expense.ExpenseType;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Data
 public class ExpenseRecordModel extends RepresentationModel<ExpenseRecordModel> {
@@ -31,7 +25,7 @@ public class ExpenseRecordModel extends RepresentationModel<ExpenseRecordModel> 
     private ExpenseType expenseType;
 
     public static ExpenseRecordModel toModel(ExpenseRecord expenseRecord) {
-        return mapper.map(expenseRecord, ExpenseRecordModel.class).addLinks();
+        return mapper.map(expenseRecord, ExpenseRecordModel.class);
     }
 
     public ExpenseRecord toEntity() {
@@ -42,10 +36,5 @@ public class ExpenseRecordModel extends RepresentationModel<ExpenseRecordModel> 
         final long id = expenseRecord.getId();
         mapper.map(this, expenseRecord);
         expenseRecord.setId(id);
-    }
-
-    private ExpenseRecordModel addLinks() {
-        add(linkTo(methodOn(ExpenseRecordController.class).expenseRecord(id)).withSelfRel());
-        return this;
     }
 }
