@@ -5,13 +5,12 @@ import com.apiservice.model.car.CarFilter;
 import com.apiservice.model.car.CarModel;
 import com.apiservice.model.car.CarModelAssembler;
 import com.apiservice.service.car.CarService;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +30,11 @@ public class CarController {
 
   private final CarService carService;
   private final CarModelAssembler modelAssembler;
-  private final ApplicationContext applicationContext;
 
   @GetMapping("/cars")
-  public List<CarModel> cars(CarFilter filter, Pageable pageable) {
-    return carService.getAllWithPaginationAndFilter(filter, pageable).stream()
-        .map(modelAssembler::toModel)
-        .collect(Collectors.toUnmodifiableList());
+  public CollectionModel<CarModel> cars(CarFilter filter, Pageable pageable) {
+    return modelAssembler
+        .toCollectionModel(carService.getAllWithPaginationAndFilter(filter, pageable));
   }
 
   @GetMapping("/cars/{id}")
@@ -62,7 +59,8 @@ public class CarController {
 
   @DeleteMapping("/cars/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id) {
+  public ResponseEntity<Void> delete(@PathVariable long id) {
     carService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }
