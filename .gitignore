@@ -66,3 +66,4 @@ secrets.yml
 /backend/api-service/mvnw.cmd
 /webapp/node_modules/
 /webapp/dist/
+/.vscode/
