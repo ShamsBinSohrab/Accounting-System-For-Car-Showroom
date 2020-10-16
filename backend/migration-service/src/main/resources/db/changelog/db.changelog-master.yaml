@@ -5,3 +5,5 @@ databaseChangeLog:
       - file: db/changelog/1.0/operator.yaml
   - include:
       - file: db/changelog/1.0/company.yaml
+  - include:
+      - file: db/changelog/1.0/password-reset-confirmation-request.yaml

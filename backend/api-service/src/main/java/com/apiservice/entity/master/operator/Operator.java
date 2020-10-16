@@ -33,6 +33,9 @@ public class Operator {
   @Column(name = "role", nullable = false)
   private OperatorRole role;
 
+  @Column(name = "email", nullable = false)
+  private String email;
+
   @JoinColumn(name = "company_id", updatable = false)
   @OneToOne(fetch = FetchType.EAGER)
   private Company company;

@@ -1,4 +1,4 @@
-package com.apiservice.service;
+package com.apiservice.service.report;
 
 import com.apiservice.entity.tenant.car.Car;
 import com.apiservice.model.car.CarFilter;
