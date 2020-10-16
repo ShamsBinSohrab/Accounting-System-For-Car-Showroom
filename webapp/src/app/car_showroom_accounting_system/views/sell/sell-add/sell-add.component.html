@@ -1,0 +1,68 @@
+
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header bg-indigo">
+              <i class="fa fa-plus"></i>Add Sell Record
+            </div>
+            <form  [formGroup]="SellForm" (ngSubmit)="onSubmit()">
+              <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="sellType">Sell Type</label>
+                    <div class="col-md-8">
+                      <select name="sellType" id="sellType" class="form-control" formControlName="sellType">
+                        <option value="">Select Type</option>
+                        <option  value="CASH">Cash</option>
+                        <option  value="CREDIT">Credit</option>
+                        <option  value="BANK_LOAN">Bank Loan</option>
+                        <option  value="SHOWROOM">Showroom</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="sellDate">Sell Date</label>
+                    <div class="col-md-8">
+                      <input type="text"
+                      placeholder="Enter Sell Date (Required)"
+                      class="form-control"
+                      bsDatepicker formControlName="sellDate">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="paidAsAdvance">Paid As Advance</label>
+                    <div class="col-md-8">
+                      <input type="text" id="paidAsAdvance" name="paidAsAdvance" class="form-control" placeholder="Paid As Advance" formControlName="paidAsAdvance">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="paidOnDelivery">Paid On Delivery</label>
+                    <div class="col-md-8">
+                      <input type="text" id="paidOnDelivery" name="paidOnDelivery" class="form-control" placeholder="Enter Paid on Delivery" formControlName="paidOnDelivery">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="paidAfterDelivery">Paid After Delivery</label>
+                    <div class="col-md-8">
+                      <input type="text" id="paidAfterDelivery" name="paidAfterDelivery" class="form-control" placeholder="Enter Paid After Delivery" formControlName="paidAfterDelivery">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="purchaseLetterNo">Purchase Letter No</label>
+                    <div class="col-md-8">
+                      <input type="text" id="purchaseLetterNo" name="purchaseLetterNo" class="form-control" placeholder="Enter Purchase Letter No" formControlName="purchaseLetterNo">
+                    </div>
+                  </div>
+              </div>
+              <div class="card-footer text-right">
+                <button type="button" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="reset" class="btn btn-sm btn-danger ml-2"><i class="fa fa-ban"></i> Reset</button>
+                <button type="submit" class="btn btn-sm btn-success ml-2"><i class="fa fa-plus-circle"></i>&nbsp;Add Sell</button>
+              </div>
+            </form>
+          </div>
+    </div>
+    <div class="col-2"></div>
+</div>
