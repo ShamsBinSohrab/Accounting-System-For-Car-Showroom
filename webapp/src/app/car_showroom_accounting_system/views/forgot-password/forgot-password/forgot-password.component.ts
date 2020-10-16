@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
 import { ForgotPasswordService } from 'src/app/car_showroom_accounting_system/Services/forgot-password.service';
+import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'app-dashboard',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
@@ -43,8 +44,20 @@ export class ForgotPasswordComponent implements OnInit {
                           .subscribe(
                             data => {
                               this.toastrService.success('Please Check Your Email.', 'Success!');
-                              this.ngOnInit();
-                              this.route.navigate(['/forgot-password/confirm-page']);
+                              Swal.fire(
+                                'Success!',
+                                'We have mailed a password reset link to ' + this.ForgotPasswordForm.get('email').value + '. Please Check Your mail.',
+                                'success'
+                              ).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
+                                  this.ngOnInit();
+                                  this.back();
+                                } else if (result.isDenied) {
+                                  this.ngOnInit();
+                                  this.back();
+                                }
+                              });
                             },
                             error => {
                               this.toastrService.error(error.error, 'Error!');
