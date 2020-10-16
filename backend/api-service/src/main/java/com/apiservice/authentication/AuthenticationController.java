@@ -59,7 +59,7 @@ public class AuthenticationController {
 
   @PatchMapping(value = "/confirmResetPassword")
   public ResponseEntity<Void> confirmResetPassword(
-      @RequestHeader("x-password-reset-token") UUID token,
+      @RequestHeader("x-password-reset-token") String token,
       @RequestBody @Valid ResetPasswordModel model) {
     final PasswordResetConfirmationRequest confirmationToken = validator.validate(token);
     passwordChangeValidator.validatePasswordReset(model);

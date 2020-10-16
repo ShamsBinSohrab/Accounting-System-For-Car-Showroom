@@ -11,22 +11,25 @@ import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PasswordResetMailSender {
 
+  @Value("${webapp.base.url}")
+  private String webappBaseUrl;
+
   private final JavaMailSender javaMailSender;
   private final PasswordResetConfirmationRequestRepository confirmationTokenRepository;
   private final JwtTokenUtil jwtTokenUtil;
-  private final String mailText =
-      "To reset your password please click the link below: <br>"
-          + "http://localhost:8080/confirmResetPassword?token={0} <br><br>"
-          + "Please ignore this email if you have not made this request.";
 
   public void sendForOperator(Operator operator) {
     Preconditions.checkArgument(
@@ -40,12 +43,18 @@ public class PasswordResetMailSender {
       message.setFrom(new InternetAddress("team15.common@gmail.com", "Team 15"));
       message.setSubject("Password reset confirmation");
       message.setContent(
-          MessageFormat.format(mailText,
+          MessageFormat.format(getMailText(),
               jwtTokenUtil.generatePasswordResetConfirmationToken(request)),
           "text/html; charset=utf-8");
       javaMailSender.send(message);
-    } catch (UnsupportedEncodingException | MessagingException e) {
-      e.printStackTrace();
+    } catch (UnsupportedEncodingException | MessagingException ex) {
+      log.error(ex.getMessage(), ex);
     }
+  }
+
+  private String getMailText() {
+    return "To reset your password please click the link below: <br>"
+        + webappBaseUrl + "/confirmResetPassword?token={0} <br><br>"
+        + "Please ignore this email if you have not made this request.";
   }
 }

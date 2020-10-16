@@ -63,6 +63,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/showroom_accounting_system
       - SERVER_PORT=8888
       - MIGRATION_INTERNAL_API_URL=http://migration-service:8082/internal/createTenant
+      - WEBAPP_BASE_URL=http://app.localhost
     networks:
       - public
   webapp:
