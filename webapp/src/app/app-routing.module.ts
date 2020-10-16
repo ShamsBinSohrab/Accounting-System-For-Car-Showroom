@@ -10,6 +10,8 @@ import { P500Component } from './car_showroom_accounting_system/views/error/500.
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 import { Common } from './car_showroom_accounting_system/Common/common';
+import { ForgotPasswordComponent } from './car_showroom_accounting_system/views/forgot-password/forgot-password/forgot-password.component';
+import { ConfirmResetPasswordComponent } from './car_showroom_accounting_system/views/forgot-password/confirm-reset-password/confirm-reset-password.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,20 @@ const routes: Routes = [
     component: SignupComponent,
     data: {
       title: 'Register Page'
+    }
+  },
+  {
+    path: 'resetpassword',
+    component: ForgotPasswordComponent,
+    data: {
+      title: 'Reset Password'
+    }
+  },
+  {
+    path: 'confirmResetPassword',
+    component: ConfirmResetPasswordComponent,
+    data: {
+      title: 'Confirm Reset Password'
     }
   },
   {
