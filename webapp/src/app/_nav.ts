@@ -26,6 +26,11 @@ export const navItems: INavData[] = [
     icon: 'fa fa-money',
   },
   {
+    name: 'Sell',
+    url: '/sell/list',
+    icon: 'fa fa-shopping-cart',
+  },
+  {
     name: 'Operator',
     url: '/operator/list',
     icon: 'fa fa-users',
@@ -307,6 +312,11 @@ export const saCompanyNavItems: INavData[] = [
   {
     name: 'Purchase',
     url: '/purchase/list',
+    icon: 'fa fa-shopping-cart',
+  },
+  {
+    name: 'Sell',
+    url: '/sell/list',
     icon: 'fa fa-shopping-cart',
   },
   {

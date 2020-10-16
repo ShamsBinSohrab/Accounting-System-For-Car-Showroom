@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-header bg-indigo d-flex justify-content-between">
         <div>
-          <i class="fa fa-align-justify"></i> Purchase Record List
+          <i class="fa fa-align-justify"></i> Sell Record List
         </div>
         <div>
           <!-- <button class="btn btn-sm btn-success" (click)="createPurchase()"><i class="fa fa-plus"></i> Create Purchase</button> -->
@@ -14,24 +14,30 @@
         <table class="table table-bordered table-striped table-sm text-center">
           <thead>
             <tr>
-              <th>Purchase Type</th>
-              <th>Purchase Date</th>
+              <th>Sell Type</th>
+              <th>Sell Date</th>
               <th>Chassis No</th>
-              <th>Base Price</th>
+              <th>Advance</th>
+              <th>On Delivery</th>
+              <th>After Delivery</th>
+              <th>Sell Letter No</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let purchase of purchaseList">
-              <td>{{purchase.purchaseType|titlecase}}</td>
-              <td>{{purchase.purchaseDate|date:'mediumDate'}}</td>
-              <td>{{purchase.chassisNo}}</td>
-              <td>BDT. {{purchase.basePrice}}</td>
+            <tr *ngFor="let sell of sellList">
+              <td>{{sell.sellType|titlecase}}</td>
+              <td>{{sell.sellDate|date:'mediumDate'}}</td>
+              <td>{{sell.chassisNo}}</td>
+              <td>BDT. {{sell.paidAsAdvance}}</td>
+              <td>BDT. {{sell.paidOnDelivery}}</td>
+              <td>BDT. {{sell.paidAfterDelivery}}</td>
+              <td>{{sell.purchaseLetterNo}}</td>
               <td>
-                <span *ngIf="purchase.links.length>0">
-                  <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="purchaseDetails(purchase.links[0].href)"><i class="fa fa-info-circle"></i> Details</button>
-                  <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updatePurchase(purchase.links[0].href)"><i class="fa fa-edit"></i> Update</button>
-                  <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deletePurchase(purchase.links[0].href)"><i class="fa fa-trash"></i> Delete</button>
+                <span *ngIf="sell.links.length>0">
+                  <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="sellDetails(sell.links[0].href)"><i class="fa fa-info-circle"></i> Details</button>
+                  <button type="button" class="btn btn-sm btn-warning ml-2 mr-2" (click)="updateSell(sell.links[0].href)"><i class="fa fa-edit"></i> Update</button>
+                  <button type="button" class="btn btn-sm btn-danger ml-2 mr-2" (click)="deleteSell(sell.links[0].href)"><i class="fa fa-trash"></i> Delete</button>
                 </span>
               </td>
             </tr>
