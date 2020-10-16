@@ -74,6 +74,10 @@ const routes: Routes = [
         loadChildren: () => import('./car_showroom_accounting_system/views/sell/sell.module').then(m => m.SellModule)
       },
       {
+        path: 'expense',
+        loadChildren: () => import('./car_showroom_accounting_system/views/expense/expense.module').then(m => m.ExpenseModule)
+      },
+      {
         path: 'operator',
         loadChildren: () => import('./car_showroom_accounting_system/views/operator/operator.module').then(m => m.OperatorModule)
       },

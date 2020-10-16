@@ -80,3 +80,19 @@ databaseChangeLog:
             (role in ('ADMIN', 'SALES_OPERATOR', 'ACCOUNTS_OPERATOR') and company_id is NOT NULL)
           );
         rollback: ALTER TABLE public.operator DROP CONSTRAINT company_id_check;
+  - changeSet:
+      id: 7
+      author: shams
+      comment: Adding email to operator
+      changes:
+        - addColumn:
+            schemaName: public
+            tableName: operator
+            columns:
+              - column:
+                  name: email
+                  type: varchar(100)
+                  defaultValue: team15.common@gmail.com
+                  constraints:
+                    nullable: false
+                    unique: true

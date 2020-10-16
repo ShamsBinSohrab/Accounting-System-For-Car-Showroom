@@ -1,7 +1,7 @@
 package com.apiservice.controller.report;
 
 import com.apiservice.model.car.CarFilter;
-import com.apiservice.service.ReportService;
+import com.apiservice.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
