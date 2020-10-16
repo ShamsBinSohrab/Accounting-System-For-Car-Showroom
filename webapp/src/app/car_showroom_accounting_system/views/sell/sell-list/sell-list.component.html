@@ -17,21 +17,21 @@
               <th>Sell Type</th>
               <th>Sell Date</th>
               <th>Chassis No</th>
-              <th>paidAsAdvance</th>
-              <th>paidOnDelivery</th>
-              <th>paidAfterDelivery</th>
-              <th>purchaseLetterNo</th>
+              <th>Advance</th>
+              <th>On Delivery</th>
+              <th>After Delivery</th>
+              <th>Sell Letter No</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let sell of sellList">
               <td>{{sell.sellType|titlecase}}</td>
-              <td>{{sell.sellDate|date:'short'}}</td>
+              <td>{{sell.sellDate|date:'mediumDate'}}</td>
               <td>{{sell.chassisNo}}</td>
-              <td>{{sell.paidAsAdvance}}</td>
-              <td>{{sell.paidOnDelivery}}</td>
-              <td>{{sell.paidAfterDelivery}}</td>
+              <td>BDT. {{sell.paidAsAdvance}}</td>
+              <td>BDT. {{sell.paidOnDelivery}}</td>
+              <td>BDT. {{sell.paidAfterDelivery}}</td>
               <td>{{sell.purchaseLetterNo}}</td>
               <td>
                 <span *ngIf="sell.links.length>0">

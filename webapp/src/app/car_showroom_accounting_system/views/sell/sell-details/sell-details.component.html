@@ -20,15 +20,15 @@
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="paidAsAdvance"> <strong> Paid As Advance</strong></label>
-          <label class="col-md-8" id="paidAsAdvance">{{data.paidAsAdvance}}</label>
+          <label class="col-md-8" id="paidAsAdvance">BDT. {{data.paidAsAdvance}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="paidOnDelivery"> <strong> Paid On Delivery</strong></label>
-          <label class="col-md-8" id="paidOnDelivery">{{data.paidOnDelivery}}</label>
+          <label class="col-md-8" id="paidOnDelivery">BDT. {{data.paidOnDelivery}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="paidAfterDelivery"> <strong> Paid After Delivery</strong></label>
-          <label class="col-md-8" id="paidAfterDelivery">{{data.paidAfterDelivery}}</label>
+          <label class="col-md-8" id="paidAfterDelivery">BDT. {{data.paidAfterDelivery}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="purchaseLetterNo"> <strong> Purchase Letter No</strong></label>
@@ -36,8 +36,8 @@
         </div>
         <hr>
         <div class="text-right">
-          <button type="reset" class="btn btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
-          <button type="button" class="btn btn-warning ml-2" (click)="updateSell(data._links.self.href)"><i class="fa fa-edit"></i> Update</button>
+          <button type="reset" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+          <button type="button" class="btn btn-sm btn-warning ml-2" (click)="updateSell(data._links.self.href)"><i class="fa fa-edit"></i> Update</button>
         </div>
       </div>
     </div>

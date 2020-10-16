@@ -88,9 +88,9 @@ onSubmit()
   this.sellService.updateSell(this.SellForm.value)
                         .subscribe(
                           data => {
-                            this.toastrService.success('Successfully Added Sell Record', 'Success!');
+                            this.toastrService.success('Successfully Updated Sell Record', 'Success!');
                             this.ngOnInit();
-                            this.route.navigate(['/sell/list']);
+                            this.back();
                           },
                           error => {
                             this.toastrService.error(error.error, 'Error!');

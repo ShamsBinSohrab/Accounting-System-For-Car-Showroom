@@ -24,9 +24,9 @@
           <tbody>
             <tr *ngFor="let purchase of purchaseList">
               <td>{{purchase.purchaseType|titlecase}}</td>
-              <td>{{purchase.purchaseDate|date:'short'}}</td>
+              <td>{{purchase.purchaseDate|date:'mediumDate'}}</td>
               <td>{{purchase.chassisNo}}</td>
-              <td>{{purchase.basePrice}}</td>
+              <td>BDT. {{purchase.basePrice}}</td>
               <td>
                 <span *ngIf="purchase.links.length>0">
                   <button type="button" class="btn btn-sm btn-info ml-2 mr-2" (click)="purchaseDetails(purchase.links[0].href)"><i class="fa fa-info-circle"></i> Details</button>
