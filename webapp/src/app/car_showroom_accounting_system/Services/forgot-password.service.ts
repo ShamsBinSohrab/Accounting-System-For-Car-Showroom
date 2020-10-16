@@ -17,9 +17,10 @@ export class ForgotPasswordService {
   }
   public confirmResetPassword(data: any, token: any)
   {
-    const decodedPasswordToken = jwt_decode(token);
+    // const decodedPasswordToken = jwt_decode(token);
     // console.log(decodedPasswordToken.sub);
-    const reqHeader = new HttpHeaders({'No-Auth': 'True', 'x-password-reset-token': decodedPasswordToken.sub});
+    // const reqHeader = new HttpHeaders({'No-Auth': 'True', 'x-password-reset-token': decodedPasswordToken.sub});
+    const reqHeader = new HttpHeaders({'No-Auth': 'True', 'x-password-reset-token': token});
     // reqHeader.set('token', token);
     return this.http.patch<any>(Common.url + '/confirmResetPassword', data, {headers: reqHeader});
   }
