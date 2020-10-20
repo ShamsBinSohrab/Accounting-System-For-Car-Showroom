@@ -1,24 +1,33 @@
 package com.apiservice.authentication.password;
 
+import com.apiservice.authentication.JwtTokenUtil;
 import com.apiservice.entity.master.password.PasswordResetConfirmationRequest;
 import com.apiservice.repository.password.PasswordResetConfirmationRequestRepository;
 import com.apiservice.utils.exceptions.PasswordResetConfirmationTokenException;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import javax.management.relation.RoleUnresolved;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PasswordResetTokenValidator {
 
   private final PasswordResetConfirmationRequestRepository confirmationTokenRepository;
+  private final JwtTokenUtil jwtTokenUtil;
 
-  public PasswordResetConfirmationRequest validate(UUID token) {
-    return confirmationTokenRepository.findByTokenAndConfirmedIsFalse(token)
+  public PasswordResetConfirmationRequest validate(String token) {
+    final UUID passwordResetToken = parseToken(token);
+    return confirmationTokenRepository.findByTokenAndConfirmedIsFalse(passwordResetToken)
         .map(this::validateTokenExpiry)
         .orElseThrow(PasswordResetConfirmationTokenException::invalidToken);
+  }
+
+  private UUID parseToken(String token) {
+    return UUID.fromString(jwtTokenUtil.getSubjectFromToken(token));
   }
 
   private PasswordResetConfirmationRequest validateTokenExpiry(

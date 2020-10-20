@@ -10,6 +10,8 @@ import { P500Component } from './car_showroom_accounting_system/views/error/500.
 import { DashboardComponent } from './car_showroom_accounting_system/views/dashboard/dashboard.component';
 import { ContactComponent } from './car_showroom_accounting_system/views/contact/contact.component';
 import { Common } from './car_showroom_accounting_system/Common/common';
+import { ForgotPasswordComponent } from './car_showroom_accounting_system/views/forgot-password/forgot-password/forgot-password.component';
+import { ConfirmResetPasswordComponent } from './car_showroom_accounting_system/views/forgot-password/confirm-reset-password/confirm-reset-password.component';
 
 const routes: Routes = [
   {
@@ -46,6 +48,20 @@ const routes: Routes = [
     }
   },
   {
+    path: 'resetpassword',
+    component: ForgotPasswordComponent,
+    data: {
+      title: 'Reset Password'
+    }
+  },
+  {
+    path: 'confirmResetPassword',
+    component: ConfirmResetPasswordComponent,
+    data: {
+      title: 'Confirm Reset Password'
+    }
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard],
@@ -68,6 +84,10 @@ const routes: Routes = [
       {
         path: 'purchase',
         loadChildren: () => import('./car_showroom_accounting_system/views/purchase/purchase.module').then(m => m.PurchaseModule)
+      },
+      {
+        path: 'sell',
+        loadChildren: () => import('./car_showroom_accounting_system/views/sell/sell.module').then(m => m.SellModule)
       },
       {
         path: 'expense',

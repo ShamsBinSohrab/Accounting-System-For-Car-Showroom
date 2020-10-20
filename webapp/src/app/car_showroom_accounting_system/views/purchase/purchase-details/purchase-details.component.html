@@ -20,44 +20,44 @@
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="basePrice"> <strong> basePrice</strong></label>
-          <label class="col-md-8" id="basePrice">{{data.basePrice}}</label>
+          <label class="col-md-8" id="basePrice">BDT. {{data.basePrice}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="tax"> <strong> tax</strong></label>
-          <label class="col-md-8" id="tax">{{data.tax}}</label>
+          <label class="col-md-8" id="tax">BDT. {{data.tax}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="lcCharge"> <strong> LC Charge</strong></label>
-          <label class="col-md-8" id="lcCharge">{{data.lcCharge}}</label>
+          <label class="col-md-8" id="lcCharge">BDT. {{data.lcCharge}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="lcCharge"> <strong> LC Charge</strong></label>
-          <label class="col-md-8" id="lcCharge">{{data.lcCharge}}</label>
+          <label class="col-md-8" id="lcCharge">BDT. {{data.lcCharge}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="lcCharge"> <strong> LC Charge</strong></label>
-          <label class="col-md-8" id="lcCharge">{{data.lcCharge}}</label>
+          <label class="col-md-8" id="lcCharge">BDT. {{data.lcCharge}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="shippingCharge"> <strong> Shipping Charge</strong></label>
-          <label class="col-md-8" id="shippingCharge">{{data.shippingCharge}}</label>
+          <label class="col-md-8" id="shippingCharge">BDT. {{data.shippingCharge}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="cnfCharge"> <strong> CNF Charge</strong></label>
-          <label class="col-md-8" id="cnfCharge">{{data.cnfCharge}}</label>
+          <label class="col-md-8" id="cnfCharge">BDT. {{data.cnfCharge}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="transportationCharge"> <strong>  Transportation Charge</strong></label>
-          <label class="col-md-8" id="transportationCharge">{{data.transportationCharge}}</label>
+          <label class="col-md-8" id="transportationCharge">BDT. {{data.transportationCharge}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="miscellaneousCharge"> <strong>Miscellaneous Charge</strong></label>
-          <label class="col-md-8" id="miscellaneousCharge">{{data.miscellaneousCharge}}</label>
+          <label class="col-md-8" id="miscellaneousCharge">BDT. {{data.miscellaneousCharge}}</label>
         </div>
         <hr>
         <div class="text-right">
-          <button type="reset" class="btn btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
-          <button type="button" class="btn btn-warning ml-2" (click)="updatePurchase(data._links.self.href)"><i class="fa fa-edit"></i> Update</button>
+          <button type="reset" class="btn btn-sm btn-secondary" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+          <button type="button" class="btn btn-sm btn-warning ml-2" (click)="updatePurchase(data._links.self.href)"><i class="fa fa-edit"></i> Update</button>
         </div>
       </div>
     </div>

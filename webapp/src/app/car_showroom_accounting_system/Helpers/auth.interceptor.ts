@@ -10,6 +10,7 @@ export class AuthInterceptor implements HttpInterceptor
     {}
     intercept(req: HttpRequest<any>, next: HttpHandler): import('rxjs').Observable<HttpEvent<any>> {
         if (req.headers.get('No-Auth') === 'True') {
+            console.log(req);
             return next.handle(req.clone());
         }
         if (localStorage.getItem('auth_token') != null) {

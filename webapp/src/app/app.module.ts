@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import {
@@ -42,6 +42,8 @@ import { ContactComponent } from './car_showroom_accounting_system/views/contact
 import { TagInputModule } from 'ngx-chips';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { ForgotPasswordComponent } from './car_showroom_accounting_system/views/forgot-password/forgot-password/forgot-password.component';
+import { ConfirmResetPasswordComponent } from './car_showroom_accounting_system/views/forgot-password/confirm-reset-password/confirm-reset-password.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -62,6 +64,8 @@ const APP_CONTAINERS = [
     SignupComponent,
     DashboardComponent,
     ContactComponent,
+    ForgotPasswordComponent,
+    ConfirmResetPasswordComponent
   ],
   imports: [
     AppAsideModule,
@@ -102,7 +106,7 @@ const APP_CONTAINERS = [
     },
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: PathLocationStrategy
     }
   ],
   bootstrap: [AppComponent]

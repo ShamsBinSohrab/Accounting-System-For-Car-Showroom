@@ -83,11 +83,6 @@ public class CompanyService {
   }
 
   @Transactional(readOnly = true)
-  public List<Company> getAllCompanies() {
-    return companyRepository.findAll();
-  }
-
-  @Transactional(readOnly = true)
   public Company getCompanyById(long id) {
     return companyRepository.findById(id)
         .orElseThrow(() -> EntityNotFoundException.of(Company.class, id));
