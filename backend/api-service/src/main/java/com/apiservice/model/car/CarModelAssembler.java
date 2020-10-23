@@ -25,6 +25,7 @@ public class CarModelAssembler implements RepresentationModelAssembler<Car, CarM
   @Override
   public CarModel toModel(Car car) {
     final CarModel model = mapper.map(car, CarModel.class);
+    addLinkToCreate(model);
     addLinkToDetails(model);
     addLinkToUpdate(model);
     addLinkToDelete(model);
@@ -42,6 +43,10 @@ public class CarModelAssembler implements RepresentationModelAssembler<Car, CarM
 
   private void addLinkToDetails(CarModel model) {
     model.add(linkTo(methodOn(CarController.class).car(model.getId())).withRel("details"));
+  }
+
+  private void addLinkToCreate(CarModel model) {
+    model.add(linkTo(methodOn(CarController.class).create(model)).withRel("create"));
   }
 
   private void addLinkToUpdate(CarModel model) {

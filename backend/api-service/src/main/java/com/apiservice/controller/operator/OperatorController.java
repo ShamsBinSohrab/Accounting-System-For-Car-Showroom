@@ -3,14 +3,13 @@ package com.apiservice.controller.operator;
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.model.operator.ChangePasswordModel;
 import com.apiservice.model.operator.OperatorModel;
+import com.apiservice.model.operator.OperatorModelAssembler;
 import com.apiservice.model.operator.PasswordChangeValidator;
 import com.apiservice.model.operator.ResetPasswordModel;
 import com.apiservice.service.operator.OperatorService;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,18 +33,17 @@ public class OperatorController {
 
   private final OperatorService operatorService;
   private final PasswordChangeValidator passwordChangeValidator;
+  private final OperatorModelAssembler modelAssembler;
 
   @GetMapping("/operators")
-  public List<OperatorModel> list() {
-    return operatorService.getAllOperators().stream()
-        .map(OperatorModel::toModel)
-        .collect(Collectors.toUnmodifiableList());
+  public CollectionModel<OperatorModel> list() {
+    return modelAssembler.toCollectionModel(operatorService.getAllOperators());
   }
 
   @GetMapping("/operators/{id}")
   public OperatorModel details(@PathVariable long id) {
     Operator operator = operatorService.getOperatorById(id);
-    return OperatorModel.toModel(operator);
+    return modelAssembler.toModel(operator);
   }
 
   @PostMapping("/operators")
@@ -53,7 +51,7 @@ public class OperatorController {
   public OperatorModel create(@RequestBody @Valid OperatorModel operatorModel) {
     final Operator operator = operatorModel.toOperator();
     operatorService.createNewOperator(operator);
-    return OperatorModel.toModel(operator);
+    return modelAssembler.toModel(operator);
   }
 
   @PutMapping("/operators/{id}")
@@ -61,7 +59,7 @@ public class OperatorController {
     final Operator operator = operatorService.getOperatorById(id);
     model.updateEntity(operator);
     operatorService.save(operator);
-    return OperatorModel.toModel(operator);
+    return modelAssembler.toModel(operator);
   }
 
   @PatchMapping("/operators/{id}/changePassword")
@@ -87,7 +85,8 @@ public class OperatorController {
 
   @DeleteMapping("/operators/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id) {
+  public ResponseEntity<Void> delete(@PathVariable long id) {
     operatorService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }

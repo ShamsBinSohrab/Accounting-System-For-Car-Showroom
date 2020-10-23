@@ -25,10 +25,6 @@ public class OperatorModel extends RepresentationModel<OperatorModel> {
   @Email(message = "Invalid email address")
   private String email;
 
-  public static OperatorModel toModel(Operator operator) {
-    return mapper.map(operator, OperatorModel.class).addLinks();
-  }
-
   public Operator toOperator() {
     return mapper.map(this, Operator.class);
   }
@@ -39,34 +35,5 @@ public class OperatorModel extends RepresentationModel<OperatorModel> {
     mapper.map(this, operator);
     operator.setId(id);
     operator.setPassword(password);
-  }
-
-  private OperatorModel addLinks() {
-    add(linkTo(methodOn(OperatorController.class).details(id)).withSelfRel());
-    if (isLoggedInOperator()) {
-      add(
-          linkTo(methodOn(OperatorController.class).changePassword(null, id))
-              .withRel("changePassword"));
-    } else if (hasResetPasswordAuthority()) {
-      add(
-          linkTo(methodOn(OperatorController.class).resetPassword(null, id))
-              .withRel("resetPassword"));
-    }
-    return this;
-  }
-
-  private boolean isLoggedInOperator() {
-    return SecurityContextHolder.getContext().getAuthentication().getName().equals(username);
-  }
-
-  private boolean hasResetPasswordAuthority() {
-    return SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getAuthorities()
-            .contains(OperatorRole.SUPER_ADMIN)
-        || SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getAuthorities()
-            .contains(OperatorRole.ADMIN);
   }
 }

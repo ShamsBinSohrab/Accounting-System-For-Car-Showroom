@@ -20,6 +20,7 @@ public class CompanyModelAssembler implements RepresentationModelAssembler<Compa
   public CompanyModel toModel(Company company) {
     final CompanyModel model = mapper.map(company, CompanyModel.class);
     addLinkToDetails(model);
+    addLinkToCreate(model);
     addLinkToUpdate(model);
     if (model.isActive()) {
       addLinkToCompanyToken(model);
@@ -34,6 +35,11 @@ public class CompanyModelAssembler implements RepresentationModelAssembler<Compa
   private void addLinkToCompanyToken(CompanyModel model) {
     model.add(
         linkTo(methodOn(CompanyController.class).getCompanyToken(model.getId())).withRel("token"));
+  }
+
+  private void addLinkToCreate(CompanyModel model) {
+    model.add(
+        linkTo(methodOn(CompanyController.class).create(model)).withRel("create"));
   }
 
   private void addLinkToUpdate(CompanyModel model) {

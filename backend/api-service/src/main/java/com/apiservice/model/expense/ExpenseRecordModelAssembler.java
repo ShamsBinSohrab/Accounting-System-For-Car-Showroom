@@ -19,8 +19,9 @@ public class ExpenseRecordModelAssembler implements
 
   @Override
   public ExpenseRecordModel toModel(ExpenseRecord expenseRecord) {
-    ExpenseRecordModel model = mapper.map(expenseRecord, ExpenseRecordModel.class);
+    final ExpenseRecordModel model = mapper.map(expenseRecord, ExpenseRecordModel.class);
     addLinkToDetails(model);
+    addLinkToCreate(model);
     addLinkToUpdate(model);
     addLinkToDelete(model);
     return model;
@@ -30,6 +31,12 @@ public class ExpenseRecordModelAssembler implements
     model.add(linkTo(methodOn(ExpenseRecordController.class).expenseRecord(model.getId()))
         .withRel("details"));
   }
+
+  private void addLinkToCreate(ExpenseRecordModel model) {
+    model.add(linkTo(methodOn(ExpenseRecordController.class).create(model))
+        .withRel("create"));
+  }
+
 
   private void addLinkToUpdate(ExpenseRecordModel model) {
     model.add(linkTo(methodOn(ExpenseRecordController.class).update(model.getId(), model))
