@@ -2,6 +2,7 @@ package com.apiservice.authentication;
 
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.service.operator.OperatorService;
+import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

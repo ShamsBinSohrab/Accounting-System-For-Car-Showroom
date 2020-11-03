@@ -96,3 +96,26 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+  - changeSet:
+      id: 8
+      author: shams
+      comment: Adding scopes to operator
+      changes:
+        - addColumn:
+            schemaName: public
+            tableName: operator
+            columns:
+              - column:
+                  name: scopes
+                  type: text[]
+                  defaultValueComputed: "'{}'::text[]"
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 9
+      author: shams
+      comment: Add all scopes to super admin
+      changes:
+        - sql:
+            sql: UPDATE operator SET scopes = '{company:read, company:write, car:read, car:write, purchase:read, purchase:write, sell:read, sell:write, expense:read, expense:write, operator:read, operator:write}' WHERE role = 'SUPER_ADMIN';
+            rollback: UPDATE operator SET scopes = {}  WHERE role = 'SUPER_ADMIN';
