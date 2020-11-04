@@ -2,15 +2,17 @@ package com.apiservice.controller.sell;
 
 import com.apiservice.entity.tenant.purchase.CarPurchaseRecord;
 import com.apiservice.entity.tenant.sell.CarSellRecord;
+import com.apiservice.model.sell.CarSellRecordFilter;
 import com.apiservice.model.sell.CarSellRecordModel;
-import com.apiservice.service.car.CarService;
+import com.apiservice.model.sell.CarSellRecordModelAssembler;
 import com.apiservice.service.purchase.CarPurchaseRecordService;
 import com.apiservice.service.sell.CarSellRecordService;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,18 +32,19 @@ public class CarSellRecordController {
 
   private final CarSellRecordService sellRecordService;
   private final CarPurchaseRecordService purchaseRecordService;
+  private final CarSellRecordModelAssembler modelAssembler;
 
   @GetMapping("/sellRecords")
-  public List<CarSellRecordModel> sellRecords() {
-    return sellRecordService.getAll().stream()
-        .map(CarSellRecordModel::toModel)
-        .collect(Collectors.toUnmodifiableList());
+  public CollectionModel<CarSellRecordModel> sellRecords(
+          CarSellRecordFilter filter, Pageable pageable) {
+    return modelAssembler
+            .toCollectionModel(sellRecordService.getAllWithPaginationAndFilter(filter, pageable));
   }
 
   @GetMapping("/sellRecords/{id}")
   public CarSellRecordModel sellRecord(@PathVariable("id") long id) {
     final CarSellRecord sellRecord = sellRecordService.getById(id);
-    return CarSellRecordModel.toModel(sellRecord);
+    return modelAssembler.toModel(sellRecord);
   }
 
   @PostMapping("cars/{carId}/sellRecords")
@@ -53,7 +56,7 @@ public class CarSellRecordController {
     final CarPurchaseRecord purchaseRecord = purchaseRecordService.getByCarId(carId);
     sellRecord.setPurchaseRecord(purchaseRecord);
     sellRecordService.save(sellRecord);
-    return CarSellRecordModel.toModel(sellRecord);
+    return modelAssembler.toModel(sellRecord);
   }
 
   @PutMapping("/sellRecords/{id}")
@@ -62,12 +65,12 @@ public class CarSellRecordController {
     final CarSellRecord sellRecordToUpdate = sellRecordService.getById(id);
     final CarSellRecord sellRecord = model.updateEntity(sellRecordToUpdate);
     sellRecordService.save(sellRecord);
-    return CarSellRecordModel.toModel(sellRecord);
+    return modelAssembler.toModel(sellRecord);
   }
 
   @DeleteMapping("/sellRecords/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable("id") long id) {
+  public ResponseEntity<Void> delete(@PathVariable("id") long id) {
     sellRecordService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }
