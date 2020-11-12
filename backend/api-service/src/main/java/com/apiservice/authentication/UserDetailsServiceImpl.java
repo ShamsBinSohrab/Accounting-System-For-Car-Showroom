@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     final Operator operator = operatorService.getByUsername(username);
     final List<GrantedAuthority> authorities =
         Stream.of(operator.getScopes())
-            .map(Scopes::byAuthority)
+            .map(Scopes::valueOf)
             .collect(Collectors.toUnmodifiableList());
     return new User(operator.getUsername(), operator.getPassword(), authorities);
   }

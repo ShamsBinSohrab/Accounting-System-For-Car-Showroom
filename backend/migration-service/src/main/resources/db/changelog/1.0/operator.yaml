@@ -117,5 +117,5 @@ databaseChangeLog:
       comment: Add all scopes to super admin
       changes:
         - sql:
-            sql: UPDATE operator SET scopes = '{company:read, company:write, car:read, car:write, purchase:read, purchase:write, sell:read, sell:write, expense:read, expense:write, operator:read, operator:write}' WHERE role = 'SUPER_ADMIN';
+            sql: UPDATE operator SET scopes = '{COMPANY_READ,COMPANY_WRITE,CAR_READ,CAR_WRITE,PURCHASE_RECORD_READ,PURCHASE_RECORD_WRITE,SELL_RECORD_READ,SELL_RECORD_WRITE,EXPENSE_RECORD_READ,EXPENSE_RECORD_WRITE,OPERATOR_READ,OPERATOR_WRITE}' WHERE role = 'SUPER_ADMIN';
             rollback: UPDATE operator SET scopes = {}  WHERE role = 'SUPER_ADMIN';
