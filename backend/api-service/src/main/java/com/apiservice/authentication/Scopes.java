@@ -1,6 +1,9 @@
 package com.apiservice.authentication;
 
-public enum Scopes {
+import java.util.Arrays;
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Scopes implements GrantedAuthority {
   COMPANY_READ("company:read"),
   COMPANY_WRITE("company:write"),
   CAR_READ("car:read"),
@@ -14,13 +17,20 @@ public enum Scopes {
   OPERATOR_READ("operator:read"),
   OPERATOR_WRITE("operator:write");
 
-  private final String value;
+  private final String authority;
 
-  Scopes(String value) {
-    this.value = value;
+  Scopes(String authority) {
+    this.authority = authority;
   }
 
-  public String value() {
-    return value;
+  public static Scopes byAuthority(String authority) {
+    return Arrays.stream(Scopes.values())
+        .filter(s -> s.authority.equals(authority))
+        .findFirst().orElseThrow();
+  }
+
+  @Override
+  public String getAuthority() {
+    return authority;
   }
 }

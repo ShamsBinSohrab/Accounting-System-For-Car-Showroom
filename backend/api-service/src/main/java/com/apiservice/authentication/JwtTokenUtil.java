@@ -48,11 +48,7 @@ public class JwtTokenUtil {
 
   public String generateAuthToken(UserDetails userDetails) {
     final Map<String, Object> claims = new HashMap<>();
-    final String authorities =
-        userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-    claims.putIfAbsent("AUTHORITIES", authorities);
+    claims.putIfAbsent("AUTHORITIES", userDetails.getAuthorities());
     return doGenerateToken(claims, userDetails.getUsername());
   }
 

@@ -2,9 +2,11 @@ package com.apiservice.authentication;
 
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.service.operator.OperatorService;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     final Operator operator = operatorService.getByUsername(username);
-    return new User(operator.getUsername(), operator.getPassword(), List.of(operator.getRole()));
+    final List<GrantedAuthority> authorities =
+        Stream.of(operator.getScopes())
+            .map(Scopes::byAuthority)
+            .collect(Collectors.toUnmodifiableList());
+    return new User(operator.getUsername(), operator.getPassword(), authorities);
   }
 }

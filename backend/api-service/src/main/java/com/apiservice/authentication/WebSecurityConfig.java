@@ -48,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.OPTIONS)
         .permitAll()
+        .antMatchers(HttpMethod.GET, "/v1/cars/**").hasAuthority(Scopes.CAR_READ.getAuthority())
+        .antMatchers(HttpMethod.POST, "/v1/cars/**").hasAuthority(Scopes.CAR_WRITE.getAuthority())
         .anyRequest()
         .authenticated()
         .and()
