@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleAuthenticationException(
       AuthenticationException ex, WebRequest request) {
     return handleExceptionInternal(
-        ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+        ex, "Unauthorized", new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
   }
 
   @ExceptionHandler(CompanyCreationException.class)

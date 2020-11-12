@@ -1,5 +1,6 @@
 package com.apiservice.multitenancy;
 
+import com.apiservice.authentication.AuthenticationException;
 import com.apiservice.authentication.JwtTokenUtil;
 import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.operator.Operator;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -39,35 +41,38 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     }
 
     final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    final Operator operator = operatorService.getByUsername(username);
     final String token = request.getHeader("x-company-accessor-token");
-    try {
-      if (StringUtils.isNotEmpty(token)) {
-        final String tenant = jwtTokenUtil.getSubjectFromToken(token);
-        final Company company =
-            operator.isSuperAdmin() ? companyService.getByUuid(UUID.fromString(tenant))
-                : operator.getCompany();
-        if (company.isActive() && jwtTokenUtil.validateTenantToken(token, company)) {
-          TenantContext.setCurrentTenant(tenant);
-        } else {
-          response
-              .getWriter()
-              .write("invalid x-company-accessor-token");
-          response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
-      } else {
-        if (operator.isSuperAdmin()) {
-          TenantContext.setCurrentTenant("public");
-        } else {
-          response
-              .getWriter()
-              .write("x-company-accessor-token not present in the Request Header");
-          response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
-      }
-    } catch (IllegalArgumentException | IOException ex) {
-      log.error(ex.getMessage());
-    }
+    operatorService.findByUsername(username)
+        .ifPresent(
+            operator -> {
+              try {
+                if (StringUtils.isNotEmpty(token)) {
+                  final String tenant = jwtTokenUtil.getSubjectFromToken(token);
+                  final Company company =
+                      operator.isSuperAdmin() ? companyService.getByUuid(UUID.fromString(tenant))
+                          : operator.getCompany();
+                  if (company.isActive() && jwtTokenUtil.validateTenantToken(token, company)) {
+                    TenantContext.setCurrentTenant(tenant);
+                  } else {
+                    response
+                        .getWriter()
+                        .write("invalid x-company-accessor-token");
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                  }
+                } else {
+                  if (operator.isSuperAdmin()) {
+                    TenantContext.setCurrentTenant("public");
+                  } else {
+                    response
+                        .getWriter()
+                        .write("x-company-accessor-token not present in the Request Header");
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                  }
+                }
+              } catch (IllegalArgumentException | IOException ex) {
+                log.error(ex.getMessage());
+              }
+            });
     return TenantContext.isTenantSet();
   }
 

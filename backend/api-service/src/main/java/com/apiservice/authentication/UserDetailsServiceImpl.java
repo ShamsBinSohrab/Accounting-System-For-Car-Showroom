@@ -22,10 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     final Operator operator = operatorService.getByUsername(username);
-    final List<GrantedAuthority> authorities =
-        Stream.of(operator.getScopes())
-            .map(Scopes::valueOf)
-            .collect(Collectors.toUnmodifiableList());
-    return new User(operator.getUsername(), operator.getPassword(), authorities);
+    return new User(operator.getUsername(), operator.getPassword(), getAuthorities(operator));
+  }
+
+  private List<GrantedAuthority> getAuthorities(Operator operator) {
+    return Stream.of(operator.getScopes())
+        .map(Scopes::valueOf)
+        .collect(Collectors.toUnmodifiableList());
   }
 }

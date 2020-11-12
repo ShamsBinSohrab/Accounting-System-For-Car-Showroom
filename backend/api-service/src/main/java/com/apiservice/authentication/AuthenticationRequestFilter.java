@@ -59,7 +59,6 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
                   }
                 }
               } catch (IllegalArgumentException | ExpiredJwtException ex) {
-                log.error(ex.getMessage());
                 throw new AuthenticationException(ex.getCause());
               }
             },
