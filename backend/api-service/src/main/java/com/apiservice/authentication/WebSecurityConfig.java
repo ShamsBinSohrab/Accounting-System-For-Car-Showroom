@@ -41,23 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
-        .csrf()
-        .disable()
+        .csrf().disable()
         .authorizeRequests()
-        .antMatchers("/authenticate", "/forgotPassword", "/confirmResetPassword")
-        .permitAll()
-        .antMatchers(HttpMethod.OPTIONS)
-        .permitAll()
+        .antMatchers("/authenticate", "/forgotPassword", "/confirmResetPassword").permitAll()
         .antMatchers(HttpMethod.GET, "/v1/cars/**").hasAuthority(Scopes.CAR_READ.getAuthority())
-        .antMatchers(HttpMethod.POST, "/v1/cars/**").hasAuthority(Scopes.CAR_WRITE.getAuthority())
-        .anyRequest()
-        .authenticated()
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPoint)
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .antMatchers("/v1/cars/**").hasAuthority(Scopes.CAR_WRITE.getAuthority())
+        .antMatchers(HttpMethod.OPTIONS).permitAll()
+        .anyRequest().authenticated()
+        .and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     httpSecurity
         .addFilterBefore(authenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
   }
