@@ -1,6 +1,5 @@
 package com.apiservice.authentication;
 
-import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.password.PasswordResetConfirmationRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,10 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,19 +23,19 @@ public class JwtTokenUtil {
   @Value("${jwt.secret}")
   private String secret;
 
-  public String getSubjectFromToken(String token) {
-    return getClaimFromToken(token, Claims::getSubject);
-  }
-
   public UUID getIdentityFromToken(String token) {
     return getClaimFromToken(token, claims -> UUID.fromString(claims.get("identity").toString()));
   }
 
-  public Date getExpirationDateFromToken(String token) {
+  public UUID getSecretFromToken(String token) {
+    return getClaimFromToken(token, claims -> UUID.fromString(claims.get("secret").toString()));
+  }
+
+  private Date getExpirationDateFromToken(String token) {
     return getClaimFromToken(token, Claims::getExpiration);
   }
 
-  public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+  private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = getAllClaimsFromToken(token);
     return claimsResolver.apply(claims);
   }
@@ -68,7 +65,7 @@ public class JwtTokenUtil {
   public String generatePasswordResetConfirmationToken(
       PasswordResetConfirmationRequest confirmationToken) {
     final Map<String, Object> claims = new HashMap<>();
-    claims.putIfAbsent("token", confirmationToken.getToken());
+    claims.putIfAbsent("secret", confirmationToken.getToken());
     return doGenerateToken(claims);
   }
 
@@ -83,11 +80,6 @@ public class JwtTokenUtil {
 
   public boolean validateTokenIdentity(String token, UUID uuid) {
     return getIdentityFromToken(token).equals(uuid) && !isTokenExpired(token);
-  }
-
-  public Boolean validateTenantToken(String token, Company company) {
-    final String uuid = getSubjectFromToken(token);
-    return (uuid.equals(company.getUuid().toString()) && !isTokenExpired(token));
   }
 }
 

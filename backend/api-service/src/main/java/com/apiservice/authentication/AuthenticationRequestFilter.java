@@ -75,7 +75,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
                           () -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED));
                 }
               } catch (IllegalArgumentException | ExpiredJwtException ex) {
-                throw new AuthenticationException(ex.getCause());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
               }
             },
             () -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED));
