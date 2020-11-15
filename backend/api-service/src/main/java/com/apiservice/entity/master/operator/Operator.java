@@ -30,7 +30,7 @@ public class Operator {
   private long id;
 
   @Column(name = "uuid", nullable = false, unique = true)
-  private UUID uuid;
+  private UUID uuid = UUID.randomUUID();
 
   @Column(name = "username", nullable = false, unique = true)
   private String username;
