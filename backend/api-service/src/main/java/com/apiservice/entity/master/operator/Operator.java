@@ -2,6 +2,7 @@ package com.apiservice.entity.master.operator;
 
 import com.apiservice.entity.master.company.Company;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,6 +28,9 @@ public class Operator {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
+  @Column(name = "uuid", nullable = false, unique = true)
+  private UUID uuid;
 
   @Column(name = "username", nullable = false, unique = true)
   private String username;
