@@ -27,6 +27,10 @@ public class JwtTokenUtil {
     return getClaimFromToken(token, claims -> UUID.fromString(claims.get("identity").toString()));
   }
 
+  public List<Scopes> getScopesFromToken(String token) {
+    return (List<Scopes>) getClaimFromToken(token, claims -> claims.get("scopes"));
+  }
+
   public UUID getSecretFromToken(String token) {
     return getClaimFromToken(token, claims -> UUID.fromString(claims.get("secret").toString()));
   }
