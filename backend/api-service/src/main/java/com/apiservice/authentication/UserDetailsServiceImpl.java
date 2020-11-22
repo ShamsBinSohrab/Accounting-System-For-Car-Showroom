@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+class UserDetailsServiceImpl implements UserDetailsService {
 
   private final OperatorService operatorService;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     final Operator operator = operatorService.getByUsername(username);
-    return new User(operator.getUsername(), operator.getPassword(), List.of(operator.getRole()));
+    return new User(operator.getUsername(), operator.getPassword(), List.of());
   }
 }

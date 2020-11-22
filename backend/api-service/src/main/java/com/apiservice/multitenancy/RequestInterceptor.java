@@ -1,8 +1,8 @@
 package com.apiservice.multitenancy;
 
+import com.apiservice.authentication.AuthConstants;
 import com.apiservice.authentication.JwtTokenUtil;
 import com.apiservice.entity.master.company.Company;
-import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.service.company.CompanyService;
 import com.apiservice.service.operator.OperatorService;
 import java.io.IOException;
@@ -26,48 +26,51 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
   private final JwtTokenUtil jwtTokenUtil;
   private final OperatorService operatorService;
   private final CompanyService companyService;
+  private final AuthConstants constants;
 
   @Override
   public boolean preHandle(
       HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-    if (request.getServletPath().equalsIgnoreCase("/authenticate")
-        || request.getServletPath().equalsIgnoreCase("/forgotPassword")
-        || request.getServletPath().equalsIgnoreCase("/confirmResetPassword")
-        || request.getMethod().equalsIgnoreCase("OPTIONS")) {
+    if (constants.ALLOWED_PATHS.contains(request.getServletPath())
+        || constants.ALLOWED_METHODS.contains(request.getMethod())) {
       return true;
     }
 
     final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    final Operator operator = operatorService.getByUsername(username);
-    final String token = request.getHeader("x-company-accessor-token");
-    try {
-      if (StringUtils.isNotEmpty(token)) {
-        final String tenant = jwtTokenUtil.getSubjectFromToken(token);
-        final Company company =
-            operator.isSuperAdmin() ? companyService.getByUuid(UUID.fromString(tenant))
-                : operator.getCompany();
-        if (company.isActive() && jwtTokenUtil.validateTenantToken(token, company)) {
-          TenantContext.setCurrentTenant(tenant);
-        } else {
-          response
-              .getWriter()
-              .write("invalid x-company-accessor-token");
-          response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
-      } else {
-        if (operator.isSuperAdmin()) {
-          TenantContext.setCurrentTenant("public");
-        } else {
-          response
-              .getWriter()
-              .write("x-company-accessor-token not present in the Request Header");
-          response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
-      }
-    } catch (IllegalArgumentException | IOException ex) {
-      log.error(ex.getMessage());
-    }
+    final String token = request.getHeader(constants.tenantIdentifier);
+    operatorService.findByUsername(username)
+        .ifPresent(
+            operator -> {
+              try {
+                if (StringUtils.isNotEmpty(token)) {
+                  final UUID uuid = jwtTokenUtil.getIdentityFromToken(token);
+                  final Company company =
+                      operator.isSuperAdmin() ? companyService.getByUuid(uuid)
+                          : operator.getCompany();
+                  if (company.isActive()
+                      && jwtTokenUtil.validateTokenIdentity(token, company.getUuid())) {
+                    TenantContext.setCurrentTenant(uuid.toString());
+                  } else {
+                    response
+                        .getWriter()
+                        .write("invalid x-company-accessor-token");
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                  }
+                } else {
+                  if (operator.isSuperAdmin()) {
+                    TenantContext.setCurrentTenant("public");
+                  } else {
+                    response
+                        .getWriter()
+                        .write("x-company-accessor-token not present in the Request Header");
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                  }
+                }
+              } catch (IllegalArgumentException | IOException ex) {
+                log.error(ex.getMessage());
+              }
+            });
     return TenantContext.isTenantSet();
   }
 

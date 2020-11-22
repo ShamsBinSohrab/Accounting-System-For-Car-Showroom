@@ -96,3 +96,50 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+  - changeSet:
+      id: 8
+      author: shams
+      comment: Adding scopes to operator
+      changes:
+        - addColumn:
+            schemaName: public
+            tableName: operator
+            columns:
+              - column:
+                  name: scopes
+                  type: text[]
+                  defaultValueComputed: "'{}'::text[]"
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 9
+      author: shams
+      comment: Add all scopes to super admin
+      changes:
+        - sql:
+            sql: UPDATE operator SET scopes = '{COMPANY_READ,COMPANY_WRITE,CAR_READ,CAR_WRITE,PURCHASE_RECORD_READ,PURCHASE_RECORD_WRITE,SELL_RECORD_READ,SELL_RECORD_WRITE,EXPENSE_RECORD_READ,EXPENSE_RECORD_WRITE,OPERATOR_READ,OPERATOR_WRITE}' WHERE role = 'SUPER_ADMIN';
+            rollback: UPDATE operator SET scopes = {}  WHERE role = 'SUPER_ADMIN';
+  - changeSet:
+      id: 10
+      author: shams
+      comment: Add column uuid to operator table
+      changes:
+        - addColumn:
+            schemaName: public
+            tableName: operator
+            columns:
+              - column:
+                  name: uuid
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    nullable: false
+                    unique: true
+  - changeSet:
+      id: 11
+      author: shams
+      comment: Set uuid for super admin
+      changes:
+        - sql:
+            sql: UPDATE operator SET uuid = '3a3fc852-192d-4a38-9376-78a895aa1706' WHERE role = 'SUPER_ADMIN';
+

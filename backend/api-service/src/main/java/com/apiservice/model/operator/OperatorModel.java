@@ -6,6 +6,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.apiservice.controller.operator.OperatorController;
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.entity.master.operator.OperatorRole;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
@@ -21,6 +22,7 @@ public class OperatorModel extends RepresentationModel<OperatorModel> {
   private String username;
   private String password;
   private OperatorRole role;
+  private Set<String> scopes;
 
   @Email(message = "Invalid email address")
   private String email;

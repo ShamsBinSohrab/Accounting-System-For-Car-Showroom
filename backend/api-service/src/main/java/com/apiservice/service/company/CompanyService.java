@@ -48,7 +48,7 @@ public class CompanyService {
         companyRepository
             .findById(id)
             .orElseThrow(() -> EntityNotFoundException.of(Company.class, id));
-    return jwtTokenUtil.generateCompanyToken(company);
+    return jwtTokenUtil.generateToken(company.getUuid());
   }
 
   @Transactional
