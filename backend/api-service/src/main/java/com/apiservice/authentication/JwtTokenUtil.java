@@ -1,18 +1,17 @@
 package com.apiservice.authentication;
 
-import com.apiservice.entity.master.company.Company;
 import com.apiservice.entity.master.password.PasswordResetConfirmationRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,15 +23,19 @@ public class JwtTokenUtil {
   @Value("${jwt.secret}")
   private String secret;
 
-  public String getSubjectFromToken(String token) {
-    return getClaimFromToken(token, Claims::getSubject);
+  public UUID getIdentityFromToken(String token) {
+    return getClaimFromToken(token, claims -> UUID.fromString(claims.get("identity").toString()));
   }
 
-  public Date getExpirationDateFromToken(String token) {
+  public UUID getSecretFromToken(String token) {
+    return getClaimFromToken(token, claims -> UUID.fromString(claims.get("secret").toString()));
+  }
+
+  private Date getExpirationDateFromToken(String token) {
     return getClaimFromToken(token, Claims::getExpiration);
   }
 
-  public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+  private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = getAllClaimsFromToken(token);
     return claimsResolver.apply(claims);
   }
@@ -46,45 +49,37 @@ public class JwtTokenUtil {
     return expiration.before(new Date());
   }
 
-  public String generateAuthToken(UserDetails userDetails) {
+  public String generateToken(UUID identity, List<GrantedAuthority> authorities) {
     final Map<String, Object> claims = new HashMap<>();
-    final String authorities =
-        userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-    claims.putIfAbsent("AUTHORITIES", authorities);
-    return doGenerateToken(claims, userDetails.getUsername());
+    claims.putIfAbsent("identity", identity);
+    claims.putIfAbsent("scopes", authorities);
+    return doGenerateToken(claims);
   }
 
-  public String generateCompanyToken(Company company) {
+  public String generateToken(UUID identity) {
     final Map<String, Object> claims = new HashMap<>();
-    return doGenerateToken(claims, company.getUuid().toString());
+    claims.putIfAbsent("identity", identity);
+    return doGenerateToken(claims);
   }
 
   public String generatePasswordResetConfirmationToken(
       PasswordResetConfirmationRequest confirmationToken) {
     final Map<String, Object> claims = new HashMap<>();
-    return doGenerateToken(claims, confirmationToken.getToken().toString());
+    claims.putIfAbsent("secret", confirmationToken.getToken());
+    return doGenerateToken(claims);
   }
 
-  private String doGenerateToken(Map<String, Object> claims, String subject) {
+  private String doGenerateToken(Map<String, Object> claims) {
     return Jwts.builder()
         .setClaims(claims)
-        .setSubject(subject)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + tokenValidity * 1000))
         .signWith(SignatureAlgorithm.HS512, secret)
         .compact();
   }
 
-  public Boolean validateAuthToken(String token, UserDetails userDetails) {
-    final String username = getSubjectFromToken(token);
-    return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-  }
-
-  public Boolean validateTenantToken(String token, Company company) {
-    final String uuid = getSubjectFromToken(token);
-    return (uuid.equals(company.getUuid().toString()) && !isTokenExpired(token));
+  public boolean validateTokenIdentity(String token, UUID uuid) {
+    return getIdentityFromToken(token).equals(uuid) && !isTokenExpired(token);
   }
 }
 

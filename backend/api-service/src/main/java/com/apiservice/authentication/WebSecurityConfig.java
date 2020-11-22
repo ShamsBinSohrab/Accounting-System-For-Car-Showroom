@@ -23,13 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final AuthenticationEntryPointImpl authenticationEntryPoint;
-  private final UserDetailsService jwtUserDetailsService;
+  private final UserDetailsService userDetailsService;
   private final AuthenticationRequestFilter authenticationRequestFilter;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
   }
 
   @Bean
@@ -41,21 +41,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
-        .csrf()
-        .disable()
+        .csrf().disable()
         .authorizeRequests()
-        .antMatchers("/authenticate", "/forgotPassword", "/confirmResetPassword")
-        .permitAll()
-        .antMatchers(HttpMethod.OPTIONS)
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPoint)
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .antMatchers(HttpMethod.GET, "/v1/cars/**").hasAuthority(Scopes.CAR_READ.getAuthority())
+        .antMatchers(HttpMethod.GET, "/v1/purchaseRecords/**").hasAuthority(Scopes.PURCHASE_RECORD_READ.getAuthority())
+        .antMatchers(HttpMethod.GET, "/v1/sellRecords/**").hasAuthority(Scopes.SELL_RECORD_READ.getAuthority())
+        .antMatchers(HttpMethod.GET, "/v1/operators/**").hasAuthority(Scopes.OPERATOR_READ.getAuthority())
+        .antMatchers(HttpMethod.GET, "/v1/companies/**").hasAuthority(Scopes.COMPANY_READ.getAuthority())
+        .antMatchers(HttpMethod.GET, "/v1/expenseRecords/**").hasAuthority(Scopes.EXPENSE_RECORD_READ.getAuthority())
+        .antMatchers("/v1/cars/**").hasAuthority(Scopes.CAR_WRITE.getAuthority())
+        .antMatchers("/v1/purchaseRecords/**").hasAuthority(Scopes.PURCHASE_RECORD_WRITE.getAuthority())
+        .antMatchers("/v1/sellRecords/**").hasAuthority(Scopes.SELL_RECORD_WRITE.getAuthority())
+        .antMatchers("/v1/operators/**").hasAuthority(Scopes.OPERATOR_WRITE.getAuthority())
+        .antMatchers("/v1/companies/**").hasAuthority(Scopes.COMPANY_WRITE.getAuthority())
+        .antMatchers("/v1/expenseRecords/**").hasAuthority(Scopes.EXPENSE_RECORD_WRITE.getAuthority())
+        .antMatchers("/authenticate", "/forgotPassword", "/confirmResetPassword").permitAll()
+        .antMatchers(HttpMethod.OPTIONS).permitAll()
+        .anyRequest().authenticated()
+        .and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     httpSecurity
         .addFilterBefore(authenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
   }

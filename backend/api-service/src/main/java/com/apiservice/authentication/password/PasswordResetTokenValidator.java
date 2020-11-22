@@ -20,14 +20,10 @@ public class PasswordResetTokenValidator {
   private final JwtTokenUtil jwtTokenUtil;
 
   public PasswordResetConfirmationRequest validate(String token) {
-    final UUID passwordResetToken = parseToken(token);
+    final UUID passwordResetToken = jwtTokenUtil.getSecretFromToken(token);
     return confirmationTokenRepository.findByTokenAndConfirmedIsFalse(passwordResetToken)
         .map(this::validateTokenExpiry)
         .orElseThrow(PasswordResetConfirmationTokenException::invalidToken);
-  }
-
-  private UUID parseToken(String token) {
-    return UUID.fromString(jwtTokenUtil.getSubjectFromToken(token));
   }
 
   private PasswordResetConfirmationRequest validateTokenExpiry(

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,11 @@ public class OperatorService {
         .findByUsername(username)
         .orElseThrow(
             () -> new UsernameNotFoundException("User not found with username: " + username));
+  }
+
+  @Transactional(readOnly = true)
+  public Optional<Operator> findByUsername(String username) {
+    return operatorRepository.findByUsername(username);
   }
 
   @Transactional(readOnly = true)
