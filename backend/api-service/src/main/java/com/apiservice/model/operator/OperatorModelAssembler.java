@@ -3,6 +3,8 @@ package com.apiservice.model.operator;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.apiservice.authentication.AuthenticationService;
+import com.apiservice.authentication.Scopes;
 import com.apiservice.controller.operator.OperatorController;
 import com.apiservice.entity.master.operator.Operator;
 import com.apiservice.entity.master.operator.OperatorRole;
@@ -12,18 +14,24 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class OperatorModelAssembler implements
     RepresentationModelAssembler<Operator, OperatorModel> {
 
   private final ModelMapper mapper;
+  private final HttpServletRequest request;
+  private final AuthenticationService authService;
 
   @Override
   public OperatorModel toModel(Operator operator) {
     final OperatorModel model = mapper.map(operator, OperatorModel.class);
     addLinkToDetails(model);
-    if (isAdminOrSuperAdmin()) {
+    final List<Scopes> scopes = authService.extractScopesFromToken(request);
+    if (isAdminOrSuperAdmin() && scopes.contains("OPERATOR_WRITE")) {
       addLinkToCreate(model);
       addLinkToUpdate(model);
       addLinkToDelete(model);

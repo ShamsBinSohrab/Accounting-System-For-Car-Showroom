@@ -33,19 +33,23 @@ public class CarModelAssembler implements RepresentationModelAssembler<Car, CarM
   public CarModel toModel(Car car) {
     final List<Scopes> scopes = authService.extractScopesFromToken(request);
     final CarModel model = mapper.map(car, CarModel.class);
-    addLinkToCreate(model);
-    addLinkToDetails(model);
-    addLinkToUpdate(model);
-    addLinkToDelete(model);
-    purchaseRecordRepository
-        .findByCarId(car.getId())
-        .ifPresentOrElse(
-            pr -> {
-              if (!sellRecordRepository.existsByPurchaseRecordId(pr.getId())) {
-                addLinkToSellRecord(model);
-              }
-            },
-            () -> addLinkToPurchaseRecord(model));
+    if(scopes.contains("CAR_READ"))
+      addLinkToDetails(model);
+    if(scopes.contains("CAR_WRITE"))
+    {
+      addLinkToCreate(model);
+      addLinkToUpdate(model);
+      addLinkToDelete(model);
+      purchaseRecordRepository
+              .findByCarId(car.getId())
+              .ifPresentOrElse(
+                      pr -> {
+                        if (!sellRecordRepository.existsByPurchaseRecordId(pr.getId())) {
+                          addLinkToSellRecord(model);
+                        }
+                      },
+                      () -> addLinkToPurchaseRecord(model));
+    }
     return model;
   }
 
