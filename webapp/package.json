@@ -36,7 +36,7 @@
     "crypto-js": "^4.0.0",
     "flag-icon-css": "^3.4.6",
     "font-awesome": "^4.7.0",
-    "highcharts": "^8.1.2",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.4.0",
     "jspdf": "^1.5.3",
     "jwt-decode": "^2.2.0",
