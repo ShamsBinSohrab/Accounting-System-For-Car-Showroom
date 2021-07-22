@@ -57,7 +57,7 @@
     "tslib": "^1.11.1",
     "utf8-encoding": "^0.1.2",
     "web-animations-js": "^2.3.2",
-    "xlsx": "^0.16.0",
+    "xlsx": "^0.17.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
